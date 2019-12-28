@@ -1,3 +1,64 @@
-= Spring-data-aerospike Demo
+= How to setup `spring-data-aerospike` in Spring Boot application
 
 This repository contains sample project for demonstration of `spring-data-aerospike` setup and usage.
+
+== Setting up the project
+
+In this section we'll cover setup of the project from the start.
+
+First, we'll need to setup the basic project structure.
+You can do it either manually if you are familiar with the process or do it via https://start.spring.io/[Spring Initializr].
+
+In Spring Initializr you'll need to select:
+
+- Project: Maven project
+- Language: Java
+- Spring Boot: 2.2
+- Java: 11
+
+.Options to select
+image::docs/images/spring-initializr.png[]
+
+Press Generate button in the bottom of the page and you'll get zip with initial project. Import project into your
+favorite IDE and run the test. It should be green and that means that you are ready to continue to the next section.
+
+== Adding `spring-data-aerospike`
+
+[NOTE]
+====
+`spring-data-aerospike` is a Community project and the dependency is not managed by Spring, it has it's own release cycle
+and is not included into Spring Boot dependency management. Available versions can be checked on
+https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike[Maven Central].
+
+https://github.com/aerospike-community/spring-data-aerospike#spring-boot-compatibility[Spring Boot compatibility] can be
+checked for the version of `spring-data-aerospike` that is compatible with specific Spring Boot version.
+====
+
+In our case we are going to use `spring-data-aerospike` 2.3.0.RELEASE as we have Spring Boot 2.2.
+
+Add `spring-data-aerospike` to the
+https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Management[`dependencyManagement`]
+and `dependencies` sections of your `pom.xml`:
+
+.pom.xml
+[source,xml]
+----
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike -->
+            <dependency>
+                <groupId>com.aerospike</groupId>
+                <artifactId>spring-data-aerospike</artifactId>
+                <version>2.3.0.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.aerospike</groupId>
+            <artifactId>spring-data-aerospike</artifactId>
+        </dependency>
+<!-- Other dependencies ommited-->
+    </dependencies>
+----
