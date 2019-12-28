@@ -24,7 +24,7 @@ image::docs/images/spring-initializr.png[height=400]
 Press Generate button in the bottom of the page and you'll get zip with initial project. Import project into your
 favorite IDE and run the test. It should be green and that means that you are ready to continue to the next section.
 
-== Adding `spring-data-aerospike`
+== Adding `spring-data-aerospike` dependency
 
 [NOTE]
 ====
@@ -57,10 +57,115 @@ and `dependencies` sections of your `pom.xml`:
     </dependencyManagement>
 
     <dependencies>
+    <!-- Other dependencies ommited-->
         <dependency>
             <groupId>com.aerospike</groupId>
             <artifactId>spring-data-aerospike</artifactId>
         </dependency>
-<!-- Other dependencies ommited-->
+    <!-- Other dependencies ommited-->
     </dependencies>
 ----
+
+== Creating Aerospike repository
+
+We will be using https://projectlombok.org/[Lombok] library to omit the boilerplate code in the entity class.
+Add the following dependency into your `pom.xml`:
+
+.pom.xml
+[source,xml]
+----
+    <dependencies>
+    <!-- Other dependencies ommited-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    <!-- Other dependencies ommited-->
+    </dependencies>
+----
+
+We are going to use the movies domain in this project, so to be able to read and save our movies into Aerospike we will need to create:
+
+. document(entity) class that represents our domain model,
+. repository class that provides https://en.wikipedia.org/wiki/CRUD[CRUD] operations.
+
+Movie document class will look the following way:
+
+.MovieDocument.java
+[source,java]
+----
+package com.example.demo.persistence;
+
+import lombok.Value;
+import org.springframework.data.aerospike.mapping.Document;
+import org.springframework.data.aerospike.mapping.Field;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+
+import java.util.List;
+
+@Value // <1>
+@Document // <2>
+public class MovieDocument {
+
+    @Id // <3>
+    String id;
+
+    @Field // <4>
+    String name;
+
+    @Field("desc") // <5>
+    String description;
+
+    @Field
+    double rating;
+
+    @Field
+    List<PersonDocument> stars;
+
+    @Version // <6>
+    long version;
+}
+----
+
+Document explained:
+
+<1> https://projectlombok.org/features/Value[`@Value`] makes class immutable, all fields are made private and final,
+`toString()`, `equals()`, `hashCode()`, field getters and all args constructor are generated.
+
+<2> `@Document` //TODO
+
+<3> `@Id` //TODO
+
+<4> `@Field` //TODO
+
+<5> `@Field("desc")` //TODO
+
+<6> `@Version` //TODO
+
+[NOTE]
+====
+Aerospike has https://www.aerospike.com/docs/guide/limitations.html[limitation] on the bin name length.
+If your document contains field with name that exceeds this limit, specify short name in `@Field` annotation:
+----
+    @Field("shortName")
+    String veryLoooongFieldName;
+----
+====
+
+Create Movie Repository interface:
+
+----
+package com.example.demo.persistence;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface MovieRepository extends CrudRepository<MovieDocument, String> { // <1>
+}
+----
+
+
+Repository explained:
+
+<1> `CrudRepository` //TODO
