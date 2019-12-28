@@ -1,0 +1,3 @@
+= Spring-data-aerospike Demo
+
+This repository contains sample project for demonstration of `spring-data-aerospike` setup and usage.
