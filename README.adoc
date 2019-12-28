@@ -2,6 +2,8 @@
 
 This repository contains sample project for demonstration of `spring-data-aerospike` setup and usage.
 
+NOTE: This project requires JDK 11. You can download it https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html[here].
+
 == Setting up the project
 
 In this section we'll cover setup of the project from the start.
@@ -11,9 +13,9 @@ You can do it either manually if you are familiar with the process or do it via 
 
 In Spring Initializr you'll need to select:
 
-- Project: Maven project
+- Project: https://stackoverflow.com/a/13335439/688926[Maven] project
 - Language: Java
-- Spring Boot: 2.2
+- https://spring.io/projects/spring-boot[Spring Boot]: 2.2
 - Java: 11
 
 .Options to select
