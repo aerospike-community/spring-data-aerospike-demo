@@ -169,3 +169,15 @@ public interface MovieRepository extends CrudRepository<MovieDocument, String> {
 Repository explained:
 
 <1> `CrudRepository` //TODO
+
+== Configuring connection to Aerospike
+
+//TODO
+
+== Testing
+
+//TODO
+
+== Handling errors
+
+//TODO
