@@ -57,31 +57,31 @@ and `dependencies` sections of your `pom.xml`:
     </dependencyManagement>
 
     <dependencies>
-    <!-- Other dependencies ommited-->
+    <!-- Other dependencies omitted-->
         <dependency>
             <groupId>com.aerospike</groupId>
             <artifactId>spring-data-aerospike</artifactId>
         </dependency>
-    <!-- Other dependencies ommited-->
+    <!-- Other dependencies omitted-->
     </dependencies>
 ----
 
 == Creating Aerospike repository
 
 We will be using https://projectlombok.org/[Lombok] library to omit the boilerplate code in the entity class.
-Add the following dependency into your `pom.xml`:
+Add `lombok` into your `pom.xml`:
 
 .pom.xml
 [source,xml]
 ----
     <dependencies>
-    <!-- Other dependencies ommited-->
+    <!-- Other dependencies omitted-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-    <!-- Other dependencies ommited-->
+    <!-- Other dependencies omitted-->
     </dependencies>
 ----
 
@@ -134,15 +134,15 @@ Document explained:
 <1> https://projectlombok.org/features/Value[`@Value`] makes class immutable, all fields are made private and final,
 `toString()`, `equals()`, `hashCode()`, field getters and all args constructor are generated.
 
-<2> `@Document` //TODO
+<2> `@Document` marks a class as an entity to be persisted to Aerospike. It also allows to specify set name, expiration and touch on read values.
 
-<3> `@Id` //TODO
+<3> `@Id` marks a field as the primary key.
 
-<4> `@Field` //TODO
+<4> `@Field` is optional, can be set just for the clarity purpose.
 
-<5> `@Field("desc")` //TODO
+<5> `@Field("desc")` configures the name of a field to be used when persisting the document.
 
-<6> `@Version` //TODO
+<6> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity.
 
 [NOTE]
 ====
@@ -168,11 +168,95 @@ public interface MovieRepository extends CrudRepository<MovieDocument, String> {
 
 Repository explained:
 
-<1> `CrudRepository` //TODO
+<1> `CrudRepository` provides sophisticated CRUD functionality for the entity class.
 
 == Configuring connection to Aerospike
 
-//TODO
+//TODO: autoconfiguration coming soon. Add link to repo
+
+To configure connection to Aerospike you'll need to create configuration class that extends `AbstractAerospikeDataConfiguration`.
+Basic setup requires `getHosts()` and `namespace()` methods to be implemented,
+but you can also override e.g. `getClientPolicy()` to specify custom configuration for the Aerospike client,
+or `customConverters()` to add custom converters.
+
+We are going to use
+https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-typesafe-configuration-properties[`@ConfigurationProperties`]
+for binding Aerospike configuration properties to POJO. Since connection parameters are required, configuration needs to be validated.
+To enable validation add `hibernate-validator` dependency to `pom.xml`:
+
+.pom.xml
+[source,xml]
+----
+    <dependencies>
+    <!-- Other dependencies omitted-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+    <!-- Other dependencies omitted-->
+    </dependencies>
+----
+
+Simple configuration will look the following way:
+
+.AerospikeConfiguration.java
+[source,java]
+----
+package com.example.demo.persistence;
+
+import com.aerospike.client.Host;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
+import java.util.Set;
+
+@EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
+@Configuration
+public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
+
+    @Autowired
+    private AerospikeConfigurationProperties properties;
+
+    @Override
+    protected Collection<Host> getHosts() {
+        return properties.getHosts();
+    }
+
+    @Override
+    protected String namespace() {
+        return properties.getNamespace();
+    }
+
+    @Data
+    @Validated // add this annotation if you want @ConfigurationProperties to be validated!
+    @ConfigurationProperties("aerospike")
+    public static class AerospikeConfigurationProperties {
+
+        @NotEmpty
+        Set<Host> hosts;
+
+        @NotEmpty
+        String namespace;
+    }
+}
+----
+
+Now when you run `contextLoads` test you'll get exception:
+----
+Caused by: org.springframework.boot.context.properties.bind.validation.BindValidationException: Binding validation errors on aerospike
+   - Field error in object 'aerospike' on field 'hosts': rejected value [null]; ...(message omitted)
+   - Field error in object 'aerospike' on field 'namespace': rejected value [null]; ...(message omitted)
+----
+
+This is expected! As you remember we've added `hibernate-validator` dependency and annotated `AerospikeConfigurationProperties` fields with `@NotEmpty`. 
+Spring was not able to find neither `aerospike.hosts` nor `aerospike.namespace` properties. We are going to fix that in the next section.
 
 == Testing
 
@@ -181,3 +265,11 @@ Repository explained:
 == Handling errors
 
 //TODO
+
+== Advanced features
+
+- Creating index
+- Fetching data by secondary index
+- Custom `clientPolicy` for Aerospike client
+- Custom converters
+- Composite primary key
