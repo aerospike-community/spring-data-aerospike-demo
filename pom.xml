@@ -28,6 +28,20 @@
                 <artifactId>spring-data-aerospike</artifactId>
                 <version>2.3.0.RELEASE</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <!-- https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike -->
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>embedded-aerospike</artifactId>
+                <version>1.36</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -64,6 +78,17 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-aerospike</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -7,12 +7,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
+import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
-import java.util.Set;
 
+@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
 @EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
 @Configuration
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
@@ -22,7 +23,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
     @Override
     protected Collection<Host> getHosts() {
-        return properties.getHosts();
+        return Host.parseServiceHosts(properties.getHosts());
     }
 
     @Override
@@ -36,7 +37,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     public static class AerospikeConfigurationProperties {
 
         @NotEmpty
-        Set<Host> hosts;
+        String hosts;
 
         @NotEmpty
         String namespace;

@@ -1,6 +1,7 @@
 package com.example.demo.persistence;
 
 import lombok.Value;
+import lombok.experimental.NonFinal;
 import org.springframework.data.aerospike.mapping.Document;
 import org.springframework.data.aerospike.mapping.Field;
 import org.springframework.data.annotation.Id;
@@ -28,5 +29,6 @@ public class MovieDocument {
     List<PersonDocument> stars;
 
     @Version
+    @NonFinal
     long version;
 }

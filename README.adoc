@@ -2,7 +2,10 @@
 
 This repository contains sample project for demonstration of `spring-data-aerospike` setup and usage.
 
-NOTE: This project requires JDK 11. You can download it https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html[here].
+== Prerequisites
+
+- JDK 11.
+- Docker installed and running.
 
 == Setting up the project
 
@@ -36,31 +39,17 @@ https://github.com/aerospike-community/spring-data-aerospike#spring-boot-compati
 checked for the version of `spring-data-aerospike` that is compatible with specific Spring Boot version.
 ====
 
-In our case we are going to use `spring-data-aerospike` 2.3.0.RELEASE as we have Spring Boot 2.2.
-
-Add `spring-data-aerospike` to the
-https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Management[`dependencyManagement`]
-and `dependencies` sections of your `pom.xml`:
+In our case we are going to use `spring-data-aerospike` 2.3.0.RELEASE as we have Spring Boot 2.2:
 
 .pom.xml
 [source,xml]
 ----
-    <dependencyManagement>
-        <dependencies>
-            <!-- https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike -->
-            <dependency>
-                <groupId>com.aerospike</groupId>
-                <artifactId>spring-data-aerospike</artifactId>
-                <version>2.3.0.RELEASE</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
     <!-- Other dependencies omitted-->
         <dependency>
             <groupId>com.aerospike</groupId>
             <artifactId>spring-data-aerospike</artifactId>
+            <version>2.3.0.RELEASE</version>
         </dependency>
     <!-- Other dependencies omitted-->
     </dependencies>
@@ -98,6 +87,7 @@ Movie document class will look the following way:
 package com.example.demo.persistence;
 
 import lombok.Value;
+import lombok.experimental.NonFinal;
 import org.springframework.data.aerospike.mapping.Document;
 import org.springframework.data.aerospike.mapping.Field;
 import org.springframework.data.annotation.Id;
@@ -125,6 +115,7 @@ public class MovieDocument {
     List<PersonDocument> stars;
 
     @Version // <6>
+    @NonFinal
     long version;
 }
 ----
@@ -211,12 +202,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
+import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
-import java.util.Set;
 
+@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
 @EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
 @Configuration
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
@@ -226,7 +218,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
     @Override
     protected Collection<Host> getHosts() {
-        return properties.getHosts();
+        return Host.parseServiceHosts(properties.getHosts());
     }
 
     @Override
@@ -240,7 +232,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     public static class AerospikeConfigurationProperties {
 
         @NotEmpty
-        Set<Host> hosts;
+        String hosts;
 
         @NotEmpty
         String namespace;
@@ -255,12 +247,113 @@ Caused by: org.springframework.boot.context.properties.bind.validation.BindValid
    - Field error in object 'aerospike' on field 'namespace': rejected value [null]; ...(message omitted)
 ----
 
-This is expected! As you remember we've added `hibernate-validator` dependency and annotated `AerospikeConfigurationProperties` fields with `@NotEmpty`. 
-Spring was not able to find neither `aerospike.hosts` nor `aerospike.namespace` properties. We are going to fix that in the next section.
+This is expected, as Spring was not able to find neither `aerospike.hosts` nor `aerospike.namespace` properties. They are required to setup the connection to Aerospike.
 
 == Testing
 
-//TODO
+To fix the test we need a running Aerospike server.
+For the test purposes you can use https://github.com/testcontainers/testcontainers-spring-boot[`embedded-aerospike`] library based on https://github.com/testcontainers[`testcontainers`].
+
+NOTE: `spring-cloud-starter` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter` with test scope.
+
+[source,xml]
+----
+    <dependencies>
+        <!-- Other dependencies omitted-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+            <version>2.2.1.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+<!-- https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike -->
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-aerospike</artifactId>
+            <version>1.36</version>
+            <scope>test</scope>
+        </dependency>
+    <dependencies>
+----
+
+This will setup Aerospike container when the test starts.
+
+Add Aerospike configuration:
+
+./test/resources/application.properties
+----
+aerospike.hosts=${embedded.aerospike.host}:${embedded.aerospike.port}
+aerospike.namespace=${embedded.aerospike.namespace}
+----
+
+and run the test. It will be green now.
+
+To verify that the repository is actually working let's add some basic tests:
+
+[source,java]
+----
+package com.example.demo;
+
+import com.example.demo.persistence.MovieDocument;
+import com.example.demo.persistence.MovieRepository;
+import com.example.demo.persistence.PersonDocument;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class MovieRepositoryTests extends DemoApplicationTests {
+
+    String id;
+
+    MovieDocument movie;
+
+    @Autowired
+    MovieRepository repository;
+
+    @BeforeEach
+    void setUp() {
+        id = UUID.randomUUID().toString();
+        movie = new MovieDocument(id, "Inception",
+                "Origin of an idea", 8.8,
+                Lists.list(new PersonDocument("Leonardo DiCaprio"),
+                        new PersonDocument("Joseph Gordon-Levitt"),
+                        new PersonDocument("Ellen Page")), 0L);
+    }
+
+    @Test
+    public void save_savesMovie() {
+        repository.save(movie);
+
+        assertThat(repository.findById(id)).hasValue(movie);
+    }
+
+    @Test
+    public void exists_returnsTrueIfMovieIsPresent() {
+        repository.save(movie);
+
+        assertThat(repository.existsById(id)).isTrue();
+    }
+
+    @Test
+    public void deleteById_deletesExistingMovie() {
+        repository.save(movie);
+
+        repository.deleteById(id);
+
+        assertThat(repository.findById(id)).isNotPresent();
+    }
+
+    @Test
+    void deleteById_doesNothingForNonexistingMovie() {
+        repository.deleteById(id);
+    }
+}
+----
 
 == Handling errors
 
