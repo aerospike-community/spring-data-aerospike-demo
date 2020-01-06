@@ -358,6 +358,10 @@ public class MovieRepositoryTests extends DemoApplicationTests {
 == Handling errors
 
 //TODO
+- `spring-retry` @Retryable
+- retryable, non retryable errors
+- exponential backoff with jitter
+- Concurrent saves: OptimisticLockingFailureException
 
 == Advanced features
 
