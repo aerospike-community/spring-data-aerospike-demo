@@ -2,7 +2,6 @@ package com.example.demo;
 
 import com.example.demo.persistence.MovieDocument;
 import com.example.demo.persistence.MovieRepository;
-import com.example.demo.persistence.PersonDocument;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,11 +23,7 @@ public class MovieRepositoryTests extends DemoApplicationTests {
     @BeforeEach
     void setUp() {
         id = UUID.randomUUID().toString();
-        movie = new MovieDocument(id, "Inception",
-                "Origin of an idea", 8.8,
-                Lists.list(new PersonDocument("Leonardo DiCaprio"),
-                        new PersonDocument("Joseph Gordon-Levitt"),
-                        new PersonDocument("Ellen Page")), 0L);
+        movie = new MovieDocument(id, "Inception", "Origin of an idea", 8.8, 0L);
     }
 
     @Test

@@ -93,28 +93,25 @@ import org.springframework.data.aerospike.mapping.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
-import java.util.List;
-
 @Value // <1>
 @Document // <2>
+@Builder(toBuilder = true) // <3>
+@AllArgsConstructor // <4>
 public class MovieDocument {
 
-    @Id // <3>
+    @Id // <5>
     String id;
 
-    @Field // <4>
+    @Field // <6>
     String name;
 
-    @Field("desc") // <5>
+    @Field("desc") // <7>
     String description;
 
     @Field
     double rating;
 
-    @Field
-    List<PersonDocument> stars;
-
-    @Version // <6>
+    @Version // <8>
     @NonFinal
     long version;
 }
@@ -127,13 +124,18 @@ Document explained:
 
 <2> `@Document` marks a class as an entity to be persisted to Aerospike. It also allows to specify set name, expiration and touch on read values.
 
-<3> `@Id` marks a field as the primary key.
+<3> `@Builder` provide Builder API for a class.
 
-<4> `@Field` is optional, can be set just for the clarity purpose.
+<4> `@AllArgsConstructor` creates public all-args constructor for a class (which is hidden by `@Builder`).
+Spring Data can use all-args constructor instead of reflection to https://docs.spring.io/spring-data/data-commons/docs/current/reference/html/#mapping.object-creation[gain performance boost] for object creation.
 
-<5> `@Field("desc")` configures the name of a field to be used when persisting the document.
+<5> `@Id` marks a field as the primary key.
 
-<6> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity.
+<6> `@Field` is optional, can be set just for the clarity purpose.
+
+<7> `@Field("desc")` configures the name of a field to be used when persisting the document.
+
+<8> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity.
 
 [NOTE]
 ====
@@ -256,6 +258,7 @@ For the test purposes you can use https://github.com/testcontainers/testcontaine
 
 NOTE: `spring-cloud-starter` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter` with test scope.
 
+.pom.xml
 [source,xml]
 ----
     <dependencies>
@@ -290,6 +293,7 @@ and run the test. It will be green now.
 
 To verify that the repository is actually working let's add some basic tests:
 
+.MovieRepositoryTests.java
 [source,java]
 ----
 package com.example.demo;
@@ -318,11 +322,7 @@ public class MovieRepositoryTests extends DemoApplicationTests {
     @BeforeEach
     void setUp() {
         id = UUID.randomUUID().toString();
-        movie = new MovieDocument(id, "Inception",
-                "Origin of an idea", 8.8,
-                Lists.list(new PersonDocument("Leonardo DiCaprio"),
-                        new PersonDocument("Joseph Gordon-Levitt"),
-                        new PersonDocument("Ellen Page")), 0L);
+        movie = new MovieDocument(id, "Inception", "Origin of an idea", 8.8, 0L);
     }
 
     @Test
@@ -357,11 +357,148 @@ public class MovieRepositoryTests extends DemoApplicationTests {
 
 == Handling errors
 
+[quote, Werner Vogels]
+Everything fails all the time.
+
 //TODO
 - `spring-retry` @Retryable
+
+.pom.xml
+[source,xml]
+----
+    <dependencies>
+        <!-- Other dependencies omitted-->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+    </dependencies>
+----
+
+You can either specify retry configuration directly via `@Retryable` properties or create `RetryInterceptor` bean and set it's name in `@Retryable` `interceptor` property.
+For this demo we'll use simple configuration via `@Retryable`.
+
+.MovieOperations.java
+[source,java]
+----
+package com.example.demo.service;
+
+import com.example.demo.persistence.MovieDocument;
+import com.example.demo.persistence.MovieRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.dao.QueryTimeoutException;
+import org.springframework.dao.TransientDataAccessResourceException;
+import org.springframework.data.aerospike.core.AerospikeTemplate;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+
+import java.util.Optional;
+import java.util.function.Function;
+
+@Retryable( // <1>
+        include = {
+                QueryTimeoutException.class, // <2>
+                TransientDataAccessResourceException.class, // <3>
+                OptimisticLockingFailureException.class // <4>
+        },
+        maxAttempts = 5, // <5>
+        backoff = @Backoff( // <6>
+                delay = 3,
+                multiplier = 2,
+                random = true // <7>
+        )
+)
+@RequiredArgsConstructor
+public class MovieOperations {
+
+    private final MovieRepository repository;
+    private final AerospikeTemplate template;
+
+    public void createMovie(Movie movie) {
+        try {
+            template.insert(MovieDocument.builder() // <8>
+                    .id(movie.getName())
+                    .name(movie.getName())
+                    .description(movie.getDescription())
+                    .rating(movie.getRating())
+                    .version(0L)
+                    .build());
+        } catch (DuplicateKeyException e) {
+            throw new IllegalArgumentException("Movie with name: " + movie.getName() + " already exists!");
+        }
+    }
+
+    public void deleteMovie(String name) {
+        repository.deleteById(name);
+    }
+
+    public Optional<Movie> findMovie(String name) {
+        return repository.findById(name)
+                .map(this::toMovie);
+    }
+
+    public Movie updateMovieRating(String name, double newRating) { // <9>
+        return update(name, existingMovie ->
+                repository.save(existingMovie.toBuilder().rating(newRating).build()));
+    }
+
+    public Movie updateMovieDescription(String name, String newDescription) {
+        return update(name, existingMovie ->
+                repository.save(existingMovie.toBuilder().description(newDescription).build()));
+    }
+
+    private Movie update(String name, Function<MovieDocument, MovieDocument> updateFunction) {
+        return repository.findById(name)
+                .map(updateFunction)
+                .map(this::toMovie)
+                .orElseThrow(() -> new IllegalArgumentException("Movie with name: " + name + " not found"));
+    }
+
+    private Movie toMovie(MovieDocument doc) {
+        return new Movie(doc.getName(), doc.getDescription(), doc.getRating());
+    }
+}
+----
+
+//TODO: add explanations
+
+<1> `@Retryable`
+<2> `QueryTimeoutException`
+<3> `TransientDataAccessResourceException`
+<4> `OptimisticLockingFailureException`
+<5> `maxAttempts`
+<6> `backoff`
+<7> `random = true`
+<8> `template.insert`
+<9> `updateMovieRating`
+
+Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separate class `AerospikeRetryConfiguration`:
+
+.AerospikeRetryConfiguration.java
+[source,java]
+----
+package com.example.demo.persistence;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.annotation.EnableRetry;
+
+@EnableRetry
+@Configuration
+public class AerospikeRetryConfiguration {
+
+}
+----
+
 - retryable, non retryable errors
 - exponential backoff with jitter
-- Concurrent saves: OptimisticLockingFailureException
+- Concurrent saves: OptimisticLockingFailureException (`MovieDocument` `version` field enables optimistic locking mechanism)
+- simulate network latencies
 
 == Advanced features
 
