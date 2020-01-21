@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
+import java.util.List;
 
 @EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
 @EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
@@ -29,6 +30,14 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     @Override
     protected String nameSpace() {
         return properties.getNamespace();
+    }
+
+    @Override
+    protected List<?> customConverters() {
+        return List.of(
+                CommentsKey.CommentsKeyToStringConverter.INSTANCE,
+                CommentsKey.StringToCommentsKeyConverter.INSTANCE
+        );
     }
 
     @Data
