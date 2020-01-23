@@ -1,5 +1,7 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
 
+:spring-data-aerospike-version: 2.3.0.RELEASE
+
 == Setting up the project
 
 In this section we'll cover setup of the project from the start.
@@ -29,20 +31,20 @@ and is not included into Spring Boot dependency management. Available versions c
 https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike[Maven Central].
 
 https://github.com/aerospike-community/spring-data-aerospike#spring-boot-compatibility[Spring Boot compatibility] can be
-checked for the version of `spring-data-aerospike` that is compatible with specific Spring Boot version.
+checked for the version of `spring-data-aerospike` that is compatible with the specific Spring Boot version.
 ====
 
-In our case we are going to use `spring-data-aerospike` 2.3.0.RELEASE as we have Spring Boot 2.2:
+In our case we are going to use `spring-data-aerospike` %spring-data-aerospike-version as we have Spring Boot 2.2:
 
 .pom.xml
-[source,xml]
+[source,xml,subs=attributes]
 ----
     <dependencies>
     <!-- Other dependencies omitted-->
         <dependency>
             <groupId>com.aerospike</groupId>
             <artifactId>spring-data-aerospike</artifactId>
-            <version>2.3.0.RELEASE</version>
+            <version>%spring-data-aerospike-version</version>
         </dependency>
     <!-- Other dependencies omitted-->
     </dependencies>
