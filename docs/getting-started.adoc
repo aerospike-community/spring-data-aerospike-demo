@@ -7,6 +7,11 @@
 
 == Setting up the project
 
+[NOTE]
+====
+Skip this section if you already have working Spring Boot {spring-boot-version} project.
+====
+
 In this section we'll cover setup of the project from the start.
 
 First, we'll need to setup the basic project structure.
