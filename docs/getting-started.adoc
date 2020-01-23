@@ -37,7 +37,7 @@ checked for the version of `spring-data-aerospike` that is compatible with the s
 In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot 2.2:
 
 .pom.xml
-[source,xml,subs=attributes]
+[source,xml,subs=attributes+]
 ----
     <dependencies>
     <!-- Other dependencies omitted-->
