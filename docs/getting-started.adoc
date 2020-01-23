@@ -1,6 +1,9 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
 
+:spring-boot-version: 2.2
+:spring-cloud-starter-version: 2.2.1.RELEASE
 :spring-data-aerospike-version: 2.3.0.RELEASE
+:embedded-aerospike-version: 1.36
 
 == Setting up the project
 
@@ -13,7 +16,7 @@ In Spring Initializr you'll need to select:
 
 - Project: https://stackoverflow.com/a/13335439/688926[Maven] project
 - Language: Java
-- https://spring.io/projects/spring-boot[Spring Boot]: 2.2
+- https://spring.io/projects/spring-boot[Spring Boot]: {spring-boot-version}
 - Java: 11
 
 .Options to select
@@ -34,7 +37,7 @@ https://github.com/aerospike-community/spring-data-aerospike#spring-boot-compati
 checked for the version of `spring-data-aerospike` that is compatible with the specific Spring Boot version.
 ====
 
-In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot 2.2:
+In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot {spring-boot-version}:
 
 .pom.xml
 [source,xml,subs=attributes+]
@@ -46,7 +49,6 @@ In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-v
             <artifactId>spring-data-aerospike</artifactId>
             <version>{spring-data-aerospike-version}</version>
         </dependency>
-    <!-- Other dependencies omitted-->
     </dependencies>
 ----
 
@@ -65,7 +67,6 @@ Add `lombok` into your `pom.xml`:
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-    <!-- Other dependencies omitted-->
     </dependencies>
 ----
 
@@ -176,12 +177,11 @@ To enable validation add `hibernate-validator` dependency to `pom.xml`:
 [source,xml]
 ----
     <dependencies>
-    <!-- Other dependencies omitted-->
+    <!-- Other dependencies omitted -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-    <!-- Other dependencies omitted-->
     </dependencies>
 ----
 
@@ -254,21 +254,21 @@ For the test purposes you can use https://github.com/testcontainers/testcontaine
 NOTE: `spring-cloud-starter` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter` with test scope.
 
 .pom.xml
-[source,xml]
+[source,xml,subs=attributes+]
 ----
     <dependencies>
         <!-- Other dependencies omitted-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
-            <version>2.2.1.RELEASE</version>
+            <version>{spring-cloud-starter-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-<!-- https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike -->
+        <!-- https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike -->
             <groupId>com.playtika.testcontainers</groupId>
             <artifactId>embedded-aerospike</artifactId>
-            <version>1.36</version>
+            <version>{embedded-aerospike-version}</version>
             <scope>test</scope>
         </dependency>
     <dependencies>
