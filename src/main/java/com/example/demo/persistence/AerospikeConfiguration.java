@@ -1,6 +1,9 @@
 package com.example.demo.persistence;
 
 import com.aerospike.client.Host;
+import com.example.demo.persistence.article.ArticleDocument;
+import com.example.demo.persistence.article.ArticleDocumentConverters;
+import com.example.demo.persistence.user.UserDataConverters;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -36,7 +39,11 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     protected List<?> customConverters() {
         return List.of(
                 CommentsKey.CommentsKeyToStringConverter.INSTANCE,
-                CommentsKey.StringToCommentsKeyConverter.INSTANCE
+                CommentsKey.StringToCommentsKeyConverter.INSTANCE,
+                UserDataConverters.MapToUserDataToConverter.INSTANCE,
+                UserDataConverters.UserDataToMapConverter.INSTANCE,
+                ArticleDocumentConverters.AerospikeReadDataToArticleDocumentToConverter.INSTANCE,
+                new ArticleDocumentConverters.ArticleDocumentToAerospikeWriteDataConverter(properties.getNamespace(), ArticleDocument.SET_NAME)
         );
     }
 
