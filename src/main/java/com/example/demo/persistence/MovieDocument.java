@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
 @Value
-@Document
+@Document(collection = "demo-service-movies")
 @Builder(toBuilder = true)
 @AllArgsConstructor // Spring Data object creation can use all-args constructor instead of reflection which is much faster
 public class MovieDocument {

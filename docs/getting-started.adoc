@@ -7,11 +7,6 @@
 
 == Setting up the project
 
-[NOTE]
-====
-Skip this section if you already have working Spring Boot {spring-boot-version} project.
-====
-
 In this section we'll cover setup of the project from the start.
 
 First, we'll need to setup the basic project structure.
@@ -95,7 +90,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
 @Value // <1>
-@Document // <2>
+@Document(collection = "demo-service-movies") // <2>
 @Builder(toBuilder = true) // <3>
 @AllArgsConstructor // <4>
 public class MovieDocument {
@@ -123,7 +118,7 @@ Document explained:
 <1> https://projectlombok.org/features/Value[`@Value`] makes class immutable, all fields are made private and final,
 `toString()`, `equals()`, `hashCode()`, field getters and all args constructor are generated.
 
-<2> `@Document` marks a class as an entity to be persisted to Aerospike. It also allows to specify set name, expiration and touch on read values.
+<2> `@Document(collection = "demo-service-movies")` marks a class as an entity to be persisted to Aerospike. It also allows to specify set name, expiration and touch on read values. In current example custom set name is specified via `collection`. Please note that a set name cannot contain the ':' or ';' characters. (See more https://www.aerospike.com/docs/guide/limitations.html[limitations])
 
 <3> `@Builder` provide Builder API for a class.
 
@@ -134,9 +129,9 @@ Spring Data can use all-args constructor instead of reflection to https://docs.s
 
 <6> `@Field` is optional, can be set just for the clarity purpose.
 
-<7> `@Field("desc")` configures the name of a field to be used when persisting the document.
+<7> `@Field("desc")` configures the name of a field to be used when persisting the document. This value will be used as a bin name instead of the original field name.
 
-<8> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity.
+<8> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity. Note that if concurrent update fails -- `OptimisticLockingFailureException` is thrown.
 
 [NOTE]
 ====
@@ -281,7 +276,7 @@ NOTE: `spring-cloud-starter` is required to be present on classpath. If you are 
 
 This will setup Aerospike container when the test starts.
 
-Add Aerospike configuration:
+Add Aerospike configuration to the test resources:
 
 ./test/resources/application.properties
 ----
