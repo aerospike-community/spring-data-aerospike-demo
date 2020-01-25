@@ -23,7 +23,6 @@ class CommentsRepositoryTest extends DemoApplicationTests {
 
         Optional<CommentsDocument> actual = repository.findById(key);
 
-//        assertThat(actual).hasValue(document);
-        assertThat(actual).isEmpty();//TODO: will be fixed in https://github.com/aerospike-community/spring-data-aerospike/pull/66
+        assertThat(actual).hasValue(document);
     }
 }
