@@ -1,10 +1,9 @@
-= Handling errors
+= Basic error handling
 
 [quote, Werner Vogels]
 Everything fails all the time.
 
-//TODO
-- `spring-retry` @Retryable
+Add `spring-retry` dependency together with `spring-boot-starter-aop`:
 
 .pom.xml
 [source,xml]
@@ -45,16 +44,16 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Retryable( // <1>
-        include = {
-                QueryTimeoutException.class, // <2>
-                TransientDataAccessResourceException.class, // <3>
-                OptimisticLockingFailureException.class // <4>
+        include = { // <2>
+                QueryTimeoutException.class,
+                TransientDataAccessResourceException.class,
+                OptimisticLockingFailureException.class
         },
-        maxAttempts = 5, // <5>
-        backoff = @Backoff( // <6>
+        maxAttempts = 5, // <3>
+        backoff = @Backoff( // <4>
                 delay = 3,
                 multiplier = 2,
-                random = true // <7>
+                random = true // <5>
         )
 )
 @RequiredArgsConstructor
@@ -65,7 +64,7 @@ public class MovieOperations {
 
     public void createMovie(Movie movie) {
         try {
-            template.insert(MovieDocument.builder() // <8>
+            template.insert(MovieDocument.builder()
                     .id(movie.getName())
                     .name(movie.getName())
                     .description(movie.getDescription())
@@ -86,7 +85,7 @@ public class MovieOperations {
                 .map(this::toMovie);
     }
 
-    public Movie updateMovieRating(String name, double newRating) { // <9>
+    public Movie updateMovieRating(String name, double newRating) {
         return update(name, existingMovie ->
                 repository.save(existingMovie.toBuilder().rating(newRating).build()));
     }
@@ -109,17 +108,11 @@ public class MovieOperations {
 }
 ----
 
-//TODO: add explanations
-
-<1> `@Retryable`
-<2> `QueryTimeoutException`
-<3> `TransientDataAccessResourceException`
-<4> `OptimisticLockingFailureException`
-<5> `maxAttempts`
-<6> `backoff`
-<7> `random = true`
-<8> `template.insert`
-<9> `updateMovieRating`
+<1> `@Retryable` specifies that the method(s) will be retied.
+<2> `include` specifies exception types that should be retried.
+<3> `maxAttempts` specifies number of max attempts of retries.
+<4> `backoff` specifies backoff configuration for the retries.
+<5> `random = true` enables jitter in backoff timeouts.
 
 Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separate class `AerospikeRetryConfiguration`:
 
