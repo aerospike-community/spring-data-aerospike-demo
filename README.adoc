@@ -10,7 +10,7 @@ This repository contains sample project for demonstration of `spring-data-aerosp
 == Guides
 
 link:docs/getting-started.adoc[Getting started] +
-link:docs/error-handling.adoc[Basic error handling] +
+link:docs/basic-error-handling.adoc[Basic error handling] +
 link:docs/concurrent-updates.adoc[Handling concurrent updates] +
 link:docs/custom-converters.adoc[Creating custom converters] +
 link:docs/working-with-indexes.adoc[Working with indexes] +

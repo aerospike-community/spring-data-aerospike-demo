@@ -131,7 +131,7 @@ public class AerospikeRetryConfiguration {
 }
 ----
 
-- retryable, non retryable errors
-- exponential backoff with jitter
-- Concurrent saves: OptimisticLockingFailureException (`MovieDocument` `version` field enables optimistic locking mechanism)
-- simulate network latencies
+// TODO: add separate page about advanced topics
+//- retryable, non retryable errors
+//- why use exponential backoff with jitter
+//- how to simulate network latencies

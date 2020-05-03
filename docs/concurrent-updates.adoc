@@ -1,2 +1,3 @@
 = Handling concurrent updates
 
+- Concurrent saves: OptimisticLockingFailureException (`MovieDocument` `version` field enables optimistic locking mechanism)
