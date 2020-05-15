@@ -1,0 +1,134 @@
+= Basic error handling
+
+[quote, Werner Vogels]
+Everything fails all the time.
+
+Add `spring-retry` dependency together with `spring-boot-starter-aop`:
+
+.pom.xml
+[source,xml]
+----
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+----
+
+You can either specify retry configuration directly via `@Retryable` properties or create `RetryInterceptor` bean and set it's name in `@Retryable` `interceptor` property.
+For this demo we'll use simple configuration via `@Retryable`.
+
+.MovieOperations.java
+[source,java]
+----
+package com.example.demo.service;
+
+import com.example.demo.persistence.MovieDocument;
+import com.example.demo.persistence.MovieRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.dao.QueryTimeoutException;
+import org.springframework.dao.TransientDataAccessResourceException;
+import org.springframework.data.aerospike.core.AerospikeTemplate;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+
+import java.util.Optional;
+import java.util.function.Function;
+
+@Retryable( // <1>
+        include = { // <2>
+                QueryTimeoutException.class,
+                TransientDataAccessResourceException.class,
+                OptimisticLockingFailureException.class
+        },
+        maxAttempts = 5, // <3>
+        backoff = @Backoff( // <4>
+                delay = 3,
+                multiplier = 2,
+                random = true // <5>
+        )
+)
+@RequiredArgsConstructor
+public class MovieOperations {
+
+    private final MovieRepository repository;
+    private final AerospikeTemplate template;
+
+    public void createMovie(Movie movie) {
+        try {
+            template.insert(MovieDocument.builder()
+                    .id(movie.getName())
+                    .name(movie.getName())
+                    .description(movie.getDescription())
+                    .rating(movie.getRating())
+                    .version(0L)
+                    .build());
+        } catch (DuplicateKeyException e) {
+            throw new IllegalArgumentException("Movie with name: " + movie.getName() + " already exists!");
+        }
+    }
+
+    public void deleteMovie(String name) {
+        repository.deleteById(name);
+    }
+
+    public Optional<Movie> findMovie(String name) {
+        return repository.findById(name)
+                .map(this::toMovie);
+    }
+
+    public Movie updateMovieRating(String name, double newRating) {
+        return update(name, existingMovie ->
+                repository.save(existingMovie.toBuilder().rating(newRating).build()));
+    }
+
+    public Movie updateMovieDescription(String name, String newDescription) {
+        return update(name, existingMovie ->
+                repository.save(existingMovie.toBuilder().description(newDescription).build()));
+    }
+
+    private Movie update(String name, Function<MovieDocument, MovieDocument> updateFunction) {
+        return repository.findById(name)
+                .map(updateFunction)
+                .map(this::toMovie)
+                .orElseThrow(() -> new IllegalArgumentException("Movie with name: " + name + " not found"));
+    }
+
+    private Movie toMovie(MovieDocument doc) {
+        return new Movie(doc.getName(), doc.getDescription(), doc.getRating());
+    }
+}
+----
+
+<1> `@Retryable` specifies that the method(s) will be retied.
+<2> `include` specifies exception types that should be retried.
+<3> `maxAttempts` specifies number of max attempts of retries.
+<4> `backoff` specifies backoff configuration for the retries.
+<5> `random = true` enables jitter in backoff timeouts.
+
+Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separate class `AerospikeRetryConfiguration`:
+
+.AerospikeRetryConfiguration.java
+[source,java]
+----
+package com.example.demo.persistence;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.annotation.EnableRetry;
+
+@EnableRetry
+@Configuration
+public class AerospikeRetryConfiguration {
+
+}
+----
+
+// TODO: add separate page about advanced topics
+//- retryable, non retryable errors
+//- why use exponential backoff with jitter
+//- how to simulate network latencies
