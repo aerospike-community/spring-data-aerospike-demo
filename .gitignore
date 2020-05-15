@@ -27,3 +27,6 @@ hs_err_pid*
 
 /out/
 /.idea
+
+# Preprocessed documentation for Github (see: https://github.com/github/markup/issues/1095)
+/docs_processed/
