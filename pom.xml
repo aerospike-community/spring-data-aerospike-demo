@@ -46,11 +46,14 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- tag::spring-data-aerospike[] -->
         <dependency>
             <groupId>com.aerospike</groupId>
             <artifactId>spring-data-aerospike</artifactId>
         </dependency>
+        <!-- end::spring-data-aerospike[] -->
 
+        <!-- tag::retry-deps[] -->
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
@@ -59,17 +62,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <!-- end::retry-deps[] -->
 
+        <!-- tag::lombok[] -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- end::lombok[] -->
 
+        <!-- tag::hibernate-validator[] -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+        <!-- end::hibernate-validator[] -->
 
 
         <dependency>
@@ -77,6 +85,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- tag::test-deps[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -99,6 +108,7 @@
             <artifactId>embedded-aerospike</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- end::test-deps[] -->
     </dependencies>
 
     <build>

@@ -14,17 +14,17 @@ import org.springframework.retry.annotation.Retryable;
 import java.util.Optional;
 import java.util.function.Function;
 
-@Retryable(
-        include = {
+@Retryable( // <1>
+        include = { // <2>
                 QueryTimeoutException.class,
                 TransientDataAccessResourceException.class,
                 OptimisticLockingFailureException.class
         },
-        maxAttempts = 5,
-        backoff = @Backoff(
+        maxAttempts = 5, // <3>
+        backoff = @Backoff( // <4>
                 delay = 3,
                 multiplier = 2,
-                random = true
+                random = true // <5>
         )
 )
 @RequiredArgsConstructor

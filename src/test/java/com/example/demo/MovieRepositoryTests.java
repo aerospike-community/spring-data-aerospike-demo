@@ -2,7 +2,6 @@ package com.example.demo;
 
 import com.example.demo.persistence.MovieDocument;
 import com.example.demo.persistence.MovieRepository;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

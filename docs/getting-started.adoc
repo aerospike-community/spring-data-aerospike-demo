@@ -1,9 +1,7 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
 
 :spring-boot-version: 2.2
-:spring-cloud-starter-version: 2.2.1.RELEASE
 :spring-data-aerospike-version: 2.3.1.RELEASE
-:embedded-aerospike-version: 1.36
 
 == Setting up the project
 
@@ -40,17 +38,11 @@ checked for the version of `spring-data-aerospike` that is compatible with the s
 In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot {spring-boot-version}:
 
 .pom.xml
-[source,xml,subs=attributes+]
+[source,xml]
 ----
-    <dependencies>
-    <!-- Other dependencies omitted-->
-        <dependency>
-            <groupId>com.aerospike</groupId>
-            <artifactId>spring-data-aerospike</artifactId>
-            <version>{spring-data-aerospike-version}</version>
-        </dependency>
-    </dependencies>
+include::../pom.xml[tags=spring-data-aerospike]
 ----
+
 
 == Creating Aerospike repository
 
@@ -60,14 +52,7 @@ Add `lombok` into your `pom.xml`:
 .pom.xml
 [source,xml]
 ----
-    <dependencies>
-    <!-- Other dependencies omitted-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+include::../pom.xml[tags=lombok]
 ----
 
 We are going to use the movies domain in this project, so to be able to read and save our movies into Aerospike we will need to create:
@@ -77,40 +62,11 @@ We are going to use the movies domain in this project, so to be able to read and
 
 Movie document class will look the following way:
 
+
 .MovieDocument.java
 [source,java]
 ----
-package com.example.demo.persistence;
-
-import lombok.Value;
-import lombok.experimental.NonFinal;
-import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.aerospike.mapping.Field;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-
-@Value // <1>
-@Document(collection = "demo-service-movies") // <2>
-@Builder(toBuilder = true) // <3>
-@AllArgsConstructor // <4>
-public class MovieDocument {
-
-    @Id // <5>
-    String id;
-
-    @Field // <6>
-    String name;
-
-    @Field("desc") // <7>
-    String description;
-
-    @Field
-    double rating;
-
-    @Version // <8>
-    @NonFinal
-    long version;
-}
+include::../src/main/java/com/example/demo/persistence/MovieDocument.java[]
 ----
 
 Document explained:
@@ -145,15 +101,11 @@ If your document contains field with name that exceeds this limit, specify short
 
 Create Movie Repository interface:
 
+.MovieRepository.java
+[source,java]
 ----
-package com.example.demo.persistence;
-
-import org.springframework.data.repository.CrudRepository;
-
-public interface MovieRepository extends CrudRepository<MovieDocument, String> { // <1>
-}
+include::../src/main/java/com/example/demo/persistence/MovieRepository.java[]
 ----
-
 
 Repository explained:
 
@@ -176,13 +128,7 @@ To enable validation add `hibernate-validator` dependency to `pom.xml`:
 .pom.xml
 [source,xml]
 ----
-    <dependencies>
-    <!-- Other dependencies omitted -->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-    </dependencies>
+include::../pom.xml[tags=hibernate-validator]
 ----
 
 Simple configuration will look the following way:
@@ -190,51 +136,7 @@ Simple configuration will look the following way:
 .AerospikeConfiguration.java
 [source,java]
 ----
-package com.example.demo.persistence;
-
-import com.aerospike.client.Host;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
-import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
-
-@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
-@EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
-@Configuration
-public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
-
-    @Autowired
-    private AerospikeConfigurationProperties properties;
-
-    @Override
-    protected Collection<Host> getHosts() {
-        return Host.parseServiceHosts(properties.getHosts());
-    }
-
-    @Override
-    protected String namespace() {
-        return properties.getNamespace();
-    }
-
-    @Data
-    @Validated // add this annotation if you want @ConfigurationProperties to be validated!
-    @ConfigurationProperties("aerospike")
-    public static class AerospikeConfigurationProperties {
-
-        @NotEmpty
-        String hosts;
-
-        @NotEmpty
-        String namespace;
-    }
-}
+include::../src/main/java/com/example/demo/persistence/AerospikeConfiguration.java[]
 ----
 
 Now when you run `contextLoads` test you'll get exception:
@@ -254,24 +156,9 @@ For the test purposes you can use https://github.com/testcontainers/testcontaine
 NOTE: `spring-cloud-starter` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter` with test scope.
 
 .pom.xml
-[source,xml,subs=attributes+]
+[source,xml]
 ----
-    <dependencies>
-        <!-- Other dependencies omitted-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
-            <version>{spring-cloud-starter-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-        <!-- https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike -->
-            <groupId>com.playtika.testcontainers</groupId>
-            <artifactId>embedded-aerospike</artifactId>
-            <version>{embedded-aerospike-version}</version>
-            <scope>test</scope>
-        </dependency>
-    <dependencies>
+include::../pom.xml[tags=test-deps]
 ----
 
 This will setup Aerospike container when the test starts.
@@ -291,61 +178,5 @@ To verify that the repository is actually working let's add some basic tests:
 .MovieRepositoryTests.java
 [source,java]
 ----
-package com.example.demo;
-
-import com.example.demo.persistence.MovieDocument;
-import com.example.demo.persistence.MovieRepository;
-import com.example.demo.persistence.PersonDocument;
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class MovieRepositoryTests extends DemoApplicationTests {
-
-    String id;
-
-    MovieDocument movie;
-
-    @Autowired
-    MovieRepository repository;
-
-    @BeforeEach
-    void setUp() {
-        id = UUID.randomUUID().toString();
-        movie = new MovieDocument(id, "Inception", "Origin of an idea", 8.8, 0L);
-    }
-
-    @Test
-    public void save_savesMovie() {
-        repository.save(movie);
-
-        assertThat(repository.findById(id)).hasValue(movie);
-    }
-
-    @Test
-    public void exists_returnsTrueIfMovieIsPresent() {
-        repository.save(movie);
-
-        assertThat(repository.existsById(id)).isTrue();
-    }
-
-    @Test
-    public void deleteById_deletesExistingMovie() {
-        repository.save(movie);
-
-        repository.deleteById(id);
-
-        assertThat(repository.findById(id)).isNotPresent();
-    }
-
-    @Test
-    void deleteById_doesNothingForNonexistingMovie() {
-        repository.deleteById(id);
-    }
-}
+include::../src/test/java/com/example/demo/MovieRepositoryTests.java[]
 ----

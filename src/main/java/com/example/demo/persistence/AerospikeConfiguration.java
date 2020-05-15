@@ -48,7 +48,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     }
 
     @Data
-    @Validated
+    @Validated // add this annotation if you want @ConfigurationProperties to be validated!
     @ConfigurationProperties("aerospike")
     public static class AerospikeConfigurationProperties {
 
