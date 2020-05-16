@@ -18,7 +18,7 @@ In Spring Initializr you'll need to select:
 - Java: 11
 
 .Options to select
-image::images/spring-initializr.png[height=400]
+image::../images/spring-initializr.png[height=400]
 
 Press Generate button in the bottom of the page and you'll get zip with initial project. Import project into your
 favorite IDE and run the test. It should be green and that means that you are ready to continue to the next section.
