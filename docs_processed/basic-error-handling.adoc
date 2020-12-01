@@ -116,7 +116,7 @@ Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separ
 .AerospikeRetryConfiguration.java
 [source,java]
 ----
-package com.example.demo.persistence;
+package com.example.demo.persistence.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.EnableRetry;

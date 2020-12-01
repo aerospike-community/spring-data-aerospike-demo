@@ -1,7 +1,8 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
+:toc:
 
-:spring-boot-version: 2.2
-:spring-data-aerospike-version: 2.3.1.RELEASE
+:spring-boot-version: 2.3
+:spring-data-aerospike-version: 2.4.1.RELEASE
 
 == Setting up the project
 
@@ -168,14 +169,14 @@ or `customConverters()` to add custom converters.
 We are going to use
 https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-typesafe-configuration-properties[`@ConfigurationProperties`]
 for binding Aerospike configuration properties to POJO. Since connection parameters are required, configuration needs to be validated.
-To enable validation add `hibernate-validator` dependency to `pom.xml`:
+To enable validation add `hibernate-validator` dependency to `pom.xml` or `spring-boot-starter-validation`:
 
 .pom.xml
 [source,xml]
 ----
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 ----
 
@@ -184,9 +185,11 @@ Simple configuration will look the following way:
 .AerospikeConfiguration.java
 [source,java]
 ----
-package com.example.demo.persistence;
+package com.example.demo.persistence.configuration;
 
 import com.aerospike.client.Host;
+import com.example.demo.persistence.CommentsKey;
+import com.example.demo.persistence.MovieRepository;
 import com.example.demo.persistence.article.ArticleDocument;
 import com.example.demo.persistence.article.ArticleDocumentConverters;
 import com.example.demo.persistence.user.UserDataConverters;
