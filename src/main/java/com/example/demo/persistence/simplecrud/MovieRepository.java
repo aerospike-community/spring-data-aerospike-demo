@@ -1,4 +1,4 @@
-package com.example.demo.persistence;
+package com.example.demo.persistence.simplecrud;
 
 import org.springframework.data.repository.CrudRepository;
 

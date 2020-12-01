@@ -1,4 +1,4 @@
-package com.example.demo.persistence.user;
+package com.example.demo.persistence.customconverters;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;

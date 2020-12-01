@@ -1,9 +1,9 @@
 package com.example.demo.persistence;
 
 import com.example.demo.DemoApplicationTests;
-import com.example.demo.persistence.user.UserDataConverters;
-import com.example.demo.persistence.user.UserDocument;
-import com.example.demo.persistence.user.UserRepository;
+import com.example.demo.persistence.customconverters.UserDataConverters;
+import com.example.demo.persistence.customconverters.UserDocument;
+import com.example.demo.persistence.customconverters.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.persistence.MovieRepository;
+import com.example.demo.persistence.simplecrud.MovieRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.aerospike.core.AerospikeTemplate;

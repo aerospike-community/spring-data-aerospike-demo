@@ -1,5 +1,6 @@
 package com.example.demo.persistence;
 
+import com.example.demo.persistence.compositeprimarykey.CommentsKey;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

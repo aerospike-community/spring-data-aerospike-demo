@@ -19,7 +19,7 @@ In this example we will create an index at startup of the application manually.
 .AerospikeIndexConfiguration.java
 [source,java]
 ----
-include::../src/main/java/com/example/demo/persistence/indexed/AerospikeIndexConfiguration.java[]
+include::../src/main/java/com/example/demo/persistence/index/AerospikeIndexConfiguration.java[]
 ----
 
 == Creating index via `@Indexed` annotation
@@ -35,7 +35,7 @@ This will make `spring-data-aerospike` to auto-create specfied secondary index i
 .IndexedDocument.java
 [source,java]
 ----
-include::../src/main/java/com/example/demo/persistence/indexed/IndexedDocument.java[]
+include::../src/main/java/com/example/demo/persistence/index/IndexedDocument.java[]
 ----
 
 == Testing

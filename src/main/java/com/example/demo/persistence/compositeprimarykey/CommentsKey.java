@@ -1,4 +1,4 @@
-package com.example.demo.persistence;
+package com.example.demo.persistence.compositeprimarykey;
 
 import lombok.Value;
 import org.springframework.core.convert.converter.Converter;

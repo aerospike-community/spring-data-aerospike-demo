@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.persistence.MovieDocument;
-import com.example.demo.persistence.MovieRepository;
+import com.example.demo.persistence.simplecrud.MovieDocument;
+import com.example.demo.persistence.simplecrud.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;

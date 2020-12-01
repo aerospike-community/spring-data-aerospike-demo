@@ -1,4 +1,4 @@
-package com.example.demo.persistence;
+package com.example.demo.persistence.compositeprimarykey;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

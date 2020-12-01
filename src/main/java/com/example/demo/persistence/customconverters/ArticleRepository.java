@@ -1,4 +1,4 @@
-package com.example.demo.persistence.article;
+package com.example.demo.persistence.customconverters;
 
 import org.springframework.data.repository.CrudRepository;
 

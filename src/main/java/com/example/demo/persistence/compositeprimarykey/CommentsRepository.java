@@ -1,4 +1,4 @@
-package com.example.demo.persistence;
+package com.example.demo.persistence.compositeprimarykey;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -67,7 +67,7 @@ Movie document class will look the following way:
 .MovieDocument.java
 [source,java]
 ----
-include::../src/main/java/com/example/demo/persistence/MovieDocument.java[]
+include::../src/main/java/com/example/demo/persistence/simplecrud/MovieDocument.java[]
 ----
 
 Document explained:
@@ -88,7 +88,9 @@ Spring Data can use all-args constructor instead of reflection to https://docs.s
 
 <7> `@Field("desc")` configures the name of a field to be used when persisting the document. This value will be used as a bin name instead of the original field name.
 
-<8> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity. Note that if concurrent update fails -- `OptimisticLockingFailureException` is thrown.
+<8> `@Indexed` creates https://www.aerospike.com/docs/architecture/secondary-index.html[secondary index] on application startup for the specific field. Note: `@Indexed` annotation is not supported for the fields annotated with `@Id`, `@Expiration` or `@Version` annotations.
+
+<9> `@Version` enables https://stackoverflow.com/questions/129329/optimistic-vs-pessimistic-locking[optimistic locking], so that concurrent updates are not lost when saving an entity. Note that if concurrent update fails -- `OptimisticLockingFailureException` is thrown.
 
 [NOTE]
 ====
@@ -105,7 +107,7 @@ Create Movie Repository interface:
 .MovieRepository.java
 [source,java]
 ----
-include::../src/main/java/com/example/demo/persistence/MovieRepository.java[]
+include::../src/main/java/com/example/demo/persistence/simplecrud/MovieRepository.java[]
 ----
 
 Repository explained:

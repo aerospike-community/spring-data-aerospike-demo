@@ -1,9 +1,12 @@
-package com.example.demo.persistence;
+package com.example.demo.persistence.simplecrud;
 
+import com.aerospike.client.query.IndexCollectionType;
+import com.aerospike.client.query.IndexType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import org.springframework.data.aerospike.annotation.Indexed;
 import org.springframework.data.aerospike.mapping.Document;
 import org.springframework.data.aerospike.mapping.Field;
 import org.springframework.data.annotation.Id;
@@ -25,10 +28,14 @@ public class MovieDocument {
     @Field("desc")  // <7>
     String description;
 
+    @Indexed(type = IndexType.NUMERIC, collectionType = IndexCollectionType.DEFAULT) // <8>
+    @Field
+    int likes;
+
     @Field
     double rating;
 
-    @Version // <8>
+    @Version // <9>
     @NonFinal
     long version;
 }

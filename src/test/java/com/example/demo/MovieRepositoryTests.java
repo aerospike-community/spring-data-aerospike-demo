@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.persistence.MovieDocument;
-import com.example.demo.persistence.MovieRepository;
+import com.example.demo.persistence.simplecrud.MovieDocument;
+import com.example.demo.persistence.simplecrud.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,13 @@ public class MovieRepositoryTests extends DemoApplicationTests {
     @BeforeEach
     void setUp() {
         id = UUID.randomUUID().toString();
-        movie = new MovieDocument(id, "Inception", "Origin of an idea", 8.8, 0L);
+        movie = MovieDocument.builder()
+                .id(id)
+                .name("Inception")
+                .description("Origin of an idea")
+                .rating(8.8)
+                .likes(555_555)
+                .build();
     }
 
     @Test

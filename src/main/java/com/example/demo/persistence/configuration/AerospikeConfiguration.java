@@ -1,11 +1,11 @@
 package com.example.demo.persistence.configuration;
 
 import com.aerospike.client.Host;
-import com.example.demo.persistence.CommentsKey;
-import com.example.demo.persistence.MovieRepository;
-import com.example.demo.persistence.article.ArticleDocument;
-import com.example.demo.persistence.article.ArticleDocumentConverters;
-import com.example.demo.persistence.user.UserDataConverters;
+import com.example.demo.persistence.compositeprimarykey.CommentsKey;
+import com.example.demo.persistence.simplecrud.MovieRepository;
+import com.example.demo.persistence.customconverters.ArticleDocument;
+import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
+import com.example.demo.persistence.customconverters.UserDataConverters;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,7 +19,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
 
-@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
+@EnableAerospikeRepositories(basePackages = "com.example.demo.persistence")
 @EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
 @Configuration
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
@@ -37,6 +37,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
         return properties.getNamespace();
     }
 
+    // Optional. Only needed when you need custom converters
     @Override
     protected List<?> customConverters() {
         return List.of(

@@ -1,4 +1,4 @@
-package com.example.demo.persistence.article;
+package com.example.demo.persistence.customconverters;
 
 import lombok.Value;
 import org.springframework.data.aerospike.mapping.Document;

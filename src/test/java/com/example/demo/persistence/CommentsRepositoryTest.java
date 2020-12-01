@@ -1,6 +1,9 @@
 package com.example.demo.persistence;
 
 import com.example.demo.DemoApplicationTests;
+import com.example.demo.persistence.compositeprimarykey.CommentsDocument;
+import com.example.demo.persistence.compositeprimarykey.CommentsKey;
+import com.example.demo.persistence.compositeprimarykey.CommentsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

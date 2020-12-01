@@ -147,7 +147,7 @@ Create Movie Repository interface:
 ----
 package com.example.demo.persistence;
 
-import org.springframework.data.repository.CrudRepository;
+import com.example.demo.persistence.simplecrud.MovieDocument;import org.springframework.data.repository.CrudRepository;
 
 public interface MovieRepository extends CrudRepository<MovieDocument, String> { // <1>
 }
@@ -188,11 +188,11 @@ Simple configuration will look the following way:
 package com.example.demo.persistence.configuration;
 
 import com.aerospike.client.Host;
-import com.example.demo.persistence.CommentsKey;
-import com.example.demo.persistence.MovieRepository;
-import com.example.demo.persistence.article.ArticleDocument;
-import com.example.demo.persistence.article.ArticleDocumentConverters;
-import com.example.demo.persistence.user.UserDataConverters;
+import com.example.demo.persistence.compositeprimarykey.CommentsKey;
+import com.example.demo.persistence.simplecrud.MovieRepository;
+import com.example.demo.persistence.customconverters.ArticleDocument;
+import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
+import com.example.demo.persistence.customconverters.UserDataConverters;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -312,8 +312,8 @@ To verify that the repository is actually working let's add some basic tests:
 ----
 package com.example.demo;
 
-import com.example.demo.persistence.MovieDocument;
-import com.example.demo.persistence.MovieRepository;
+import com.example.demo.persistence.simplecrud.MovieDocument;
+import com.example.demo.persistence.simplecrud.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

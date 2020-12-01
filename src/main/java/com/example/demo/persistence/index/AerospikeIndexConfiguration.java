@@ -1,7 +1,7 @@
-package com.example.demo.persistence.indexed;
+package com.example.demo.persistence.index;
 
 import com.aerospike.client.query.IndexType;
-import com.example.demo.persistence.MovieDocument;
+import com.example.demo.persistence.simplecrud.MovieDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;

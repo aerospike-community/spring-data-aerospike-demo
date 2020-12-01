@@ -1,9 +1,9 @@
 package com.example.demo.persistence;
 
 import com.example.demo.DemoApplicationTests;
-import com.example.demo.persistence.article.ArticleDocument;
-import com.example.demo.persistence.article.ArticleDocumentConverters;
-import com.example.demo.persistence.article.ArticleRepository;
+import com.example.demo.persistence.customconverters.ArticleDocument;
+import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
+import com.example.demo.persistence.customconverters.ArticleRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

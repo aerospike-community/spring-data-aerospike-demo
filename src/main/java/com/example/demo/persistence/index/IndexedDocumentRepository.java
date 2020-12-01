@@ -1,4 +1,4 @@
-package com.example.demo.persistence.indexed;
+package com.example.demo.persistence.index;
 
 import org.springframework.data.repository.CrudRepository;
 

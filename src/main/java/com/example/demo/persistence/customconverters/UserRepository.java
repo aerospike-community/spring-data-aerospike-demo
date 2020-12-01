@@ -1,4 +1,4 @@
-package com.example.demo.persistence.user;
+package com.example.demo.persistence.customconverters;
 
 import org.springframework.data.repository.CrudRepository;
 

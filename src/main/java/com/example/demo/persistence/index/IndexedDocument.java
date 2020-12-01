@@ -1,8 +1,9 @@
-package com.example.demo.persistence.indexed;
+package com.example.demo.persistence.index;
 
 import lombok.Value;
 import org.springframework.data.aerospike.annotation.Indexed;
 import org.springframework.data.aerospike.mapping.Document;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import static com.aerospike.client.query.IndexType.STRING;
 @Document
 public class IndexedDocument {
 
+    @Id
     String key;
 
     @Indexed(type = STRING, collectionType = DEFAULT)

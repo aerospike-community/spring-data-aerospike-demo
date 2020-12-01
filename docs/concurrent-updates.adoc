@@ -1,3 +1,14 @@
 = Handling concurrent updates
 
-- Concurrent saves: OptimisticLockingFailureException (`MovieDocument` `version` field enables optimistic locking mechanism)
+Guide is in progress...
+
+- Concurrent saves: OptimisticLockingFailureException (`VersionedDocument` `version` field enables optimistic locking mechanism)
+
+.VersionedDocument.java
+[source,java]
+----
+include::../src/main/java/com/example/demo/persistence/optimisticlocking/VersionedDocument.java[]
+----
+
+- update operation: get-save-retry
+- test
