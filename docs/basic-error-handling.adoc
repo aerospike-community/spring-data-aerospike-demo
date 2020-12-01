@@ -31,7 +31,7 @@ Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separ
 .AerospikeRetryConfiguration.java
 [source,java]
 ----
-include::../src/main/java/com/example/demo/persistence/AerospikeRetryConfiguration.java[]
+include::../src/main/java/com/example/demo/persistence/configuration/AerospikeRetryConfiguration.java[]
 ----
 
 // TODO: add separate page about advanced topics

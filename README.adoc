@@ -13,5 +13,6 @@ link:docs_processed/getting-started.adoc[Getting started] +
 link:docs_processed/basic-error-handling.adoc[Basic error handling] +
 link:docs_processed/concurrent-updates.adoc[Handling concurrent updates] +
 link:docs_processed/custom-converters.adoc[Creating custom converters] +
-link:docs_processed/working-with-indexes.adoc[Working with indexes] +
 link:docs_processed/composite-primary-key.adoc[Composite primary key]
+link:docs_processed/creating-secondary-index.adoc[Creating secondary index] +
+link:docs_processed/retrieving-data-by-secondary-index.adoc[Retrieving data by secondary index] +
