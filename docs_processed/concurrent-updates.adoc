@@ -1,3 +1,38 @@
 = Handling concurrent updates
 
-- Concurrent saves: OptimisticLockingFailureException (`MovieDocument` `version` field enables optimistic locking mechanism)
+Guide is in progress...
+
+- Concurrent saves: OptimisticLockingFailureException (`VersionedDocument` `version` field enables optimistic locking mechanism)
+
+.VersionedDocument.java
+[source,java]
+----
+package com.example.demo.persistence.optimisticlocking;
+
+import lombok.Value;
+import lombok.experimental.NonFinal;
+import org.springframework.data.aerospike.mapping.Document;
+import org.springframework.data.aerospike.mapping.Field;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+
+import java.util.List;
+
+@Value
+@Document
+public class VersionedDocument {
+
+    @Id
+    String key;
+
+    @Field("avlOpts")
+    List<Integer> availableOptions;
+
+    @NonFinal
+    @Version
+    Long version;
+}
+----
+
+- update operation: get-save-retry
+- test

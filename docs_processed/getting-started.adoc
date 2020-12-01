@@ -74,12 +74,15 @@ Movie document class will look the following way:
 .MovieDocument.java
 [source,java]
 ----
-package com.example.demo.persistence;
+package com.example.demo.persistence.simplecrud;
 
+import com.aerospike.client.query.IndexCollectionType;
+import com.aerospike.client.query.IndexType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import org.springframework.data.aerospike.annotation.Indexed;
 import org.springframework.data.aerospike.mapping.Document;
 import org.springframework.data.aerospike.mapping.Field;
 import org.springframework.data.annotation.Id;
@@ -101,10 +104,14 @@ public class MovieDocument {
     @Field("desc")  // <7>
     String description;
 
+    @Indexed(type = IndexType.NUMERIC, collectionType = IndexCollectionType.DEFAULT) // <8>
+    @Field
+    int likes;
+
     @Field
     double rating;
 
-    @Version // <8>
+    @Version // <9>
     @NonFinal
     long version;
 }
@@ -128,7 +135,9 @@ Spring Data can use all-args constructor instead of reflection to https://docs.s
 
 <7> `@Field("desc")` configures the name of a field to be used when persisting the document. This value will be used as a bin name instead of the original field name.
 
-<8> `@Version` enables optimistic locking, so that concurrent updates are not lost when saving an entity. Note that if concurrent update fails -- `OptimisticLockingFailureException` is thrown.
+<8> `@Indexed` creates https://www.aerospike.com/docs/architecture/secondary-index.html[secondary index] on application startup for the specific field. Note: `@Indexed` annotation is not supported for the fields annotated with `@Id`, `@Expiration` or `@Version` annotations.
+
+<9> `@Version` enables https://stackoverflow.com/questions/129329/optimistic-vs-pessimistic-locking[optimistic locking], so that concurrent updates are not lost when saving an entity. Note that if concurrent update fails -- `OptimisticLockingFailureException` is thrown.
 
 [NOTE]
 ====
@@ -145,9 +154,9 @@ Create Movie Repository interface:
 .MovieRepository.java
 [source,java]
 ----
-package com.example.demo.persistence;
+package com.example.demo.persistence.simplecrud;
 
-import com.example.demo.persistence.simplecrud.MovieDocument;import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository;
 
 public interface MovieRepository extends CrudRepository<MovieDocument, String> { // <1>
 }
@@ -206,7 +215,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
 
-@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
+@EnableAerospikeRepositories(basePackages = "com.example.demo.persistence")
 @EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
 @Configuration
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
@@ -224,6 +233,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
         return properties.getNamespace();
     }
 
+    // Optional. Only needed when you need custom converters
     @Override
     protected List<?> customConverters() {
         return List.of(
@@ -334,7 +344,13 @@ public class MovieRepositoryTests extends DemoApplicationTests {
     @BeforeEach
     void setUp() {
         id = UUID.randomUUID().toString();
-        movie = new MovieDocument(id, "Inception", "Origin of an idea", 8.8, 0L);
+        movie = MovieDocument.builder()
+                .id(id)
+                .name("Inception")
+                .description("Origin of an idea")
+                .rating(8.8)
+                .likes(555_555)
+                .build();
     }
 
     @Test
