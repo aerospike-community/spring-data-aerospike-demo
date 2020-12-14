@@ -1,23 +1,29 @@
 package com.example.demo.persistence.configuration;
 
 import com.aerospike.client.Host;
+import com.aerospike.client.async.EventLoops;
+import com.aerospike.client.async.EventPolicy;
+import com.aerospike.client.async.NettyEventLoops;
 import com.example.demo.persistence.compositeprimarykey.CommentsKey;
 import com.example.demo.persistence.customconverters.ArticleDocument;
 import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
 import com.example.demo.persistence.customconverters.UserDataConverters;
+import io.netty.channel.nio.NioEventLoopGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
-import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
+import org.springframework.data.aerospike.config.AbstractReactiveAerospikeDataConfiguration;
+import org.springframework.data.aerospike.repository.config.EnableReactiveAerospikeRepositories;
 
 import java.util.Collection;
 import java.util.List;
 
-@EnableAerospikeRepositories(basePackages = "com.example.demo.persistence")
+@EnableReactiveAerospikeRepositories(basePackages = "com.example.demo.persistence")
 @EnableConfigurationProperties(AerospikeConfigurationProperties.class)
 @Configuration
-public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
+public class AerospikeReactiveConfiguration extends AbstractReactiveAerospikeDataConfiguration {
+
+    private static final EventLoops eventLoops = new NettyEventLoops(new EventPolicy(), new NioEventLoopGroup(2));
 
     @Autowired
     AerospikeConfigurationProperties properties;
@@ -43,6 +49,11 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
                 ArticleDocumentConverters.AerospikeReadDataToArticleDocumentToConverter.INSTANCE,
                 new ArticleDocumentConverters.ArticleDocumentToAerospikeWriteDataConverter(properties.getNamespace(), ArticleDocument.SET_NAME)
         );
+    }
+
+    @Override
+    protected EventLoops eventLoops() {
+        return eventLoops;
     }
 
 }

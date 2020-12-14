@@ -1,28 +1,30 @@
 package com.example.demo;
 
+import com.example.demo.persistence.configuration.AerospikeConfiguration;
+import com.example.demo.persistence.configuration.AerospikeRetryConfiguration;
 import com.example.demo.service.Movie;
 import com.example.demo.service.MovieOperations;
+import com.example.demo.service.OperationsConfiguration;
 import com.playtika.test.aerospike.AerospikeTestOperations;
+import com.playtika.test.aerospike.EmbeddedAerospikeTestOperationsAutoConfiguration;
 import lombok.SneakyThrows;
 import org.assertj.core.util.Lists;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@ContextConfiguration(classes = {AerospikeConfiguration.class,
+        OperationsConfiguration.class,
+        AerospikeRetryConfiguration.class,
+        EmbeddedAerospikeTestOperationsAutoConfiguration.class})
 public class MovieOperationsTests extends DemoApplicationTests {
 
     @Autowired

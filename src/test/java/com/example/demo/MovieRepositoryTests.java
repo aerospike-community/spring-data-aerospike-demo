@@ -1,15 +1,19 @@
 package com.example.demo;
 
+import com.example.demo.persistence.configuration.AerospikeConfiguration;
 import com.example.demo.persistence.simplecrud.MovieDocument;
 import com.example.demo.persistence.simplecrud.MovieRepository;
+import com.example.demo.service.OperationsConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ContextConfiguration(classes = {AerospikeConfiguration.class, OperationsConfiguration.class})
 public class MovieRepositoryTests extends DemoApplicationTests {
 
     String id;

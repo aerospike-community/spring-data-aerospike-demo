@@ -3,9 +3,13 @@ package com.example.demo;
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Info;
 import com.aerospike.client.cluster.Node;
+import com.example.demo.persistence.configuration.AerospikeConfiguration;
+import com.example.demo.persistence.index.AerospikeIndexConfiguration;
+import com.example.demo.service.OperationsConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +18,8 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ContextConfiguration(classes = {AerospikeConfiguration.class,
+        OperationsConfiguration.class, AerospikeIndexConfiguration.class})
 public class IndexTests extends DemoApplicationTests {
 
     @Value("${embedded.aerospike.namespace}")
@@ -21,7 +27,6 @@ public class IndexTests extends DemoApplicationTests {
 
     @Autowired
     AerospikeClient client;
-
 
     @Test
     void verifyCustomIndexCreated() {

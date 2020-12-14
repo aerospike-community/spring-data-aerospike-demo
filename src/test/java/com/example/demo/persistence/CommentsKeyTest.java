@@ -1,11 +1,14 @@
 package com.example.demo.persistence;
 
 import com.example.demo.persistence.compositeprimarykey.CommentsKey;
+import com.example.demo.persistence.configuration.AerospikeConfiguration;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@ContextConfiguration(classes = {AerospikeConfiguration.class})
 class CommentsKeyTest {
 
     @Test

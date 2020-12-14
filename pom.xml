@@ -82,6 +82,15 @@
         </dependency>
         <!-- end::hibernate-validator[] -->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-reactor-netty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aerospike</groupId>
+            <artifactId>aerospike-reactor-client</artifactId>
+            <version>4.4.10</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

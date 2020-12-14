@@ -1,14 +1,17 @@
 package com.example.demo.persistence;
 
 import com.example.demo.DemoApplicationTests;
+import com.example.demo.persistence.configuration.AerospikeConfiguration;
 import com.example.demo.persistence.customconverters.UserDataConverters;
 import com.example.demo.persistence.customconverters.UserDocument;
 import com.example.demo.persistence.customconverters.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ContextConfiguration(classes = {AerospikeConfiguration.class})
 class UserRepositoryTest extends DemoApplicationTests {
 
     @Autowired
