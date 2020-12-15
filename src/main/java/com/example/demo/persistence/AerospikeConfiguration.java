@@ -1,8 +1,7 @@
-package com.example.demo.persistence.configuration;
+package com.example.demo.persistence;
 
 import com.aerospike.client.Host;
 import com.example.demo.persistence.compositeprimarykey.CommentsKey;
-import com.example.demo.persistence.simplecrud.MovieRepository;
 import com.example.demo.persistence.customconverters.ArticleDocument;
 import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
 import com.example.demo.persistence.customconverters.UserDataConverters;
