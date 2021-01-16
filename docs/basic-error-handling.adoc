@@ -34,7 +34,29 @@ Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separ
 include::../src/main/java/com/example/demo/persistence/configuration/AerospikeRetryConfiguration.java[]
 ----
 
-// TODO: add separate page about advanced topics
-//- retryable, non retryable errors
-//- why use exponential backoff with jitter
-//- how to simulate network latencies
+== Important points
+
+=== Retryable and non retryable errors
+
+In the context of retries there are two types of errors: retryable and non retryable. For example, retrieving value by key may result in `DataRetrievalFailureException` (key not found), which in most cases should not be retried; whereas in case there are connectivity issues to Aerospike or any network congestion issues you on the contrary would retry. Consider this when configuring your retry policy.
+
+=== Backoff
+
+When retrying errors there are two basic backoff policies: fixed and exponential. Fixed backoff policy does exactly how it's named, each retry occurs within fixed time interval. This backoff policy is simple and easy for understanding, but is not recommended for production, because in case external resource is overloaded and all clients experience issues, constantly increasing number of requests at the same time may lead to the total resource outage. Instead to overcome the issues resource should be given some time to heal, this can be achieved by exponential backoff policy, which increases each retry time interval by specific multiplier. This backoff polic usually is used together with jitter -- added randomized time interval into the backoff, which removes retry waves at specific time from multiple clients. With `spring-retry` you can use `org.springframework.retry.backoff.ExponentialRandomBackOffPolicy`.
+
+=== Concurrent saves: `OptimisticLockingFailureException`
+
+There are two basic types of locking mechanisms used in NoSQL storages for handling concurrent writes -- optimistic and pessimistic. Pessimistic locking mechanism is based on acquiring/releasing write lock on each write operation. Optimistic locking mechanism is based on entity versioning -- to make it short you may save entity only with the same version that exists in the storage. See a short example:
+
+----
+do {
+  D document = storage.get(key)
+  document = update(document)
+  storage.save(document)
+} while (version already modified)
+----
+
+Optimistic locking can be enabled for the document via `@Version` field in `spring-data`. For retrying save failures you will need to enable retries for `OptimisticLockingFailureException.class`.
+For more details refer to link:docs_processed/concurrent-updates.adoc[Handling concurrent updates].
+
+//TODO: how to simulate network latencies and test them
