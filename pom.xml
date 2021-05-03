@@ -20,7 +20,7 @@
         <java.version>11</java.version>
         <spring-cloud-dependencies.version>Hoxton.SR9</spring-cloud-dependencies.version>
         <spring-data-aerospike.version>2.4.2.RELEASE</spring-data-aerospike.version>
-        <embedded-aerospike.version>2.0.0</embedded-aerospike.version>
+        <embedded-aerospike.version>2.0.7</embedded-aerospike.version>
     </properties>
 
     <dependencyManagement>
