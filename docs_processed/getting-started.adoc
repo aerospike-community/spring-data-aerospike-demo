@@ -1,8 +1,8 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
 :toc:
 
-:spring-boot-version: 2.3
-:spring-data-aerospike-version: 2.4.1.RELEASE
+:spring-boot-version: 2.5.3
+:spring-data-aerospike-version: 3.0.0
 
 == Setting up the project
 
@@ -260,60 +260,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 }
 ----
 
-Now when you run `contextLoads` test you'll get exception:
-----
-Caused by: org.springframework.boot.context.properties.bind.validation.BindValidationException: Binding validation errors on aerospike
-   - Field error in object 'aerospike' on field 'hosts': rejected value [null]; ...(message omitted)
-   - Field error in object 'aerospike' on field 'namespace': rejected value [null]; ...(message omitted)
-----
-
-This is expected, as Spring was not able to find neither `aerospike.hosts` nor `aerospike.namespace` properties. They are required to setup the connection to Aerospike.
-
 == Testing
-
-To fix the test we need a running Aerospike server.
-For the test purposes you can use https://github.com/testcontainers/testcontainers-spring-boot[`embedded-aerospike`] library based on https://github.com/testcontainers[`testcontainers`].
-
-NOTE: `spring-cloud-starter` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter` with test scope.
-
-.pom.xml
-[source,xml]
-----
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.playtika.testcontainers</groupId>
-            <artifactId>embedded-aerospike</artifactId>
-            <scope>test</scope>
-        </dependency>
-----
-
-This will setup Aerospike container when the test starts.
-
-Add Aerospike configuration to the test resources:
-
-./test/resources/application.properties
-----
-aerospike.hosts=${embedded.aerospike.host}:${embedded.aerospike.port}
-aerospike.namespace=${embedded.aerospike.namespace}
-----
-
-and run the test. It will be green now.
 
 To verify that the repository is actually working let's add some basic tests:
 
@@ -382,3 +329,46 @@ public class MovieRepositoryTests extends DemoApplicationTests {
     }
 }
 ----
+
+For the test purposes you can use https://github.com/testcontainers/testcontainers-spring-boot[`embedded-aerospike`] library based on https://github.com/testcontainers[`testcontainers`].
+
+NOTE: `spring-cloud-starter-bootstrap` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter-bootstrap` with `test` scope.
+
+.pom.xml
+[source,xml]
+----
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-aerospike</artifactId>
+            <scope>test</scope>
+        </dependency>
+----
+
+This will setup Aerospike container when the test starts.
+
+Add Aerospike configuration to the test resources:
+
+./test/resources/application.properties
+----
+aerospike.hosts=${embedded.aerospike.host}:${embedded.aerospike.port}
+aerospike.namespace=${embedded.aerospike.namespace}
+----
+
+and run the test. It will be green now.
