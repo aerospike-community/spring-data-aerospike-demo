@@ -293,7 +293,7 @@ NOTE: `spring-cloud-starter` is required to be present on classpath. If you are 
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
