@@ -1,25 +1,27 @@
 package com.example.demo.persistence.optimisticlocking;
 
+import lombok.Builder;
+import lombok.Singular;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.aerospike.mapping.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
 import java.util.List;
 
 @Value
+@Builder(toBuilder = true)
 @Document
-public class VersionedDocument {
+public class WatchedMoviesDocument {
 
     @Id
     String key;
 
-    @Field("avlOpts")
-    List<Integer> availableOptions;
+    @Singular
+    List<String> watchedMovies;
 
     @NonFinal
-    @Version
+    @Version  // <1>
     Long version;
 }
