@@ -1,8 +1,8 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
 :toc:
 
-:spring-boot-version: 2.3
-:spring-data-aerospike-version: 2.4.1.RELEASE
+:spring-boot-version: 2.5.3
+:spring-data-aerospike-version: 3.0.0
 
 == Setting up the project
 
@@ -142,21 +142,19 @@ Simple configuration will look the following way:
 include::../src/main/java/com/example/demo/persistence/configuration/AerospikeConfiguration.java[]
 ----
 
-Now when you run `contextLoads` test you'll get exception:
-----
-Caused by: org.springframework.boot.context.properties.bind.validation.BindValidationException: Binding validation errors on aerospike
-   - Field error in object 'aerospike' on field 'hosts': rejected value [null]; ...(message omitted)
-   - Field error in object 'aerospike' on field 'namespace': rejected value [null]; ...(message omitted)
-----
-
-This is expected, as Spring was not able to find neither `aerospike.hosts` nor `aerospike.namespace` properties. They are required to setup the connection to Aerospike.
-
 == Testing
 
-To fix the test we need a running Aerospike server.
+To verify that the repository is actually working let's add some basic tests:
+
+.MovieRepositoryTests.java
+[source,java]
+----
+include::../src/test/java/com/example/demo/MovieRepositoryTests.java[]
+----
+
 For the test purposes you can use https://github.com/testcontainers/testcontainers-spring-boot[`embedded-aerospike`] library based on https://github.com/testcontainers[`testcontainers`].
 
-NOTE: `spring-cloud-starter` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter` with test scope.
+NOTE: `spring-cloud-starter-bootstrap` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter-bootstrap` with `test` scope.
 
 .pom.xml
 [source,xml]
@@ -175,11 +173,3 @@ aerospike.namespace=${embedded.aerospike.namespace}
 ----
 
 and run the test. It will be green now.
-
-To verify that the repository is actually working let's add some basic tests:
-
-.MovieRepositoryTests.java
-[source,java]
-----
-include::../src/test/java/com/example/demo/MovieRepositoryTests.java[]
-----
