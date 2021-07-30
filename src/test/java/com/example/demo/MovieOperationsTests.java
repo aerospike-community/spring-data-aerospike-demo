@@ -5,13 +5,11 @@ import com.example.demo.service.MovieOperations;
 import com.playtika.test.aerospike.AerospikeTestOperations;
 import lombok.SneakyThrows;
 import org.assertj.core.util.Lists;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -107,7 +105,7 @@ public class MovieOperationsTests extends DemoApplicationTests {
         );
     }
 
-    @Ignore
+    @Disabled
     @Test
     void networkLatency() {
         testOperations.addNetworkLatencyForResponses(Duration.ofMillis(10_000));
