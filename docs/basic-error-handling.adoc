@@ -46,17 +46,6 @@ When retrying errors there are two basic backoff policies: fixed and exponential
 
 === Concurrent saves: `OptimisticLockingFailureException`
 
-There are two basic types of locking mechanisms used in NoSQL storages for handling concurrent writes -- optimistic and pessimistic. Pessimistic locking mechanism is based on acquiring/releasing write lock on each write operation. Optimistic locking mechanism is based on entity versioning -- to make it short you may save entity only with the same version that exists in the storage. See a short example:
-
-----
-do {
-  D document = storage.get(key)
-  document = update(document)
-  storage.save(document)
-} while (version already modified)
-----
-
-Optimistic locking can be enabled for the document via `@Version` field in `spring-data`. For retrying save failures you will need to enable retries for `OptimisticLockingFailureException.class`.
-For more details refer to link:docs_processed/concurrent-updates.adoc[Handling concurrent updates].
+See link:docs_processed/concurrent-updates.adoc[Handling concurrent updates].
 
 //TODO: how to simulate network latencies and test them

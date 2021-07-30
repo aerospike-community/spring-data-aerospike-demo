@@ -1,14 +1,64 @@
 = Handling concurrent updates
 
-Guide is in progress...
+There are two basic types of locking mechanisms used in NoSQL storages for handling concurrent writes -- optimistic and pessimistic.
+Pessimistic locking mechanism is based on acquiring/releasing write lock on each write operation. Optimistic locking mechanism is based on entity versioning -- to make it short _you can save entity only with the same version that exists in the storage_. See a pseudocode:
 
-- Concurrent saves: OptimisticLockingFailureException (`VersionedDocument` `version` field enables optimistic locking mechanism)
+----
+do {
+  D document = storage.get(key)
+  document = update(document)
+  storage.save(document)
+} while (version already modified)
+----
 
-.VersionedDocument.java
+Optimistic locking can be enabled for the document via adding `@Version` field in the document. When saving such document into the storage -- you will either get success or an exception `OptimisticLockingFailureException.class`. This exception is thrown when `version` field in your document is not the same as in the storage. So to save the document -- you will need to enable retries for `OptimisticLockingFailureException.class`.
+
+In this example we are going to use a simple document that will store movies already watched by user:
+
+.WatchedMoviesDocument.java
 [source,java]
 ----
-include::../src/main/java/com/example/demo/persistence/optimisticlocking/VersionedDocument.java[]
+include::../src/main/java/com/example/demo/persistence/optimisticlocking/WatchedMoviesDocument.java[]
 ----
 
-- update operation: get-save-retry
-- test
+Document explained:
+
+<1> `@Version` enables https://stackoverflow.com/questions/129329/optimistic-vs-pessimistic-locking[optimistic locking], so that concurrent updates are not lost when saving an entity.
+
+Next we need to have a simple repository:
+
+.WatchedMoviesDocumentRepository.java
+[source,java]
+----
+include::../src/main/java/com/example/demo/persistence/optimisticlocking/WatchedMoviesDocumentRepository.java[]
+----
+
+The next part is the most interesting as it contains the update logic and retries for handling optimistic lock errors:
+
+.WatchedMoviesOperations.java
+[source,java]
+----
+include::../src/main/java/com/example/demo/persistence/optimisticlocking/WatchedMoviesOperations.java[]
+----
+
+`WatchedMoviesOperations` explained:
+
+<1> `@Retryable` enables retries on the method. For more details on `@Retryable` refer to: link:docs_processed/basic-error-handling.adoc[Basic error handling].
+
+<2> `include` specifies exception types that should be retried.
+
+<3> `OptimisticLockingFailureException.class` enables retries for this exception type. This means that when you have a failing concurrent update -- it will be retried.
+
+<4> `repository.findById(id)` gets document from the storage.
+
+<5> `.map(existingDocument -> updateExistingDocument(existingDocument, newWatchedMovie))` updates existing document according to the requirements. In current case `updateExistingDocument` will only add `newWatchedMovie` to the list of `watchedMovies`. Note, that we are using Lombok's `.toBuilder()` method -- it copies existing document without any modifications, this is important because we need to leave `version` and other fields of the document as is; and after that -- we add only `newWatchedMovie` to the document.
+
+<6> `.orElseGet(() -> createNewDocumentWithMovie(id, newWatchedMovie))` creates new document if there is no document in the storage for the given key.
+
+<7> `repository.save(watchedMoviesDocument)` saves new/updated document with all modifications in the storage.
+
+Concurrent test is not trivial, but is required for checking concurrent behavior:
+[source,java]
+----
+include::../src/test/java/com/example/demo/persistence/optimisticlocking/WatchedMoviesOperationsConcurrentTest.java[]
+----
