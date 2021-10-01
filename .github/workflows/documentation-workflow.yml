@@ -3,7 +3,7 @@
 name: Process and commit documentation
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
