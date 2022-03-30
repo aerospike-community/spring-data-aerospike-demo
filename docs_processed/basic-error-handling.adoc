@@ -140,6 +140,6 @@ When retrying errors there are two basic backoff policies: fixed and exponential
 
 === Concurrent saves: `OptimisticLockingFailureException`
 
-See link:docs_processed/concurrent-updates.adoc[Handling concurrent updates].
+See link:concurrent-updates.adoc[Handling concurrent updates].
 
 //TODO: how to simulate network latencies and test them

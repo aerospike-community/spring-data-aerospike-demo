@@ -134,7 +134,7 @@ public class WatchedMoviesOperations {
 
 `WatchedMoviesOperations` explained:
 
-<1> `@Retryable` enables retries on the method. For more details on `@Retryable` refer to: link:docs_processed/basic-error-handling.adoc[Basic error handling].
+<1> `@Retryable` enables retries on the method. For more details on `@Retryable` refer to: link:basic-error-handling.adoc[Basic error handling].
 
 <2> `include` specifies exception types that should be retried.
 
