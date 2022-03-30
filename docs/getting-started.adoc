@@ -1,8 +1,8 @@
 = How to setup `spring-data-aerospike` in Spring Boot application
 :toc:
 
-:spring-boot-version: 2.5.3
-:spring-data-aerospike-version: 3.0.0
+:spring-boot-version: 2.6.5
+:spring-data-aerospike-version: 3.3.1
 
 == Setting up the project
 
