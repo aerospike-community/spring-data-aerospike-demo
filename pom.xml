@@ -6,21 +6,22 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.5</version>
+        <version>3.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>spring-data-aerospike-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <name>Spring Data Aerospike Demo</name>
     <description>Demo project for Spring Data Aerospike</description>
 
     <properties>
-        <java.version>11</java.version>
-        <spring-cloud-dependencies.version>2021.0.1</spring-cloud-dependencies.version>
-        <spring-data-aerospike.version>3.3.1</spring-data-aerospike.version>
-        <embedded-aerospike.version>2.1.4</embedded-aerospike.version>
+        <java.version>17</java.version>
+        <spring-cloud-dependencies.version>2022.0.1</spring-cloud-dependencies.version>
+        <spring-data-aerospike.version>4.0.0</spring-data-aerospike.version>
+        <embedded-aerospike.version>2.2.14</embedded-aerospike.version>
+        <testcontainers>1.17.6</testcontainers>
     </properties>
 
     <dependencyManagement>
@@ -115,7 +116,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.16.3</version>
+            <version>${testcontainers}</version>
         </dependency>
     </dependencies>
 
