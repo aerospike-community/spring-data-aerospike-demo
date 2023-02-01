@@ -16,7 +16,7 @@ In Spring Initializr you'll need to select:
 - Project: https://stackoverflow.com/a/13335439/688926[Maven] project
 - Language: Java
 - https://spring.io/projects/spring-boot[Spring Boot]: {spring-boot-version}
-- Java: 11
+- Java: 17
 
 .Options to select
 image::../images/spring-initializr.png[height=400]

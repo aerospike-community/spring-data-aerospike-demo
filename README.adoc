@@ -4,7 +4,7 @@ This repository contains sample project for demonstration of `spring-data-aerosp
 
 == Prerequisites
 
-- JDK 11
+- JDK 17
 - Docker installed and running
 
 == Guides
