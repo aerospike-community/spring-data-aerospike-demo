@@ -2,10 +2,10 @@ package com.example.demo.persistence.configuration;
 
 import com.aerospike.client.Host;
 import com.example.demo.persistence.compositeprimarykey.CommentsKey;
-import com.example.demo.persistence.simplecrud.MovieRepository;
 import com.example.demo.persistence.customconverters.ArticleDocument;
 import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
 import com.example.demo.persistence.customconverters.UserDataConverters;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,6 @@ import org.springframework.data.aerospike.config.AbstractAerospikeDataConfigurat
 import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
 
