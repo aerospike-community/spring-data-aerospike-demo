@@ -46,9 +46,10 @@ public class ArticleDocumentConverters {
             String id = (String) source.getKey().userKey.getObject();
             String author = (String) source.getValue("author");
             String content = (String) source.getValue("content");
-            // The server does not natively handle boolean, so it is stored as long.
-            // (default spring-data-aerospike conversion mechanism handles that using LongToBooleanConverter)
-            boolean draft = (long) source.getValue("draft") != 0L;
+            // The client previously did not natively handle boolean, so it was stored as long.
+            // (default spring-data-aerospike conversion mechanism handled that using LongToBooleanConverter)
+            // since ver. 7.0.0 boolean is supported
+            boolean draft = (boolean) source.getValue("draft");
             return new ArticleDocument(id, author, content, draft);
         }
     }
