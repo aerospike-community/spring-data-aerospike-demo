@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.4</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -19,9 +19,9 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud-dependencies.version>2022.0.4</spring-cloud-dependencies.version>
-        <spring-data-aerospike.version>4.4.0</spring-data-aerospike.version>
+        <spring-data-aerospike.version>4.5.0</spring-data-aerospike.version>
         <embedded-aerospike.version>2.3.2</embedded-aerospike.version>
-        <testcontainers>1.17.6</testcontainers>
+        <testcontainers>1.18.3</testcontainers>
     </properties>
 
     <dependencyManagement>
