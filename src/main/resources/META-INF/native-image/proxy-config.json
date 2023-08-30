@@ -1,0 +1,32 @@
+[
+  {
+    "interfaces":["com.example.demo.persistence.compositeprimarykey.CommentsRepository","org.springframework.data.repository.Repository","org.springframework.transaction.interceptor.TransactionalProxy","org.springframework.aop.framework.Advised","org.springframework.core.DecoratingProxy"]
+  },
+  {
+    "interfaces":["com.example.demo.persistence.customconverters.ArticleRepository","org.springframework.data.repository.Repository","org.springframework.transaction.interceptor.TransactionalProxy","org.springframework.aop.framework.Advised","org.springframework.core.DecoratingProxy"]
+  },
+  {
+    "interfaces":["com.example.demo.persistence.customconverters.UserRepository","org.springframework.data.repository.Repository","org.springframework.transaction.interceptor.TransactionalProxy","org.springframework.aop.framework.Advised","org.springframework.core.DecoratingProxy"]
+  },
+  {
+    "interfaces":["com.example.demo.persistence.index.IndexedDocumentRepository","org.springframework.data.repository.Repository","org.springframework.transaction.interceptor.TransactionalProxy","org.springframework.aop.framework.Advised","org.springframework.core.DecoratingProxy"]
+  },
+  {
+    "interfaces":["com.example.demo.persistence.optimisticlocking.WatchedMoviesDocumentRepository","org.springframework.data.repository.Repository","org.springframework.transaction.interceptor.TransactionalProxy","org.springframework.aop.framework.Advised","org.springframework.core.DecoratingProxy"]
+  },
+  {
+    "interfaces":["com.example.demo.persistence.simplecrud.MovieRepository","org.springframework.data.repository.Repository","org.springframework.transaction.interceptor.TransactionalProxy","org.springframework.aop.framework.Advised","org.springframework.core.DecoratingProxy"]
+  },
+  {
+    "interfaces":["org.springframework.boot.context.properties.ConfigurationProperties"]
+  },
+  {
+    "interfaces":["org.springframework.retry.annotation.Retryable"]
+  },
+  {
+    "interfaces":["org.springframework.web.bind.annotation.PathVariable"]
+  },
+  {
+    "interfaces":["org.springframework.web.bind.annotation.RequestMapping"]
+  }
+]
