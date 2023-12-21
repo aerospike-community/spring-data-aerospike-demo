@@ -2,19 +2,14 @@ package com.example.demo;
 
 import com.example.demo.service.Movie;
 import com.example.demo.service.MovieOperations;
-import com.playtika.test.aerospike.AerospikeTestOperations;
+import com.playtika.testcontainer.aerospike.AerospikeTestOperations;
 import lombok.SneakyThrows;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
