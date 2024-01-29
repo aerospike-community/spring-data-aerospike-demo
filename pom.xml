@@ -21,7 +21,7 @@
         <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
         <spring-data-aerospike.version>4.6.0</spring-data-aerospike.version>
         <embedded-aerospike.version>3.1.1</embedded-aerospike.version>
-        <testcontainers>1.19.3</testcontainers>
+        <testcontainers>1.19.4</testcontainers>
     </properties>
 
     <dependencyManagement>
