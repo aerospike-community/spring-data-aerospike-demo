@@ -1,14 +1,14 @@
-= How to setup `spring-data-aerospike` in Spring Boot application
+= How to set up `spring-data-aerospike` in Spring Boot application
 :toc:
 
-:spring-boot-version: 2.5.3
-:spring-data-aerospike-version: 3.0.0
+:spring-boot-version: 3.3.0
+:spring-data-aerospike-version: 4.8.0
 
 == Setting up the project
 
 In this section we'll cover setup of the project from the start.
 
-First, we'll need to setup the basic project structure.
+First, we'll need to set up the basic project structure.
 You can do it either manually if you are familiar with the process or do it via https://start.spring.io/[Spring Initializr].
 
 In Spring Initializr you'll need to select:
@@ -21,14 +21,14 @@ In Spring Initializr you'll need to select:
 .Options to select
 image::../images/spring-initializr.png[height=400]
 
-Press Generate button in the bottom of the page and you'll get zip with initial project. Import project into your
+Press Generate button in the bottom of the page, and you'll get zip with initial project. Import project into your
 favorite IDE and run the test. It should be green and that means that you are ready to continue to the next section.
 
 == Adding `spring-data-aerospike` dependency
 
 [NOTE]
 ====
-`spring-data-aerospike` is a Community project and the dependency is not managed by Spring, it has it's own release cycle
+`spring-data-aerospike` is a Community project and the dependency is not managed by Spring, it has its own release cycle
 and is not included into Spring Boot dependency management. Available versions can be checked on
 https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike[Maven Central].
 
@@ -361,7 +361,7 @@ NOTE: `spring-cloud-starter-bootstrap` is required to be present on classpath. I
         </dependency>
 ----
 
-This will setup Aerospike container when the test starts.
+This will set up Aerospike container when the test starts.
 
 Add Aerospike configuration to the test resources:
 
