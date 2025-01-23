@@ -38,7 +38,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
     // Optional. Only needed when you need custom converters
     @Override
-    protected List<?> customConverters() {
+    protected List<Object> customConverters() {
         return List.of(
                 CommentsKey.CommentsKeyToStringConverter.INSTANCE,
                 CommentsKey.StringToCommentsKeyConverter.INSTANCE,
