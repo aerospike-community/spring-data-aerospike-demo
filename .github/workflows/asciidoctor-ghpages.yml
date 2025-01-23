@@ -25,5 +25,5 @@ jobs:
         uses: manoelcampos/asciidoctor-ghpages-action@v2
         with:
           asciidoctor_params: --attribute=nofooter
-          source_dir: ./src/main/asciidoc
+          source_dir: ./asciidoc
           ebook_main_adoc_file: index

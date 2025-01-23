@@ -9,10 +9,10 @@ This repository contains sample project for demonstration of `spring-data-aerosp
 
 == Guides
 
-- link:docs_processed/getting-started.adoc[Getting started]
-- link:docs_processed/basic-error-handling.adoc[Basic error handling]
-- link:docs_processed/concurrent-updates.adoc[Handling concurrent updates]
-- link:docs_processed/custom-converters.adoc[Creating custom converters]
-- link:docs_processed/composite-primary-key.adoc[Composite primary key]
-- link:docs_processed/creating-secondary-index.adoc[Creating secondary index]
-- link:docs_processed/retrieving-data-by-secondary-index.adoc[Retrieving data by secondary index]
+- link:asciidoc/getting-started.adoc[Getting started]
+- link:asciidoc/basic-error-handling.adoc[Basic error handling]
+- link:asciidoc/concurrent-updates.adoc[Handling concurrent updates]
+- link:asciidoc/custom-converters.adoc[Creating custom converters]
+- link:asciidoc/composite-primary-key.adoc[Composite primary key]
+- link:asciidoc/creating-secondary-index.adoc[Creating secondary index]
+- link:asciidoc/retrieving-data-by-secondary-index.adoc[Retrieving data by secondary index]
