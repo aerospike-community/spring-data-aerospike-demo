@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.aerospike.core.AerospikeTemplate;
-import org.springframework.data.aerospike.exceptions.IndexAlreadyExistsException;
 
 @Slf4j
 @Configuration
@@ -21,12 +20,8 @@ public class AerospikeIndexConfiguration {
             havingValue = "true",
             matchIfMissing = true)
     public boolean createAerospikeIndex(AerospikeTemplate aerospikeTemplate) {
-        try {
-            aerospikeTemplate.createIndex(MovieDocument.class, INDEX_NAME, "rating", IndexType.NUMERIC);
-            log.info("Index {} was successfully created", INDEX_NAME);
-        } catch (IndexAlreadyExistsException e) {
-            log.info("Index {} already exists, skipped creating", INDEX_NAME);
-        }
+        aerospikeTemplate.createIndex(MovieDocument.class, INDEX_NAME, "rating", IndexType.NUMERIC);
+        log.info("Index {} was successfully created", INDEX_NAME);
         return true;
     }
 }
