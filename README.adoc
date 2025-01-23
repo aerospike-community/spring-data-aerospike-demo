@@ -15,4 +15,3 @@ This repository contains sample project for demonstration of `spring-data-aerosp
 - link:asciidoc/custom-converters.adoc[Creating custom converters]
 - link:asciidoc/composite-primary-key.adoc[Composite primary key]
 - link:asciidoc/creating-secondary-index.adoc[Creating secondary index]
-- link:asciidoc/retrieving-data-by-secondary-index.adoc[Retrieving data by secondary index]
