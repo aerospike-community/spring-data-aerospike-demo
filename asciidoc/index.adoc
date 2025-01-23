@@ -1,4 +1,4 @@
-== Spring Data Aerospike Demo - Documentation
+= Spring Data Aerospike Demo - Documentation
 :doctype: book
 :revdate: {localdate}
 :toc:
@@ -27,7 +27,7 @@ include::basic-error-handling.adoc[]
 :leveloffset: -1
 
 [[appendix]]
-== Appendix
+= Appendix
 
 :leveloffset: +1
 
