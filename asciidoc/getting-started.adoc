@@ -20,9 +20,6 @@ In Spring Initializr you'll need to select:
 - https://spring.io/projects/spring-boot[Spring Boot]: {spring-boot-version}
 - Java: 17
 
-.Options to select
-image::../images/spring-initializr.png[height=400]
-
 Press Generate button in the bottom of the page, and you'll get zip with initial project. Import project into your
 favorite IDE and run the test. It should be green and that means that you are ready to continue to the next section.
 
@@ -30,12 +27,12 @@ favorite IDE and run the test. It should be green and that means that you are re
 
 [NOTE]
 ====
-`spring-data-aerospike` is a Community project and the dependency is not managed by Spring, it has its own release cycle
+`spring-data-aerospike` is an Aerospike project and the dependency is not managed by Spring, it has its own release cycle
 and is not included into Spring Boot dependency management. Available versions can be checked on
 https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike[Maven Central].
 
 https://github.com/aerospike-community/spring-data-aerospike#spring-boot-compatibility[Spring Boot compatibility] can be
-checked for the version of `spring-data-aerospike` that is compatible with the specific Spring Boot version.
+checked for the version of `spring-data-aerospike` that is compatible with the specific Spring Boot version, and for the documentation.
 ====
 
 In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot {spring-boot-version}:

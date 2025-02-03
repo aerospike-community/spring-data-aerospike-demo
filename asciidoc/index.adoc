@@ -1,9 +1,16 @@
-= Spring Data Aerospike Demo - Documentation
+[[documentation-index]]
+
 :doctype: book
 :revdate: {localdate}
 :toc:
 :toc-placement!:
 :toclevels: 1
+
+:leveloffset: -1
+
+== Spring Data Aerospike Demo - Documentation
+
+:leveloffset: +1
 
 (C) 2018-2025 The original authors.
 
@@ -12,6 +19,7 @@ NOTE: Copies of this document may be made for your own use and for distribution 
 toc::[]
 
 :leveloffset: 1
+
 include::getting-started.adoc[]
 
 include::creating-secondary-index.adoc[]
@@ -27,7 +35,7 @@ include::basic-error-handling.adoc[]
 :leveloffset: -1
 
 [[appendix]]
-= Appendix
+== Appendix
 
 :leveloffset: +1
 

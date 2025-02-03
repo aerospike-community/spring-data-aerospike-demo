@@ -149,11 +149,11 @@ public class WatchedMoviesOperations {
 <7> `repository.save(watchedMoviesDocument)` saves new/updated document with all modifications in the storage.
 
 Concurrent test is not trivial, but is required for checking concurrent behavior:
+
 [source,java]
 ----
 package com.example.demo.persistence.optimisticlocking;
 
-import com.example.demo.DemoApplicationTests;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
