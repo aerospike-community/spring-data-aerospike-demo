@@ -1,0 +1,17 @@
+= Basic Error Handling
+
+This directory contains a sample project for demonstration of basic error handling when using Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Guides
+
+:base_path: ../../../../../../../..
+link:{base_path}/asciidoc/basic-error-handling.adoc[Basic Error Handling]
+
+== Tests
+
+See `examples/src/test/java/com/demo/errorhandling`.

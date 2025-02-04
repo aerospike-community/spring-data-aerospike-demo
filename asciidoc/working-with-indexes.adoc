@@ -1,4 +1,0 @@
-= Working with indexes
-
-- Creating index
-- Fetching data by secondary index

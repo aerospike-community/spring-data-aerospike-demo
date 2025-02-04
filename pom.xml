@@ -17,8 +17,8 @@
     <name>Spring Data Aerospike Demo</name>
     <description>Demo project for Spring Data Aerospike</description>
     <modules>
-        <module>demo</module>
-        <module>demo-reactive</module>
+        <module>examples</module>
+        <module>examples-reactive</module>
     </modules>
 
     <properties>
@@ -27,6 +27,9 @@
         <spring-data-aerospike.version>5.0.0</spring-data-aerospike.version>
         <embedded-aerospike.version>3.1.10</embedded-aerospike.version>
         <testcontainers>1.20.4</testcontainers>
+        <spring-boot-test.version>3.4.1</spring-boot-test.version>
+        <spring-boot-starter-web.version>3.4.2</spring-boot-starter-web.version>
+        <rest-assured.version>5.5.0</rest-assured.version>
     </properties>
 
     <dependencyManagement>
@@ -44,11 +47,26 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike -->
                 <groupId>com.playtika.testcontainers</groupId>
                 <artifactId>embedded-aerospike</artifactId>
                 <version>${embedded-aerospike.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-test</artifactId>
+                <version>${spring-boot-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-web.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${rest-assured.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

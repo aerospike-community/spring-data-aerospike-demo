@@ -1,16 +1,51 @@
-= Creating secondary index
+= Creating secondary index with Spring Data Aerospike
 
-TIP: For more details on secondary indexes please visit https://www.aerospike.com/docs/architecture/secondary-index.html[Aerospike Secondary Index official documentation].
+TIP: For more details on secondary indexes please visit
+https://www.aerospike.com/docs/architecture/secondary-index.html[Aerospike Secondary Index official documentation].
 
-Out of the box `spring-data-aerospike` supports creating secondary indexes in Aerospike.
+Out of the box https://github.com/aerospike/spring-data-aerospike[Spring Data Aerospike] supports
+creating secondary indexes in Aerospike.
 
 There are two ways to accomplish this task:
 
-. Using `AerospikeTemplate` `createIndex` method;
-. Using `@Indexed` annotation placed over the field in your entity.
+. Using `@Indexed` annotation placed over the indexed field in your entity;
+. Using `createIndex` method of `AerospikeTemplate`.
 
 Let's dive into more details.
 
+== Creating index via `@Indexed` annotation
+
+Place `@Indexed` annotation over the necessary fields in your entity and specify required types of the index.
+This will make `spring-data-aerospike` auto-create specified secondary indexes in Aerospike
+on startup of your application (it can be configured by `create-indexes-on-startup` property,
+by default it is `true`).
+
+[NOTE]
+====
+`@Indexed` annotation is not supported for the fields annotated with `@Id` (not needed for primary key),
+`@Expiration` or `@Version` (metadata).
+====
+
+.IndexedDocument.java
+[source,java]
+----
+@Value
+@Document
+public class IndexedDocument {
+
+    @Id
+    String key;
+
+    @Indexed(type = STRING, collectionType = DEFAULT)
+    String author;
+
+    @Indexed(type = NUMERIC, collectionType = DEFAULT)
+    int likes;
+
+    @Indexed(type = NUMERIC, collectionType = LIST)
+    List<Integer> options;
+}
+----
 
 == Creating index via `AerospikeTemplate`
 
@@ -19,16 +54,6 @@ In this example we will create an index at startup of the application manually.
 .AerospikeIndexConfiguration.java
 [source,java]
 ----
-package com.example.demo.persistence.index;
-
-import com.aerospike.client.query.IndexType;
-import com.example.demo.persistence.simplecrud.MovieDocument;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.aerospike.core.AerospikeTemplate;
-
 @Slf4j
 @Configuration
 public class AerospikeIndexConfiguration {
@@ -48,51 +73,6 @@ public class AerospikeIndexConfiguration {
 }
 ----
 
-== Creating index via `@Indexed` annotation
-
-Place `@Indexed` annotation over the field in your entity and specify required types of the index.
-This will make `spring-data-aerospike` to auto-create specfied secondary index in Aerospike on startup of your application.
-
-[NOTE]
-====
-`@Indexed` annotation is not supported for the fields annotated with `@Id`, `@Expiration` or `@Version` annotations.
-====
-
-.IndexedDocument.java
-[source,java]
-----
-package com.example.demo.persistence.index;
-
-import lombok.Value;
-import org.springframework.data.aerospike.annotation.Indexed;
-import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.annotation.Id;
-
-import java.util.List;
-
-import static com.aerospike.client.query.IndexCollectionType.DEFAULT;
-import static com.aerospike.client.query.IndexCollectionType.LIST;
-import static com.aerospike.client.query.IndexType.NUMERIC;
-import static com.aerospike.client.query.IndexType.STRING;
-
-@Value
-@Document
-public class IndexedDocument {
-
-    @Id
-    String key;
-
-    @Indexed(type = STRING, collectionType = DEFAULT)
-    String author;
-
-    @Indexed(type = NUMERIC, collectionType = DEFAULT)
-    int likes;
-
-    @Indexed(type = NUMERIC, collectionType = LIST)
-    List<Integer> options;
-}
-----
-
 == Testing
 
 Verify indexes were created using the following tests:
@@ -100,26 +80,10 @@ Verify indexes were created using the following tests:
 .IndexTests.java
 [source,java]
 ----
-package com.example.demo;
+public class IndexTests extends SecondaryIndexAerospikeDemoApplicationTest {
 
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.Info;
-import com.aerospike.client.cluster.Node;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class IndexTests extends DemoApplicationTests {
-
-    @Value("${embedded.aerospike.namespace}")
-    String namespace;
+    @Value("${spring.data.aerospike.namespace}")
+    private String namespace;
 
     @Autowired
     AerospikeClient client;
@@ -128,14 +92,12 @@ public class IndexTests extends DemoApplicationTests {
     @Test
     void verifyCustomIndexCreated() {
         List<String> existingIndexes = getIndexes(client, namespace);
-
         assertThat(existingIndexes).contains("movie-rating-index");
     }
 
     @Test
     void verifyAnnotationBasedIndexesCreated() {
         List<String> existingIndexes = getIndexes(client, namespace);
-
         assertThat(existingIndexes)
                 .contains(
                         "IndexedDocument_author_string_default",
@@ -159,8 +121,8 @@ public class IndexTests extends DemoApplicationTests {
                 })
                 .collect(Collectors.toList());
     }
-
 }
 ----
 
-TIP: If you are not familiar on how to setup embedded Aerospike server for your tests please consult <<getting-started.adoc#, Getting started>> Testing section.
+TIP: If you are not familiar with how to set up embedded Aerospike server for your tests please see
+<<getting-started.adoc#, Getting started>> Testing section.
