@@ -9,7 +9,7 @@ This directory contains a sample project for demonstration of creating and regis
 
 == Guides
 
-:base_path: ../../../../../../../..
+:base_path: ../../../../../../..
 link:{base_path}/asciidoc/custom-converters.adoc[Custom Converters]
 
 == Tests

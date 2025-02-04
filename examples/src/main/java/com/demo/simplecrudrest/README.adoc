@@ -9,7 +9,7 @@ This directory contains a sample project for demonstration of using simple CRUD 
 
 == Guides
 
-:base_path: ../../../../../../../..
+:base_path: ../../../../../../..
 link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
 
 == Tests

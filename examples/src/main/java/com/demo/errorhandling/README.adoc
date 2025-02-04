@@ -9,7 +9,7 @@ This directory contains a sample project for demonstration of basic error handli
 
 == Guides
 
-:base_path: ../../../../../../../..
+:base_path: ../../../../../../..
 link:{base_path}/asciidoc/basic-error-handling.adoc[Basic Error Handling]
 
 == Tests

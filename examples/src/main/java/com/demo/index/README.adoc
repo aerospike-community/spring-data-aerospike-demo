@@ -9,7 +9,7 @@ This directory contains a sample project for demonstration of creating secondary
 
 == Guides
 
-:base_path: ../../../../../../../..
+:base_path: ../../../../../../..
 link:{base_path}/asciidoc/creating-secondary-index.adoc[Creating Secondary Index]
 
 == Tests

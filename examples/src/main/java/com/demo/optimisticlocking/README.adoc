@@ -9,7 +9,7 @@ This directory contains a sample project for demonstration of handling concurren
 
 == Guides
 
-:base_path: ../../../../../../../..
+:base_path: ../../../../../../..
 link:{base_path}/asciidoc/optimistic-locking.adoc[Optimistic Locking]
 
 == Tests

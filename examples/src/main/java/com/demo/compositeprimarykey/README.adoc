@@ -9,7 +9,7 @@ This directory contains a sample project for demonstration of creating and using
 
 == Guides
 
-:base_path: ../../../../../../../..
+:base_path: ../../../../../../..
 link:{base_path}/asciidoc/composite-primary-key.adoc[Composite Primary Key]
 
 == Tests
