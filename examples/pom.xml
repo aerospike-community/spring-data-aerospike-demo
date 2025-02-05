@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>examples</artifactId>
-    <description>Sample demo projects using Spring Data Aerospike</description>
+    <description>Sample demo applications using Spring Data Aerospike</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

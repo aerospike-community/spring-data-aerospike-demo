@@ -9,5 +9,4 @@ public class SimpleCrudWithRestAPIAerospikeDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SimpleCrudWithRestAPIAerospikeDemoApplication.class, args);
 	}
-
 }

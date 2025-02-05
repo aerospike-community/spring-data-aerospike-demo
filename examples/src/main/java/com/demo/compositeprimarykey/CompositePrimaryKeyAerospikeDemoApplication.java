@@ -9,5 +9,4 @@ public class CompositePrimaryKeyAerospikeDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CompositePrimaryKeyAerospikeDemoApplication.class, args);
 	}
-
 }

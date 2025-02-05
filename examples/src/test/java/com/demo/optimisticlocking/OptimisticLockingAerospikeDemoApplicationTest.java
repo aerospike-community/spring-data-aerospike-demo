@@ -9,5 +9,4 @@ class OptimisticLockingAerospikeDemoApplicationTest {
 	@Test
 	void contextLoads() {
 	}
-
 }

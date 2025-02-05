@@ -9,5 +9,4 @@ public class CustomConvertersAerospikeDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CustomConvertersAerospikeDemoApplication.class, args);
 	}
-
 }

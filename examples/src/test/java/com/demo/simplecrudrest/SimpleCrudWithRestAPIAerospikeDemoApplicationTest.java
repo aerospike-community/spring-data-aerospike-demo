@@ -9,5 +9,4 @@ class SimpleCrudWithRestAPIAerospikeDemoApplicationTest {
 	@Test
 	void contextLoads() {
 	}
-
 }

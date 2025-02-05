@@ -23,7 +23,7 @@ public class MovieRepositoryTests extends SimpleCrudAerospikeDemoApplicationTest
         id = UUID.randomUUID().toString();
         movie = MovieDocument.builder()
                 .id(id)
-                .name("Back Tto the Future")
+                .name("Back To the Future")
                 .description("I finally invented something that works!")
                 .rating(9.3)
                 .likes(555_555)

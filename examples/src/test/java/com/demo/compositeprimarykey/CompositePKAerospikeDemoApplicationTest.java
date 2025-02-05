@@ -9,5 +9,4 @@ class CompositePKAerospikeDemoApplicationTest {
 	@Test
 	void contextLoads() {
 	}
-
 }

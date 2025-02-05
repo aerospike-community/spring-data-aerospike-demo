@@ -9,5 +9,4 @@ class CustomConvertersAerospikeDemoApplicationTest {
 	@Test
 	void contextLoads() {
 	}
-
 }

@@ -9,5 +9,4 @@ public class OptimisticLockingAerospikeDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OptimisticLockingAerospikeDemoApplication.class, args);
 	}
-
 }

@@ -9,5 +9,4 @@ public class ErrorHandlingAerospikeDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ErrorHandlingAerospikeDemoApplication.class, args);
 	}
-
 }

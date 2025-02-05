@@ -9,5 +9,4 @@ class ErrorHandlingAerospikeDemoApplicationTest {
 	@Test
 	void contextLoads() {
 	}
-
 }

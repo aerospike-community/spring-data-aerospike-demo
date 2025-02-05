@@ -9,5 +9,4 @@ class SecondaryIndexAerospikeDemoApplicationTest {
 	@Test
 	void contextLoads() {
 	}
-
 }
