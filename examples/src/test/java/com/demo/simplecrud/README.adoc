@@ -9,8 +9,12 @@ This directory contains tests for a sample project for demonstration of setting 
 
 == Guides
 
-https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/getting-started.adoc[Getting Started for Basic CRUD Operations].
+:base_path: ../../../../../../..
 
-== Demo application
+link:{base_path}/asciidoc/optimistic-locking.adoc[Getting Started for Basic CRUD Operations]
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/simplecrud[Simple CRUD Demo].
+== Demo Application
+
+:demo_path: examples/src/main/java/com/demo
+
+To see demo application go to link:{base_path}/{demo_path}/simplecrud/README.adoc[Simple CRUD Demo].

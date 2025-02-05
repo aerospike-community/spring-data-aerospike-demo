@@ -292,4 +292,6 @@ link:https://docs.spring.io/spring-framework/reference/[Spring Framework Documen
 
 === Demo application
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/simplecrud[Simple CRUD Demo].
+:demo_path: ../examples/src/main/java/com/demo
+
+To see demo application go to link:{demo_path}/simplecrud/README.adoc[Simple CRUD Demo].

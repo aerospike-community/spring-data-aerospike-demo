@@ -8,6 +8,9 @@ This directory contains tests for a sample project for demonstration of using si
 - JDK 17
 - Docker installed and running (optional)
 
-== Demo application
+== Demo Application
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/simplecrudrest[Simple CRUD with REST API Demo].
+:base_path: ../../../../../../..
+:demo_path: examples/src/main/java/com/demo
+
+To see demo application go to link:{base_path}/{demo_path}/simplecrudrest/README.adoc[Simple CRUD with REST API Demo].

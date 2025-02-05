@@ -10,8 +10,12 @@ This directory contains a sample project for demonstration of setting up Spring 
 
 == Guides
 
-https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/getting-started.adoc[Getting Started].
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
 
 == Tests
 
-To see tests go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/simplecrud[Simple CRUD Tests].
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/simplecrud/README.adoc[Simple CRUD Tests].

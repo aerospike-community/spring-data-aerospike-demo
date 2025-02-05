@@ -9,8 +9,12 @@ This directory contains tests for a sample project for demonstration of creating
 
 == Guides
 
-https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/custom-converters.adoc[Custom Converters].
+:base_path: ../../../../../../..
 
-== Demo application
+link:{base_path}/asciidoc/custom-converters.adoc[Custom Converters]
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/customconverters[Custom Converters Demo].
+== Demo Application
+
+:demo_path: examples/src/main/java/com/demo
+
+To see demo application go to link:{base_path}/{demo_path}/customconverters/README.adoc[Custom Converters Demo].

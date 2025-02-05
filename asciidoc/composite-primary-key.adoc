@@ -87,4 +87,6 @@ public interface CommentsRepository extends AerospikeRepository<CommentsDocument
 
 == Demo application
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/compositeprimarykey[Composite Primary Key Demo].
+:demo_path: ../examples/src/main/java/com/demo
+
+To see demo application go to link:{demo_path}/compositeprimarykey/README.adoc[Composite Primary Key Demo].

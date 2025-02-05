@@ -10,8 +10,12 @@ This directory contains a sample project for demonstration of basic error handli
 
 == Guides
 
-https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/basic-error-handling.adoc[Error Handling].
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/basic-error-handling.adoc[Basic Error Handling]
 
 == Tests
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/errorhandling[Error Handling Tests].
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/errorhandling/README.adoc[Basic Error Handling Tests].
