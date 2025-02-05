@@ -28,5 +28,4 @@ hs_err_pid*
 /out/
 /.idea
 
-/examples/target/
-/examples-reactive/target/
+target/
