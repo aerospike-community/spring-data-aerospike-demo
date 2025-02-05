@@ -10,4 +10,4 @@ This directory contains tests for a sample project for demonstration of using si
 
 == Demo application
 
-To see demo application go to xref:demo-simple-crud-rest[Simple CRUD with REST API Demo].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/simplecrudrest[Simple CRUD with REST API Demo].

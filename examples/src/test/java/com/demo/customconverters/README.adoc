@@ -9,7 +9,7 @@ This directory contains tests for a sample project for demonstration of creating
 
 == Guides
 
-https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/custom-converters.adoc[Composite Primary Key].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/custom-converters.adoc[Custom Converters].
 
 == Demo application
 

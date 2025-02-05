@@ -9,7 +9,7 @@ This directory contains tests for a sample project for demonstration of setting 
 
 == Guides
 
-https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/getting-started.adoc[Getting Started].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/getting-started.adoc[Getting Started for Basic CRUD Operations].
 
 == Demo application
 
