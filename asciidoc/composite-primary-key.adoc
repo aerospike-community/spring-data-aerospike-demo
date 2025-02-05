@@ -1,20 +1,12 @@
-= Creating composite primary key
+[[guide-composite-pk]]
+= Creating a composite primary key with Spring Data Aerospike
 
 1. Create POJO that represents your composite key and provide converters for it:
 +
 .CommentsKey.java
 [source,java]
 ----
-import lombok.Value;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.ReadingConverter;
-import org.springframework.data.convert.WritingConverter;
-
-@Value
-public class CommentsKey {
-
-    public final long pageId;
-    public final long threadId;
+public record CommentsKey(long pageId, long threadId) {
 
     @WritingConverter
     public enum CommentsKeyToStringConverter implements Converter<CommentsKey, String> {
@@ -41,7 +33,6 @@ public class CommentsKey {
             return new CommentsKey(pageId, threadId);
         }
     }
-
 }
 ----
 
@@ -50,15 +41,6 @@ public class CommentsKey {
 .CommentsDocument.java
 [source,java]
 ----
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Value;
-import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.aerospike.mapping.Field;
-import org.springframework.data.annotation.Id;
-
-import java.util.List;
-
 @Value
 @Document(collection = "demo-service-comments-set")
 @Builder(toBuilder = true)
@@ -73,7 +55,6 @@ public class CommentsDocument {
 
 }
 ----
-
 
 3. Register custom converters in Aerospike configuration:
 +
@@ -100,6 +81,10 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 ----
 import org.springframework.data.repository.CrudRepository;
 
-public interface CommentsRepository extends CrudRepository<CommentsDocument, CommentsKey> {
+public interface CommentsRepository extends AerospikeRepository<CommentsDocument, CommentsKey> {
 }
 ----
+
+== Demo application
+
+To see demo application go to xref:demo-composite-pk[Composite Primary Key Demo].

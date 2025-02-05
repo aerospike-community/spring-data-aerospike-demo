@@ -1,4 +1,5 @@
-= Basic error handling
+[[guide-error-handling]]
+= Basic error handling when using Spring Data Aerospike
 
 [quote, Werner Vogels]
 Everything fails all the time.
@@ -8,40 +9,25 @@ Add `spring-retry` dependency together with `spring-boot-starter-aop`:
 .pom.xml
 [source,xml]
 ----
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
+    <dependency>
+        <groupId>org.springframework.retry</groupId>
+        <artifactId>spring-retry</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
 ----
 
-You can either specify retry configuration directly via `@Retryable` properties or create `RetryInterceptor` bean and set it's name in `@Retryable` `interceptor` property.
+You can either specify retry configuration directly via `@Retryable` properties or create `RetryInterceptor` bean
+and set its name in `@Retryable` `interceptor` property.
 For this demo we'll use simple configuration via `@Retryable`.
 
-.MovieOperations.java
+.MovieService.java
 [source,java]
 ----
-package com.example.demo.service;
-
-import com.example.demo.persistence.simplecrud.MovieDocument;
-import com.example.demo.persistence.simplecrud.MovieRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.dao.QueryTimeoutException;
-import org.springframework.dao.TransientDataAccessResourceException;
-import org.springframework.data.aerospike.core.AerospikeTemplate;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
-
-import java.util.Optional;
-import java.util.function.Function;
-
 @Retryable( // <1>
-        include = { // <2>
+        retryFor = { // <2>
                 QueryTimeoutException.class,
                 TransientDataAccessResourceException.class,
                 OptimisticLockingFailureException.class
@@ -54,7 +40,8 @@ import java.util.function.Function;
         )
 )
 @RequiredArgsConstructor
-public class MovieOperations {
+@Service
+public class MovieService {
 
     private final MovieRepository repository;
     private final AerospikeTemplate template;
@@ -106,7 +93,7 @@ public class MovieOperations {
 ----
 
 <1> `@Retryable` specifies that the method(s) will be retied.
-<2> `include` specifies exception types that should be retried.
+<2> `retryFor` specifies exception types that should be retried.
 <3> `maxAttempts` specifies number of max attempts of retries.
 <4> `backoff` specifies backoff configuration for the retries.
 <5> `random = true` enables jitter in backoff timeouts.
@@ -116,11 +103,6 @@ Add `@EnableRetry` either into existing `AerospikeConfiguration` or create separ
 .AerospikeRetryConfiguration.java
 [source,java]
 ----
-package com.example.demo.persistence.configuration;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.retry.annotation.EnableRetry;
-
 @EnableRetry
 @Configuration
 public class AerospikeRetryConfiguration {
@@ -128,18 +110,44 @@ public class AerospikeRetryConfiguration {
 }
 ----
 
+.AerospikeConfiguration.java
+[source,java]
+----
+@Configuration
+@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
+public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
+
+}
+----
+
 == Important points
 
-=== Retryable and non retryable errors
+=== Retryable and non-retryable errors
 
-In the context of retries there are two types of errors: retryable and non retryable. For example, retrieving value by key may result in `DataRetrievalFailureException` (key not found), which in most cases should not be retried; whereas in case there are connectivity issues to Aerospike or any network congestion issues you on the contrary would retry. Consider this when configuring your retry policy.
+In the context of retries there are two types of errors: retryable and non-retryable.
+For example, retrieving value by key may result in `DataRetrievalFailureException` (key not found),
+which in most cases should not be retried; whereas in case there are connectivity issues to Aerospike
+or any network congestion issues you would retry. Consider this when configuring your retry policy.
 
 === Backoff
 
-When retrying errors there are two basic backoff policies: fixed and exponential. Fixed backoff policy does exactly how it's named, each retry occurs within fixed time interval. This backoff policy is simple and easy for understanding, but is not recommended for production, because in case external resource is overloaded and all clients experience issues, constantly increasing number of requests at the same time may lead to the total resource outage. Instead to overcome the issues resource should be given some time to heal, this can be achieved by exponential backoff policy, which increases each retry time interval by specific multiplier. This backoff polic usually is used together with jitter -- added randomized time interval into the backoff, which removes retry waves at specific time from multiple clients. With `spring-retry` you can use `org.springframework.retry.backoff.ExponentialRandomBackOffPolicy`.
+When retrying errors there are two basic backoff policies: fixed and exponential.
 
-=== Concurrent saves: `OptimisticLockingFailureException`
+Fixed backoff policy does exactly how it's named, each retry occurs within fixed time interval.
+This backoff policy is simple and easy for understanding, but is not recommended for production,
+because in case external resource is overloaded and all clients experience issues,
+constantly increasing number of requests at the same time may lead to the total resource outage.
 
-See link:concurrent-updates.adoc[Handling concurrent updates].
+To overcome the issues resource should be given some time to heal, and this can be achieved by exponential
+backoff policy which increases each retry time interval by a specific multiplier.
+This backoff policy is usually used together with jitter -- added randomized time interval into the backoff,
+which removes retry waves at specific time from multiple clients.
+With `spring-retry` you can use `org.springframework.retry.backoff.ExponentialRandomBackOffPolicy`.
 
-//TODO: how to simulate network latencies and test them
+=== Concurrent saves: optimistic locking
+
+See link:optimistic-locking.adoc[Handling concurrent updates using optimistic locking].
+
+=== Demo application
+
+To see demo application go to xref:demo-error-handling[Basic Error handling Demo].

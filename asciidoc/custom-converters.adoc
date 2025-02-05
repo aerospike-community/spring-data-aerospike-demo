@@ -1,22 +1,21 @@
-= Creating custom converters
+[[guide-custom-converters]]
+= Creating custom converters with Spring Data Aerospike
 
-Sometimes it might be needed to change default conversion logic of entities.
-You can either create custom converter for the one field or for the whole entity.
+Sometimes it is required to change default conversion logic of entities.
+You can either create custom converter for one field or for the whole entity.
 
-== Custom converter for the field
+== Custom converter for a field
 
-If you need to modify conversion only for save-related operations -- then you'll need to create writing converter that implements `Converter<%Your field type here%, Map<String, Object>>`; for read-related operations -- reading converter that implements `Converter<Map<String, Object>, %Your field type here%>`. In case read conversion depends on write conversion and vice versa -- you'll need to have both of the converters.
+If you need to modify conversion only for save-related operations then you'll need to create writing converter that
+implements `Converter<%Your field type here%, Map<String, Object>>`; for read-related operations -- reading converter
+that implements `Converter<Map<String, Object>, %Your field type here%>`. In case read conversion depends on
+write conversion and vice versa -- you'll need to have both of the converters.
 
 Let's have a look at a simple document:
 
 .UserDocument.java
 [source,java]
 ----
-import lombok.Value;
-import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.aerospike.mapping.Field;
-import org.springframework.data.annotation.Id;
-
 @Value
 @Document
 public class UserDocument {
@@ -41,12 +40,6 @@ In this example we want to create both writing and reading converters for the `U
 .UserDataConverters.java
 [source,java]
 ----
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.ReadingConverter;
-import org.springframework.data.convert.WritingConverter;
-
-import java.util.Map;
-
 public class UserDataConverters {
 
     @WritingConverter
@@ -55,11 +48,10 @@ public class UserDataConverters {
 
         @Override
         public Map<String, Object> convert(UserDocument.UserData source) {
-            Map<String, Object> map = Map.of(
-                    "addr", source.getAddress().toUpperCase(),
-                    "country", source.getCountry().toUpperCase()
+            return Map.of(
+                    "addr", source.address().toUpperCase(),
+                    "country", source.country().toUpperCase()
             );
-            return map;
         }
     }
 
@@ -77,7 +69,8 @@ public class UserDataConverters {
 }
 ----
 
-Custom converters also need to be registered in `customConverters` method in class that extends `AbstractAerospikeDataConfiguration`:
+Custom converters need to be registered in `customConverters` method in a configuration class that
+extends `AbstractAerospikeDataConfiguration`:
 
 .AerospikeConfiguration.java
 [source,java]
@@ -97,19 +90,18 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 }
 ----
 
-== Custom converter for the entity
+== Custom converter for an entity
 
-If you need to modify conversion only for save-related operations -- then you'll need to create writing converter that implements `Converter<%Your entity type here%, AerospikeWriteData>`; for read-related operations -- reading converter that implements `Converter<AerospikeReadData, %Your entity type here%>`. In case read conversion depends on write conversion and vice versa -- you'll need to have both of the converters.
+If you need to modify conversion only for save-related operations then you'll need to create writing converter
+that implements `Converter<%Your entity type here%, AerospikeWriteData>`; for read-related operations -- reading
+converter that implements `Converter<AerospikeReadData, %Your entity type here%>`. In case read conversion depends
+on write conversion and vice versa -- you'll need to have both of the converters.
 
 In this example we will use simple `ArticleDocument` as our entity:
 
 .ArticleDocument.java
 [source,java]
 ----
-import lombok.Value;
-import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.annotation.Id;
-
 @Value
 @Document(collection = ArticleDocument.SET_NAME)
 public class ArticleDocument {
@@ -127,23 +119,12 @@ public class ArticleDocument {
 }
 ----
 
-Let's create custom converters. In this specific example we are going to set expiration for the draft article to 10 seconds and for all other we will set expiration to none:
+Let's create custom converters. In this specific example we are going to set expiration for the draft article
+to 10 seconds and for all other we will set expiration to none:
 
 ArticleDocumentConverters.java
 [source,java]
 ----
-import com.aerospike.client.Bin;
-import com.aerospike.client.Key;
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.aerospike.convert.AerospikeReadData;
-import org.springframework.data.aerospike.convert.AerospikeWriteData;
-import org.springframework.data.convert.ReadingConverter;
-import org.springframework.data.convert.WritingConverter;
-
-import java.util.Collection;
-import java.util.List;
-
 public class ArticleDocumentConverters {
 
     @WritingConverter
@@ -178,9 +159,7 @@ public class ArticleDocumentConverters {
             String id = (String) source.getKey().userKey.getObject();
             String author = (String) source.getValue("author");
             String content = (String) source.getValue("content");
-            // The server does not natively handle boolean, so it is stored as long.
-            // (default spring-data-aerospike conversion mechanism handles that using LongToBooleanConverter)
-            boolean draft = (long) source.getValue("draft") != 0L;
+            boolean draft = (boolean) source.getValue("draft");
             return new ArticleDocument(id, author, content, draft);
         }
     }
@@ -193,16 +172,25 @@ Now we need to register custom converters in `customConverters` method:
 [source,java]
 ----
 @Configuration
+@EnableAerospikeRepositories(basePackages = "com.demo.customconverters.repository")
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
-    // other code omitted
+    @Value("${spring.data.aerospike.namespace}")
+    private String namespace;
 
     @Override
-    protected List<?> customConverters() {
+    protected List<Object> customConverters() {
         return List.of(
+                UserDataConverters.MapToUserDataToConverter.INSTANCE,
+                UserDataConverters.UserDataToMapConverter.INSTANCE,
                 ArticleDocumentConverters.AerospikeReadDataToArticleDocumentToConverter.INSTANCE,
-                new ArticleDocumentConverters.ArticleDocumentToAerospikeWriteDataConverter(properties.getNamespace(), ArticleDocument.SET_NAME)
+                new ArticleDocumentConverters.ArticleDocumentToAerospikeWriteDataConverter(namespace,
+                        ArticleDocument.SET_NAME)
         );
     }
 }
 ----
+
+=== Demo application
+
+To see demo application go to xref:demo-custom-converters[Custom Converters Demo].

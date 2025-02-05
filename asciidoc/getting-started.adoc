@@ -1,6 +1,7 @@
-= Getting Started
+[[guide-getting-started-simple-crud]]
+= Spring Data Aerospike: Getting Started
 
-== How to set up `spring-data-aerospike` in Spring Boot application
+== How to set up Spring Data Aerospike in a Spring Boot application for basic CRUD operations
 :toc:
 
 :spring-boot-version: 3.4.1
@@ -20,9 +21,6 @@ In Spring Initializr you'll need to select:
 - https://spring.io/projects/spring-boot[Spring Boot]: {spring-boot-version}
 - Java: 17
 
-.Options to select
-image::../images/spring-initializr.png[height=400]
-
 Press Generate button in the bottom of the page, and you'll get zip with initial project. Import project into your
 favorite IDE and run the test. It should be green and that means that you are ready to continue to the next section.
 
@@ -30,15 +28,18 @@ favorite IDE and run the test. It should be green and that means that you are re
 
 [NOTE]
 ====
-`spring-data-aerospike` is a Community project and the dependency is not managed by Spring, it has its own release cycle
-and is not included into Spring Boot dependency management. Available versions can be checked on
+https://github.com/aerospike/spring-data-aerospike[Spring Data Aerospike] is an Aerospike project,
+and the dependency is not managed by Spring. It has its own release cycle not included into
+Spring Boot dependency management. Available versions can be checked on
 https://mvnrepository.com/artifact/com.aerospike/spring-data-aerospike[Maven Central].
 
-https://github.com/aerospike-community/spring-data-aerospike#spring-boot-compatibility[Spring Boot compatibility] can be
-checked for the version of `spring-data-aerospike` that is compatible with the specific Spring Boot version.
+https://github.com/aerospike/spring-data-aerospike?tab=readme-ov-file#spring-data-aerospike-compatibility[Compatibility table]
+can be checked for the version of `spring-data-aerospike` that is compatible with the specific Spring Boot and
+Aerospike Server versions.
 ====
 
-In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot {spring-boot-version}:
+In our case we are going to use `spring-data-aerospike` {spring-data-aerospike-version} as we have Spring Boot
+{spring-boot-version}.
 
 .pom.xml
 [source,xml]
@@ -65,31 +66,17 @@ Add `lombok` into your `pom.xml`:
         </dependency>
 ----
 
-We are going to use the movies domain in this project, so to be able to read and save our movies into Aerospike we will need to create:
+We are going to use the movies domain in this project, so to be able to read and save our movies into Aerospike
+we will need to create:
 
-. document(entity) class that represents our domain model,
+. document (entity) class that represents our domain model,
 . repository class that provides https://en.wikipedia.org/wiki/CRUD[CRUD] operations.
 
 Movie document class will look the following way:
 
-
 .MovieDocument.java
 [source,java]
 ----
-package com.example.demo.persistence.simplecrud;
-
-import com.aerospike.client.query.IndexCollectionType;
-import com.aerospike.client.query.IndexType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Value;
-import lombok.experimental.NonFinal;
-import org.springframework.data.aerospike.annotation.Indexed;
-import org.springframework.data.aerospike.mapping.Document;
-import org.springframework.data.aerospike.mapping.Field;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-
 @Value // <1>
 @Document(collection = "demo-service-movies") // <2>
 @Builder(toBuilder = true) // <3>
@@ -112,10 +99,6 @@ public class MovieDocument {
 
     @Field
     double rating;
-
-    @Version // <9>
-    @NonFinal
-    long version;
 }
 ----
 
@@ -139,15 +122,13 @@ Spring Data can use all-args constructor instead of reflection to https://docs.s
 
 <8> `@Indexed` creates https://www.aerospike.com/docs/architecture/secondary-index.html[secondary index] on application startup for the specific field. Note: `@Indexed` annotation is not supported for the fields annotated with `@Id`, `@Expiration` or `@Version` annotations.
 
-<9> `@Version` enables https://stackoverflow.com/questions/129329/optimistic-vs-pessimistic-locking[optimistic locking], so that concurrent updates are not lost when saving an entity. Note that if concurrent update fails -- `OptimisticLockingFailureException` is thrown.
-
 [NOTE]
 ====
-Aerospike has https://www.aerospike.com/docs/guide/limitations.html[limitation] on the bin name length.
+Aerospike has certain https://aerospike.com/docs/reference/limitations[limitations] including bin name length.
 If your document contains field with name that exceeds this limit, specify short name in `@Field` annotation:
 ----
     @Field("shortName")
-    String veryLoooongFieldName;
+    String veeeeeryLoooongFieldName;
 ----
 ====
 
@@ -156,112 +137,44 @@ Create Movie Repository interface:
 .MovieRepository.java
 [source,java]
 ----
-package com.example.demo.persistence.simplecrud;
-
-import org.springframework.data.repository.CrudRepository;
-
-public interface MovieRepository extends CrudRepository<MovieDocument, String> { // <1>
+public interface MovieRepository extends AerospikeRepository<MovieDocument, String> { // <1>
 }
 ----
 
 Repository explained:
 
-<1> `CrudRepository` provides sophisticated CRUD functionality for the entity class.
+<1> `AerospikeRepository` provides
+https://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html[Repository]
+functionality for the entity class (standard CRUD + Aerospike specific operations).
 
 == Configuring connection to Aerospike
 
-//TODO: autoconfiguration coming soon. Add link to repo
+To configure connection to Aerospike you'll need to create configuration class that extends
+`AbstractAerospikeDataConfiguration`.
 
-To configure connection to Aerospike you'll need to create configuration class that extends `AbstractAerospikeDataConfiguration`.
-Basic setup requires `getHosts()` and `namespace()` methods to be implemented,
-but you can also override e.g. `getClientPolicy()` to specify custom configuration for the Aerospike client,
-or `customConverters()` to add custom converters.
+Basic setup requires one of these approaches:
 
-We are going to use
-https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-typesafe-configuration-properties[`@ConfigurationProperties`]
-for binding Aerospike configuration properties to POJO. Since connection parameters are required, configuration needs to be validated.
-To enable validation add `hibernate-validator` dependency to `pom.xml` or `spring-boot-starter-validation`:
+* Configure `application.properties` using `spring.aerospike*` and `spring.data.aerospike*` prefixes.
 
-.pom.xml
-[source,xml]
-----
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-----
+* Override `getHosts()` and `nameSpace()` methods. You might also have to override `getClientPolicy()` method
+to specify custom configuration for the Aerospike client, and `customConverters()` to add
+https://aerospike.github.io/spring-data-aerospike/#aerospike.custom-converters[custom converters].
+
+For more details, see https://aerospike.github.io/spring-data-aerospike/#configuration[Configuration] documentation.
 
 Simple configuration will look the following way:
 
 .AerospikeConfiguration.java
 [source,java]
 ----
-package com.example.demo.persistence.configuration;
-
-import com.aerospike.client.Host;
-import com.example.demo.persistence.compositeprimarykey.CommentsKey;
-import com.example.demo.persistence.simplecrud.MovieRepository;
-import com.example.demo.persistence.customconverters.ArticleDocument;
-import com.example.demo.persistence.customconverters.ArticleDocumentConverters;
-import com.example.demo.persistence.customconverters.UserDataConverters;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
-import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
-import java.util.List;
-
-@EnableAerospikeRepositories(basePackages = "com.example.demo.persistence")
-@EnableConfigurationProperties(AerospikeConfiguration.AerospikeConfigurationProperties.class)
 @Configuration
+@EnableAerospikeRepositories(basePackageClasses = MovieRepository.class)
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
-    @Autowired
-    AerospikeConfigurationProperties properties;
-
-    @Override
-    protected Collection<Host> getHosts() {
-        return Host.parseServiceHosts(properties.getHosts());
-    }
-
-    @Override
-    protected String nameSpace() {
-        return properties.getNamespace();
-    }
-
-    // Optional. Only needed when you need custom converters
-    @Override
-    protected List<?> customConverters() {
-        return List.of(
-                CommentsKey.CommentsKeyToStringConverter.INSTANCE,
-                CommentsKey.StringToCommentsKeyConverter.INSTANCE,
-                UserDataConverters.MapToUserDataToConverter.INSTANCE,
-                UserDataConverters.UserDataToMapConverter.INSTANCE,
-                ArticleDocumentConverters.AerospikeReadDataToArticleDocumentToConverter.INSTANCE,
-                new ArticleDocumentConverters.ArticleDocumentToAerospikeWriteDataConverter(properties.getNamespace(), ArticleDocument.SET_NAME)
-        );
-    }
-
-    @Data
-    @Validated // add this annotation if you want @ConfigurationProperties to be validated!
-    @ConfigurationProperties("aerospike")
-    public static class AerospikeConfigurationProperties {
-
-        @NotEmpty
-        String hosts;
-
-        @NotEmpty
-        String namespace;
-    }
 }
 ----
 
+[[guide-getting-started-simple-crud-testing]]
 == Testing
 
 To verify that the repository is actually working let's add some basic tests:
@@ -269,22 +182,9 @@ To verify that the repository is actually working let's add some basic tests:
 .MovieRepositoryTests.java
 [source,java]
 ----
-package com.example.demo;
-
-import com.example.demo.persistence.simplecrud.MovieDocument;
-import com.example.demo.persistence.simplecrud.MovieRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class MovieRepositoryTests extends DemoApplicationTests {
+public class MovieRepositoryTests extends SimpleCrudAerospikeDemoApplicationTest {
 
     String id;
-
     MovieDocument movie;
 
     @Autowired
@@ -295,46 +195,45 @@ public class MovieRepositoryTests extends DemoApplicationTests {
         id = UUID.randomUUID().toString();
         movie = MovieDocument.builder()
                 .id(id)
-                .name("Inception")
-                .description("Origin of an idea")
-                .rating(8.8)
+                .name("Back To the Future")
+                .description("I finally invented something that works!")
+                .rating(9.3)
                 .likes(555_555)
                 .build();
     }
 
     @Test
-    public void save_savesMovie() {
+    public void saveMovie() {
         repository.save(movie);
-
         assertThat(repository.findById(id)).hasValue(movie);
     }
 
     @Test
     public void exists_returnsTrueIfMovieIsPresent() {
         repository.save(movie);
-
         assertThat(repository.existsById(id)).isTrue();
     }
 
     @Test
-    public void deleteById_deletesExistingMovie() {
+    public void deleteExistingMovieById() {
         repository.save(movie);
-
         repository.deleteById(id);
-
         assertThat(repository.findById(id)).isNotPresent();
     }
 
     @Test
-    void deleteById_doesNothingForNonexistingMovie() {
+    void deleteById_doesNothingForNonExistingMovie() {
         repository.deleteById(id);
     }
 }
 ----
 
-For the test purposes you can use https://github.com/testcontainers/testcontainers-spring-boot[`embedded-aerospike`] library based on https://github.com/testcontainers[`testcontainers`].
+For the test purposes you can use
+https://mvnrepository.com/artifact/com.playtika.testcontainers/embedded-aerospike[`embedded-aerospike`]
+library based on https://mvnrepository.com/artifact/org.testcontainers/testcontainers[`testcontainers`].
 
-NOTE: `spring-cloud-starter-bootstrap` is required to be present on classpath. If you are not using Spring Cloud you can add `spring-cloud-starter-bootstrap` with `test` scope.
+NOTE: The `spring-cloud-starter-bootstrap` dependency is required to be present on classpath.
+If you are not using Spring Cloud you can add `spring-cloud-starter-bootstrap` with `test` scope.
 
 .pom.xml
 [source,xml]
@@ -369,8 +268,28 @@ Add Aerospike configuration to the test resources:
 
 ./test/resources/application.properties
 ----
-aerospike.hosts=${embedded.aerospike.host}:${embedded.aerospike.port}
-aerospike.namespace=${embedded.aerospike.namespace}
+# Using embedded-aerospike
+# The version can be controlled via bootstrap.properties
+spring.aerospike.hosts=${embedded.aerospike.host}:${embedded.aerospike.port}
+spring.data.aerospike.namespace=${embedded.aerospike.namespace}
 ----
 
-and run the test. It will be green now.
+and run the tests.
+
+
+[[appendix]]
+== Appendix
+
+:leveloffset: +1
+
+link:https://github.com/aerospike/spring-data-aerospike[Spring Data Aerospike]
+
+link:https://docs.spring.io/spring-data/commons/reference/index.html[Spring Data Commons Documentation Reference]
+
+link:https://docs.spring.io/spring-framework/reference/[Spring Framework Documentation Overview]
+
+:leveloffset: -1
+
+=== Demo application
+
+To see demo application go to xref:demo-simple-crud[Simple CRUD Demo].

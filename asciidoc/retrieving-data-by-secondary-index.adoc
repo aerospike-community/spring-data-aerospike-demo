@@ -1,4 +1,0 @@
-= Retrieving data by secondary index
-
-- using spring data query
-- using AerospikeTemplate

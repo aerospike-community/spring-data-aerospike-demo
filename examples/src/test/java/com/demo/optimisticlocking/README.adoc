@@ -1,0 +1,16 @@
+[[tests-optimistic-locking]]
+= Handling Concurrent Updates Using Optimistic Locking
+
+This directory contains tests for a sample project for demonstration of handling concurrent updates using optimistic locking with Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+
+== Guides
+
+xref:guide-optimistic-locking[Optimistic Locking].
+
+== Demo application
+
+To see demo application go to xref:demo-optimistic-locking[Optimistic Locking Demo].

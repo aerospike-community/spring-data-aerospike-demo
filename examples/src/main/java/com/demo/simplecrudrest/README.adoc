@@ -1,0 +1,13 @@
+[[demo-simple-crud-rest]]
+= Getting Started: Simple CRUD Operations with REST API
+
+This directory contains a sample project for demonstration of using simple CRUD operations via REST API with Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Tests
+
+To see tests go to xref:tests-simple-crud-rest[Simple CRUD with REST API Tests].

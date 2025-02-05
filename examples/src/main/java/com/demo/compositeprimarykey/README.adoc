@@ -1,0 +1,17 @@
+[[demo-composite-pk]]
+= Composite Primary Key
+
+This directory contains a sample project for demonstration of creating and using a composite primary key with Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Guides
+
+xref:guide-composite-pk[Composite Primary Key].
+
+== Tests
+
+To see demo application go to xref:tests-composite-pk[Composite Primary Key Tests].
