@@ -12,10 +12,7 @@ public class ArticleDocument {
 
     @Id
     String id;
-
     String author;
-
     String content;
-
     boolean draft;
 }

@@ -21,5 +21,4 @@ public class CommentsDocument {
 
     @Field
     List<String> comments;
-
 }

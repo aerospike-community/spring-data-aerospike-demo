@@ -10,4 +10,3 @@ import org.springframework.data.aerospike.repository.config.EnableAerospikeRepos
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
 }
-

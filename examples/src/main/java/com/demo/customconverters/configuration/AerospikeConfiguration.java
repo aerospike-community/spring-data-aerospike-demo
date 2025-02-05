@@ -28,4 +28,3 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
         );
     }
 }
-
