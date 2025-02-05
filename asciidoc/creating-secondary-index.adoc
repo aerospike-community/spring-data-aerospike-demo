@@ -126,8 +126,10 @@ public class IndexTests extends SecondaryIndexAerospikeDemoApplicationTest {
 ----
 
 TIP: If you are not familiar with how to set up embedded Aerospike server for your tests please see
-xref:guide-getting-started-simple-crud-testing[Getting Started: Testing] section.
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/getting-started.adoc#testing[Getting Started: Testing] section.
 
 === Demo application
 
-To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/index[Creating Secondary Index Demo].
+:demo_path: ../examples/src/main/java/com/demo
+
+To see demo application go to link:{demo_path}/index/README.adoc[Creating Secondary Index Demo].
