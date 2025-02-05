@@ -1,5 +1,5 @@
 [[tests-custom-converters]]
-= Custom Converters
+= Custom Converters Tests
 
 This directory contains tests for a sample project for demonstration of creating and registering custom converters with Spring Data Aerospike.
 

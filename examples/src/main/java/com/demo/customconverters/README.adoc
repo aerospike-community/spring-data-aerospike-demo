@@ -1,5 +1,5 @@
 [[demo-custom-converters]]
-= Custom Converters
+= Custom Converters Demo
 
 This directory contains a sample project for demonstration of creating and registering custom converters with Spring Data Aerospike.
 

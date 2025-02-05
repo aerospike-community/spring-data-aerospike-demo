@@ -1,5 +1,5 @@
 [[demo-simple-crud-rest]]
-= Getting Started: Simple CRUD Operations with REST API
+= Simple CRUD Operations with REST API Demo
 
 This directory contains a sample project for demonstration of using simple CRUD operations via REST API with Spring Data Aerospike.
 

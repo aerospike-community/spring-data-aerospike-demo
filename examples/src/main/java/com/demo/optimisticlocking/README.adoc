@@ -1,5 +1,5 @@
 [[demo-optimistic-locking]]
-= Handling Concurrent Updates Using Optimistic Locking
+= Optimistic Locking Demo
 
 This directory contains a sample project for demonstration of handling concurrent updates using optimistic locking with Spring Data Aerospike.
 

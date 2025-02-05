@@ -1,5 +1,5 @@
 [[tests-error-handling]]
-= Basic Error Handling
+= Basic Error Handling Tests
 
 This directory contains tests for a sample project for demonstration of basic error handling when using Spring Data Aerospike.
 

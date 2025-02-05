@@ -1,5 +1,5 @@
 [[demo-creating-sindex]]
-= Creating Secondary Index
+= Creating Secondary Index Demo
 
 This directory contains a sample project for demonstration of creating secondary index with Spring Data Aerospike.
 

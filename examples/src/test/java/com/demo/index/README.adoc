@@ -1,7 +1,7 @@
 [[tests-creating-sindex]]
-= Creating Secondary Index
+= Creating Secondary Index Tests
 
-This directory contains a sample project for demonstration of creating secondary index with Spring Data Aerospike.
+This directory contains tests for a sample project for demonstration of creating secondary index with Spring Data Aerospike.
 
 == Prerequisites
 

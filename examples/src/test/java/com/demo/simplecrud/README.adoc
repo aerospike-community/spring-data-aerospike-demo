@@ -1,5 +1,5 @@
 [[tests-simple-crud]]
-= Getting Started: Setup and Simple CRUD Operations
+= Simple CRUD Operations Tests
 
 This directory contains tests for a sample project for demonstration of setting up Spring Data Aerospike and using simple CRUD operations with it.
 

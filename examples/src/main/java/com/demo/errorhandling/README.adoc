@@ -1,5 +1,5 @@
 [[demo-error-handling]]
-= Basic Error Handling
+= Basic Error Handling Demo
 
 This directory contains a sample project for demonstration of basic error handling when using Spring Data Aerospike.
 

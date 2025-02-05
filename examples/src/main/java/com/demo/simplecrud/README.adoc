@@ -1,5 +1,5 @@
 [[demo-simple-crud]]
-= Getting Started: Setup and Simple CRUD Operations
+= Simple CRUD Operations Demo
 
 This directory contains a sample project for demonstration of setting up Spring Data Aerospike and using simple CRUD operations with it.
 
