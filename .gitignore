@@ -30,3 +30,5 @@ hs_err_pid*
 
 # Preprocessed documentation for Github (see: https://github.com/github/markup/issues/1095)
 /asciidoc/
+/examples/target/
+/examples-reactive/target/
