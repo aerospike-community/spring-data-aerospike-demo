@@ -1,3 +1,4 @@
+[[guide-composite-pk]]
 = Creating a composite primary key with Spring Data Aerospike
 
 1. Create POJO that represents your composite key and provide converters for it:
@@ -83,3 +84,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface CommentsRepository extends AerospikeRepository<CommentsDocument, CommentsKey> {
 }
 ----
+
+== Demo application
+
+To see demo application go to xref:demo-composite-pk[Composite Primary Key Demo].

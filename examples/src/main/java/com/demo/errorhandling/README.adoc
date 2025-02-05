@@ -1,3 +1,4 @@
+[[demo-error-handling]]
 = Basic Error Handling
 
 This directory contains a sample project for demonstration of basic error handling when using Spring Data Aerospike.
@@ -9,9 +10,8 @@ This directory contains a sample project for demonstration of basic error handli
 
 == Guides
 
-:base_path: ../../../../../../..
-link:{base_path}/asciidoc/basic-error-handling.adoc[Basic Error Handling]
+xref:guide-error-handling[Error Handling].
 
 == Tests
 
-See `examples/src/test/java/com/demo/errorhandling`.
+To see demo application go to xref:tests-error-handling[Error Handling Tests].

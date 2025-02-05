@@ -1,0 +1,16 @@
+[[tests-error-handling]]
+= Basic Error Handling
+
+This directory contains tests for a sample project for demonstration of basic error handling when using Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+
+== Guides
+
+xref:guide-error-handling[Error Handling].
+
+== Demo application
+
+To see demo application go to xref:demo-error-handling[Errors Handling Demo].

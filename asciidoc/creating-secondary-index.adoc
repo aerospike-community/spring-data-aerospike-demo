@@ -1,3 +1,4 @@
+[[guide-creating-sindex]]
 = Creating secondary index with Spring Data Aerospike
 
 TIP: For more details on secondary indexes please visit
@@ -125,4 +126,8 @@ public class IndexTests extends SecondaryIndexAerospikeDemoApplicationTest {
 ----
 
 TIP: If you are not familiar with how to set up embedded Aerospike server for your tests please see
-<<getting-started.adoc#, Getting started>> Testing section.
+xref:guide-getting-started-simple-crud-testing[Getting Started: Testing] section.
+
+=== Demo application
+
+To see demo application go to xref:demo-creating-sindex[Creating Secondary Index Demo].

@@ -1,3 +1,4 @@
+[[guide-optimistic-locking]]
 = Handling concurrent updates using optimistic locking with Spring Data Aerospike
 
 There are two basic types of locking mechanisms used in NoSQL storages for handling concurrent writes --
@@ -222,3 +223,7 @@ public class WatchedMoviesConcurrentTest extends OptimisticLockingAerospikeDemoA
     }
 }
 ----
+
+== Demo application
+
+To see demo application go to xref:demo-optimistic-locking[Optimistic Locking Demo].

@@ -1,3 +1,4 @@
+[[demo-composite-pk]]
 = Composite Primary Key
 
 This directory contains a sample project for demonstration of creating and using a composite primary key with Spring Data Aerospike.
@@ -9,9 +10,8 @@ This directory contains a sample project for demonstration of creating and using
 
 == Guides
 
-:base_path: ../../../../../../..
-link:{base_path}/asciidoc/composite-primary-key.adoc[Composite Primary Key]
+xref:guide-composite-pk[Composite Primary Key].
 
 == Tests
 
-See `examples/src/test/java/com/demo/compositeprimarykey`.
+To see demo application go to xref:tests-composite-pk[Composite Primary Key Tests].

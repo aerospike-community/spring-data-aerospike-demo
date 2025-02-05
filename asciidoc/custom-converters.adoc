@@ -1,3 +1,4 @@
+[[guide-custom-converters]]
 = Creating custom converters with Spring Data Aerospike
 
 Sometimes it is required to change default conversion logic of entities.
@@ -189,3 +190,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     }
 }
 ----
+
+=== Demo application
+
+To see demo application go to xref:demo-custom-converters[Custom Converters Demo].

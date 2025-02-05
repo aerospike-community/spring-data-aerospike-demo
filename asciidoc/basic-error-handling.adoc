@@ -1,3 +1,4 @@
+[[guide-error-handling]]
 = Basic error handling when using Spring Data Aerospike
 
 [quote, Werner Vogels]
@@ -143,6 +144,10 @@ This backoff policy is usually used together with jitter -- added randomized tim
 which removes retry waves at specific time from multiple clients.
 With `spring-retry` you can use `org.springframework.retry.backoff.ExponentialRandomBackOffPolicy`.
 
-=== Concurrent saves: `OptimisticLockingFailureException`
+=== Concurrent saves: optimistic locking
 
 See link:optimistic-locking.adoc[Handling concurrent updates using optimistic locking].
+
+=== Demo application
+
+To see demo application go to xref:demo-error-handling[Basic Error handling Demo].

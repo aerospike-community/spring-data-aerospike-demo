@@ -1,3 +1,4 @@
+[[guide-getting-started-simple-crud]]
 = Spring Data Aerospike: Getting Started
 
 == How to set up Spring Data Aerospike in a Spring Boot application for basic CRUD operations
@@ -173,6 +174,7 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 }
 ----
 
+[[guide-getting-started-simple-crud-testing]]
 == Testing
 
 To verify that the repository is actually working let's add some basic tests:
@@ -287,3 +289,7 @@ link:https://docs.spring.io/spring-data/commons/reference/index.html[Spring Data
 link:https://docs.spring.io/spring-framework/reference/[Spring Framework Documentation Overview]
 
 :leveloffset: -1
+
+=== Demo application
+
+To see demo application go to xref:demo-simple-crud[Simple CRUD Demo].

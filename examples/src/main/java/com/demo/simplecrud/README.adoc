@@ -1,3 +1,4 @@
+[[demo-simple-crud]]
 = Getting Started: Setup and Simple CRUD Operations
 
 This directory contains a sample project for demonstration of setting up Spring Data Aerospike and using simple CRUD operations with it.
@@ -9,9 +10,8 @@ This directory contains a sample project for demonstration of setting up Spring 
 
 == Guides
 
-:base_path: ../../../../../../..
-link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
+xref:guide-getting-started-simple-crud[Getting Started].
 
 == Tests
 
-See `examples/src/test/java/com/demo/simplecrud`.
+To see tests go to xref:tests-simple-crud[Simple CRUD Tests].
