@@ -9,8 +9,8 @@ This directory contains a sample project for demonstration of creating secondary
 
 == Guides
 
-xref:guide-creating-sindex[Creating Secondary Index].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/creating-secondary-index.adoc[Creating Secondary Index].
 
 == Demo application
 
-To see demo application go to xref:demo-creating-sindex[Creating Secondary Index Demo].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/index[Creating Secondary Index Demo].

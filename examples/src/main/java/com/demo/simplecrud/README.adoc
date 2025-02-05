@@ -10,8 +10,8 @@ This directory contains a sample project for demonstration of setting up Spring 
 
 == Guides
 
-xref:guide-getting-started-simple-crud[Getting Started].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/getting-started.adoc[Getting Started].
 
 == Tests
 
-To see tests go to xref:tests-simple-crud[Simple CRUD Tests].
+To see tests go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/simplecrud[Simple CRUD Tests].

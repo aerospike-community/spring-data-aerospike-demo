@@ -10,8 +10,8 @@ This directory contains a sample project for demonstration of creating and regis
 
 == Guides
 
-xref:guide-custom-converters[Custom Converters].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/custom-converters.adoc[Custom Converters].
 
 == Tests
 
-To see demo application go to xref:tests-custom-converters[Custom Converters Tests].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/customconverters[Custom Converters Tests].

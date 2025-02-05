@@ -226,4 +226,4 @@ public class WatchedMoviesConcurrentTest extends OptimisticLockingAerospikeDemoA
 
 == Demo application
 
-To see demo application go to xref:demo-optimistic-locking[Optimistic Locking Demo].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/optimisticlocking[Optimistic Locking Demo].

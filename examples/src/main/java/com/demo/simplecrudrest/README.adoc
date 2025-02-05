@@ -10,4 +10,4 @@ This directory contains a sample project for demonstration of using simple CRUD 
 
 == Tests
 
-To see tests go to xref:tests-simple-crud-rest[Simple CRUD with REST API Tests].
+To see tests go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/simplecrudrest[Simple CRUD with REST API Tests].

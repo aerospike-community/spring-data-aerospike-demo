@@ -9,8 +9,8 @@ This directory contains tests for a sample project for demonstration of basic er
 
 == Guides
 
-xref:guide-error-handling[Error Handling].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/basic-error-handling.adoc[Error Handling].
 
 == Demo application
 
-To see demo application go to xref:demo-error-handling[Errors Handling Demo].
+To see demo application go to xref:https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/errorhandling[Errors Handling Demo].

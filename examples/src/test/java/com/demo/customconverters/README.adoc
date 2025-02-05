@@ -9,8 +9,8 @@ This directory contains tests for a sample project for demonstration of creating
 
 == Guides
 
-xref:guide-custom-converters[Composite Primary Key].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/custom-converters.adoc[Composite Primary Key].
 
 == Demo application
 
-To see demo application go to xref:demo-custom-converters[Custom Converters Demo].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/customconverters[Custom Converters Demo].

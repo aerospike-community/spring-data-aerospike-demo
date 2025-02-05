@@ -150,4 +150,4 @@ See link:optimistic-locking.adoc[Handling concurrent updates using optimistic lo
 
 === Demo application
 
-To see demo application go to xref:demo-error-handling[Basic Error handling Demo].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/errorhandling[Basic Error handling Demo].

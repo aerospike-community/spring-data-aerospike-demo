@@ -10,8 +10,8 @@ This directory contains a sample project for demonstration of handling concurren
 
 == Guides
 
-xref:guide-optimistic-locking[Optimistic Locking].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/optimistic-locking.adoc[Optimistic Locking].
 
 == Tests
 
-To see tests go to xref:tests-optimistic-locking[Optimistic Locking Tests].
+To see tests go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/optimisticlocking[Optimistic Locking Tests].

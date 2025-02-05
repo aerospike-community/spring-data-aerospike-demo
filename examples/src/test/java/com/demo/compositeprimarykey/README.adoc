@@ -9,8 +9,8 @@ This directory contains tests for a sample project for demonstration of creating
 
 == Guides
 
-xref:guide-composite-pk[Composite Primary Key].
+https://github.com/aerospike-community/spring-data-aerospike-demo/blob/main/asciidoc/composite-primary-key.adoc[Composite Primary Key].
 
 == Demo application
 
-To see demo application go to xref:demo-composite-pk[Composite Primary Key Demo].
+To see demo application go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/main/java/com/demo/compositeprimarykey[Composite Primary Key Demo].
