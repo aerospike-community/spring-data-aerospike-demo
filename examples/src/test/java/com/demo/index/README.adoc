@@ -17,4 +17,4 @@ link:{base_path}/asciidoc/creating-secondary-index.adoc[Creating Secondary Index
 
 :demo_path: examples/src/main/java/com/demo
 
-To see demo application go to link:{base_path}/{demo_path}/index/README.adoc[Creating Secondary Index Demo].
+To see demo application go to link:{base_path}/{demo_path}/index[Creating Secondary Index Demo].

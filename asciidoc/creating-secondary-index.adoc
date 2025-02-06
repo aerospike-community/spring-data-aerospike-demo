@@ -132,4 +132,4 @@ link:getting-started.adoc#guide-getting-started-simple-crud-testing[Getting Star
 
 :demo_path: ../examples/src/main/java/com/demo
 
-To see demo application go to link:{demo_path}/index/README.adoc[Creating Secondary Index Demo].
+To see demo application go to link:{demo_path}/index[Creating Secondary Index Demo].

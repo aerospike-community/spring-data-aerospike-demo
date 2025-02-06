@@ -18,4 +18,4 @@ link:{base_path}/asciidoc/composite-primary-key.adoc[Composite Primary Key]
 
 :tests_path: examples/src/test/java/com/demo
 
-To see tests go to link:{base_path}/{tests_path}/compositeprimarykey/README.adoc[Composite Primary Key Tests].
+To see tests go to link:{base_path}/{tests_path}/compositeprimarykey[Composite Primary Key Tests].

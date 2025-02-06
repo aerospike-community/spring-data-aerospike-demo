@@ -152,4 +152,4 @@ See link:optimistic-locking.adoc[Handling concurrent updates using optimistic lo
 
 :demo_path: ../examples/src/main/java/com/demo
 
-To see demo application go to link:{demo_path}/errorhandling/README.adoc[Basic Error Handling Demo].
+To see demo application go to link:{demo_path}/errorhandling[Basic Error Handling Demo].

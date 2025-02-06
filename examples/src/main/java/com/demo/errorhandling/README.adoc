@@ -18,4 +18,4 @@ link:{base_path}/asciidoc/basic-error-handling.adoc[Basic Error Handling]
 
 :tests_path: examples/src/test/java/com/demo
 
-To see tests go to link:{base_path}/{tests_path}/errorhandling/README.adoc[Basic Error Handling Tests].
+To see tests go to link:{base_path}/{tests_path}/errorhandling[Basic Error Handling Tests].

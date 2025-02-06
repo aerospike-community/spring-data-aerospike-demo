@@ -10,4 +10,6 @@ This directory contains a sample project for demonstration of using simple CRUD 
 
 == Tests
 
-To see tests go to https://github.com/aerospike-community/spring-data-aerospike-demo/tree/main/examples/src/test/java/com/demo/simplecrudrest[Simple CRUD with REST API Tests].
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/simplecrudrest[Simple CRUD with REST API Tests].

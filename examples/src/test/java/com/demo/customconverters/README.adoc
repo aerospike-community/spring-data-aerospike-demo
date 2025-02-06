@@ -17,4 +17,4 @@ link:{base_path}/asciidoc/custom-converters.adoc[Custom Converters]
 
 :demo_path: examples/src/main/java/com/demo
 
-To see demo application go to link:{base_path}/{demo_path}/customconverters/README.adoc[Custom Converters Demo].
+To see demo application go to link:{base_path}/{demo_path}/customconverters[Custom Converters Demo].

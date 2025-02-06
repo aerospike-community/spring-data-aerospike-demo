@@ -17,4 +17,4 @@ link:{base_path}/asciidoc/optimistic-locking.adoc[Getting Started for Basic CRUD
 
 :demo_path: examples/src/main/java/com/demo
 
-To see demo application go to link:{base_path}/{demo_path}/simplecrud/README.adoc[Simple CRUD Demo].
+To see demo application go to link:{base_path}/{demo_path}/simplecrud[Simple CRUD Demo].

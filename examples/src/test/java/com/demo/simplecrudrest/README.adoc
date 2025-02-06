@@ -13,4 +13,4 @@ This directory contains tests for a sample project for demonstration of using si
 :base_path: ../../../../../../..
 :demo_path: examples/src/main/java/com/demo
 
-To see demo application go to link:{base_path}/{demo_path}/simplecrudrest/README.adoc[Simple CRUD with REST API Demo].
+To see demo application go to link:{base_path}/{demo_path}/simplecrudrest[Simple CRUD with REST API Demo].
