@@ -1,5 +1,5 @@
 [[demo-creating-sindex]]
-= Creating Secondary Index
+= Creating Secondary Index Demo
 
 This directory contains a sample project for demonstration of creating secondary index with Spring Data Aerospike.
 
@@ -10,8 +10,12 @@ This directory contains a sample project for demonstration of creating secondary
 
 == Guides
 
-xref:guide-creating-sindex[Creating Secondary Index].
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/creating-secondary-index.adoc[Creating Secondary Index]
 
 == Tests
 
-To see tests go to xref:tests-creating-sindex[Creating Secondary Index Tests].
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/index[Creating Secondary Index Tests].

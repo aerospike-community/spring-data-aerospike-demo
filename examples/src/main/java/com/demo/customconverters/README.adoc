@@ -1,5 +1,5 @@
 [[demo-custom-converters]]
-= Custom Converters
+= Custom Converters Demo
 
 This directory contains a sample project for demonstration of creating and registering custom converters with Spring Data Aerospike.
 
@@ -10,8 +10,12 @@ This directory contains a sample project for demonstration of creating and regis
 
 == Guides
 
-xref:guide-custom-converters[Custom Converters].
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/custom-converters.adoc[Custom Converters]
 
 == Tests
 
-To see demo application go to xref:tests-custom-converters[Custom Converters Tests].
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/customconverters[Custom Converters Tests].

@@ -126,8 +126,10 @@ public class IndexTests extends SecondaryIndexAerospikeDemoApplicationTest {
 ----
 
 TIP: If you are not familiar with how to set up embedded Aerospike server for your tests please see
-xref:guide-getting-started-simple-crud-testing[Getting Started: Testing] section.
+link:getting-started.adoc#guide-getting-started-simple-crud-testing[Getting Started: Testing].
 
 === Demo application
 
-To see demo application go to xref:demo-creating-sindex[Creating Secondary Index Demo].
+:demo_path: ../examples/src/main/java/com/demo
+
+To see demo application go to link:{demo_path}/index[Creating Secondary Index Demo].

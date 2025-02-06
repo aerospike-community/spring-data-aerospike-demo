@@ -193,4 +193,6 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
 === Demo application
 
-To see demo application go to xref:demo-custom-converters[Custom Converters Demo].
+:demo_path: ../examples/src/main/java/com/demo
+
+To see demo application go to link:{demo_path}/customconverters[Custom Converters Demo].

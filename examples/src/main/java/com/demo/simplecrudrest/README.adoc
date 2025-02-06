@@ -1,5 +1,5 @@
 [[demo-simple-crud-rest]]
-= Getting Started: Simple CRUD Operations with REST API
+= Simple CRUD Operations with REST API Demo
 
 This directory contains a sample project for demonstration of using simple CRUD operations via REST API with Spring Data Aerospike.
 
@@ -10,4 +10,6 @@ This directory contains a sample project for demonstration of using simple CRUD 
 
 == Tests
 
-To see tests go to xref:tests-simple-crud-rest[Simple CRUD with REST API Tests].
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/simplecrudrest[Simple CRUD with REST API Tests].

@@ -4,6 +4,7 @@
 [quote, Werner Vogels]
 Everything fails all the time.
 
+{nbsp} +
 Add `spring-retry` dependency together with `spring-boot-starter-aop`:
 
 .pom.xml
@@ -150,4 +151,6 @@ See link:optimistic-locking.adoc[Handling concurrent updates using optimistic lo
 
 === Demo application
 
-To see demo application go to xref:demo-error-handling[Basic Error handling Demo].
+:demo_path: ../examples/src/main/java/com/demo
+
+To see demo application go to link:{demo_path}/errorhandling[Basic Error Handling Demo].
