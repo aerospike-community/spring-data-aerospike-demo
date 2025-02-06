@@ -4,6 +4,7 @@
 [quote, Werner Vogels]
 Everything fails all the time.
 
+{nbsp} +
 Add `spring-retry` dependency together with `spring-boot-starter-aop`:
 
 .pom.xml
