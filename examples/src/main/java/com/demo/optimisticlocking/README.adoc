@@ -18,4 +18,4 @@ link:{base_path}/asciidoc/optimistic-locking.adoc[Optimistic Locking]
 
 :tests_path: examples/src/test/java/com/demo
 
-To see tests go to link:{base_path}/{tests_path}/optimisticlocking[Optimistic Locking Tests].
+To see tests go to link:{base_path}/{tests_path}/optimisticlocking[optimistic locking tests].

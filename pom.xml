@@ -24,12 +24,14 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud-dependencies.version>2024.0.0</spring-cloud-dependencies.version>
-        <spring-data-aerospike.version>5.0.0</spring-data-aerospike.version>
+        <spring-data-aerospike.version>5.0.1</spring-data-aerospike.version>
+        <reactor-client.version>9.0.2</reactor-client.version>
         <embedded-aerospike.version>3.1.10</embedded-aerospike.version>
         <testcontainers>1.20.4</testcontainers>
         <spring-boot-test.version>3.4.1</spring-boot-test.version>
         <spring-boot-starter-web.version>3.4.2</spring-boot-starter-web.version>
         <rest-assured.version>5.5.0</rest-assured.version>
+        <reactor-test>3.7.2</reactor-test>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +40,11 @@
                 <groupId>com.aerospike</groupId>
                 <artifactId>spring-data-aerospike</artifactId>
                 <version>${spring-data-aerospike.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aerospike</groupId>
+                <artifactId>aerospike-reactor-client</artifactId>
+                <version>${reactor-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -67,6 +74,11 @@
                 <groupId>io.rest-assured</groupId>
                 <artifactId>rest-assured</artifactId>
                 <version>${rest-assured.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-test</artifactId>
+                <version>${reactor-test}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

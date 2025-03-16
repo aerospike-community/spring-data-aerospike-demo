@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WatchedMoviesTest extends OptimisticLockingAerospikeDemoApplicationTest {
+class WatchedMoviesTests extends OptimisticLockingAerospikeDemoApplicationTest {
 
     @Autowired
     WatchedMoviesService watchedMoviesService;
@@ -33,7 +33,7 @@ class WatchedMoviesTest extends OptimisticLockingAerospikeDemoApplicationTest {
 
     @Test
     void addWatchedMovie_updatesExistingWatchedMovies() {
-        String id = "age::" + UUID.randomUUID();
+        String id = "watched::" + UUID.randomUUID();
         String initialWatchedMovie = "Charlie and the Chocolate Factory";
         String newWatchedMovie = "The Tourist";
 

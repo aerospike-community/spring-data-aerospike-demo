@@ -52,7 +52,7 @@ public class WatchedMoviesService {
     private WatchedMoviesDocument updateExistingDocument(WatchedMoviesDocument existingDocument, String newWatchedMovie) {
         // NOTE: we do not create new document here, but only update existing while retaining the version
         return existingDocument.toBuilder()
-                .watchedMovie(newWatchedMovie)
+                .watchedMovie(newWatchedMovie) // add to the List
                 .build();
     }
 

@@ -1,0 +1,12 @@
+package com.demo.reactive.optimisticlocking.configuration;
+
+import com.demo.reactive.optimisticlocking.repository.ReactiveWatchedMoviesDocumentRepository;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.aerospike.config.AbstractReactiveAerospikeDataConfiguration;
+import org.springframework.data.aerospike.repository.config.EnableReactiveAerospikeRepositories;
+
+@Configuration
+@EnableReactiveAerospikeRepositories(basePackageClasses = ReactiveWatchedMoviesDocumentRepository.class)
+public class AerospikeConfiguration extends AbstractReactiveAerospikeDataConfiguration {
+
+}

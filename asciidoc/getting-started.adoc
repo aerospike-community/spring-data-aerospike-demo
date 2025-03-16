@@ -78,7 +78,7 @@ Movie document class will look the following way:
 [source,java]
 ----
 @Value // <1>
-@Document(collection = "demo-service-movies") // <2>
+@Document(collection = "demo-simplecrud-set") // <2>
 @Builder(toBuilder = true) // <3>
 // Spring Data object creation can use all-args constructor instead of reflection which is much faster
 @AllArgsConstructor // <4>
@@ -107,7 +107,10 @@ Document explained:
 <1> https://projectlombok.org/features/Value[`@Value`] makes class immutable, all fields are made private and final,
 `toString()`, `equals()`, `hashCode()`, field getters and all args constructor are generated.
 
-<2> `@Document(collection = "demo-service-movies")` marks a class as an entity to be persisted to Aerospike. It also allows to specify set name, expiration and touch on read values. In current example custom set name is specified via `collection`. Please note that a set name cannot contain the ':' or ';' characters. (See more https://www.aerospike.com/docs/guide/limitations.html[limitations])
+<2> `@Document(collection = "demo-simplecrud-set")` marks a class as an entity to be persisted to Aerospike.
+It also allows to specify set name, expiration and touch on read values. In current example custom set name is specified
+via `collection`. Please note that a set name cannot contain the ':' or ';' characters
+(see more https://www.aerospike.com/docs/guide/limitations.html[limitations]).
 
 <3> `@Builder` provide Builder API for a class.
 
@@ -222,8 +225,15 @@ public class MovieRepositoryTests extends SimpleCrudAerospikeDemoApplicationTest
     }
 
     @Test
-    void deleteById_doesNothingForNonExistingMovie() {
+    void deleteById_skipsNonExistingMovie() {
         repository.deleteById(id);
+        repository.deleteById(id);
+        assertThat(repository.findById(id)).isNotPresent();
+
+        repository.save(movie);
+        repository.deleteById("testId");
+        assertThat(repository.findById(id)).isPresent();
+        assertThat(repository.findById(id).get()).isEqualTo(movie);
     }
 }
 ----

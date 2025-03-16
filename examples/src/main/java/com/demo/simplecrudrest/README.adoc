@@ -12,4 +12,4 @@ This directory contains a sample project for demonstration of using simple CRUD 
 
 :tests_path: examples/src/test/java/com/demo
 
-To see tests go to link:{base_path}/{tests_path}/simplecrudrest[Simple CRUD with REST API Tests].
+To see tests go to link:{base_path}/{tests_path}/simplecrudrest[simple CRUD with REST API tests].

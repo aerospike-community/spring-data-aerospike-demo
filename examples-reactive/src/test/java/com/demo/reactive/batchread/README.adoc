@@ -1,0 +1,15 @@
+[[tests-simple-crud]]
+= Reactive Batch Read Operations Tests
+
+This directory contains tests for a sample project for demonstration of using batch read operations with Spring Data Aerospike reactively.
+
+== Prerequisites
+
+- JDK 17
+
+== Demo Application
+
+:base_path_reactive: ../../../../../../../..
+:demo_path_reactive: examples-reactive/src/main/java/com/demo/reactive
+
+To see demo application go to link:{base_path_reactive}/{demo_path_reactive}/batchread[Reactive Batch Read Demo].

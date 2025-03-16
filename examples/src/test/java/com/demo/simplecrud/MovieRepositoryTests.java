@@ -50,7 +50,14 @@ public class MovieRepositoryTests extends SimpleCrudAerospikeDemoApplicationTest
     }
 
     @Test
-    void deleteById_doesNothingForNonExistingMovie() {
+    void deleteById_skipsNonExistingMovie() {
         repository.deleteById(id);
+        repository.deleteById(id);
+        assertThat(repository.findById(id)).isNotPresent();
+
+        repository.save(movie);
+        repository.deleteById("testId");
+        assertThat(repository.findById(id)).isPresent();
+        assertThat(repository.findById(id).get()).isEqualTo(movie);
     }
 }

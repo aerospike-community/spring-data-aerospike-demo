@@ -1,0 +1,14 @@
+[[tests-simple-crud]]
+= Batch Read Operations Tests
+
+This directory contains tests for a sample project for demonstration of using batch read operations with Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+
+== Demo Application
+
+:demo_path: examples/src/main/java/com/demo
+
+To see demo application go to link:{base_path_reactive}/{demo_path_reactive}/batchread[Batch Read Demo].

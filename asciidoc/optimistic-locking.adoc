@@ -123,7 +123,7 @@ public class WatchedMoviesService {
     private WatchedMoviesDocument updateExistingDocument(WatchedMoviesDocument existingDocument, String newWatchedMovie) {
         // NOTE: we do not create new document here, but only update existing while retaining the version
         return existingDocument.toBuilder()
-                .watchedMovie(newWatchedMovie)
+                .watchedMovie(newWatchedMovie) // add to the List
                 .build();
     }
 
@@ -185,7 +185,7 @@ public class WatchedMoviesConcurrentTest extends OptimisticLockingAerospikeDemoA
 
     @Test
     void addWatchedMovie_addsMoviesConcurrently() throws Exception {
-        String id = "age::" + UUID.randomUUID();
+        String id = "watched::" + UUID.randomUUID();
         runTasksAndWaitForCompletion(() -> watchedMoviesService.addWatchedMovie(id, "Movie " + UUID.randomUUID()));
 
         List<String> watchedMovies = watchedMoviesService.getWatchedMovies(id);

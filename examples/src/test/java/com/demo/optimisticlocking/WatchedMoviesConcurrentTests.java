@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WatchedMoviesConcurrentTest extends OptimisticLockingAerospikeDemoApplicationTest {
+public class WatchedMoviesConcurrentTests extends OptimisticLockingAerospikeDemoApplicationTest {
 
     private final int NUMBER_OF_TASKS = 10;
     private final CountDownLatch latch = new CountDownLatch(1);
@@ -41,7 +41,7 @@ public class WatchedMoviesConcurrentTest extends OptimisticLockingAerospikeDemoA
 
     @Test
     void addWatchedMovie_addsMoviesConcurrently() throws Exception {
-        String id = "age::" + UUID.randomUUID();
+        String id = "watched::" + UUID.randomUUID();
         runTasksAndWaitForCompletion(() -> watchedMoviesService.addWatchedMovie(id, "Movie " + UUID.randomUUID()));
 
         List<String> watchedMovies = watchedMoviesService.getWatchedMovies(id);
