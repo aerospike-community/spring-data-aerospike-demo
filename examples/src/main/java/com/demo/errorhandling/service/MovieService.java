@@ -39,14 +39,14 @@ public class MovieService {
     public void createMovie(Movie movie) {
         try {
             template.insert(MovieDocument.builder()
-                    .id(movie.getName())
-                    .name(movie.getName())
-                    .description(movie.getDescription())
-                    .rating(movie.getRating())
+                    .id(movie.name())
+                    .name(movie.name())
+                    .description(movie.description())
+                    .rating(movie.rating())
                     .version(0L)
                     .build());
         } catch (DuplicateKeyException e) {
-            throw new IllegalArgumentException("Movie with name: " + movie.getName() + " already exists!");
+            throw new IllegalArgumentException("Movie with name: " + movie.name() + " already exists!");
         }
     }
 

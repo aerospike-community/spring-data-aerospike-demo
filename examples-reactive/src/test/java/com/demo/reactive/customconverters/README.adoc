@@ -1,0 +1,21 @@
+[[tests-custom-converters]]
+= Custom Converters Tests for Reactive Programming Model
+
+This directory contains tests for a sample project for demonstration of creating and registering custom converters with Spring Data Aerospike reactively.
+
+== Prerequisites
+
+- JDK 17
+
+== Guides
+
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/custom-converters.adoc[Custom Converters]
+
+== Demo Application
+
+:base_path_reactive: ../../../../../../../..
+:tests_path_reactive: examples-reactive/src/test/java/com/demo/reactive
+
+To see demo application go to link:{base_path_reactive}/{demo_path_reactive}/customconverters[Custom Converters Demo for Reactive Programming Model].

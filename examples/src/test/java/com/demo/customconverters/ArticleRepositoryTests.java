@@ -35,7 +35,9 @@ public class ArticleRepositoryTests extends CustomConvertersAerospikeDemoApplica
         repository.save(document);
         assertThat(repository.findById(id)).hasValue(document);
 
-        Thread.sleep(11_000);// expiration is set to 10 seconds; using naive approach to test expiration
+        Thread.sleep(11_000);
+        // expiration is set to 10 seconds in ArticleDocumentToAerospikeWriteDataConverter;
+        // using naive approach to test expiration
         assertThat(repository.findById(id)).isEmpty();
     }
 }

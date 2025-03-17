@@ -1,0 +1,15 @@
+[[tests-error-handling]]
+= Basic Error Handling Tests for Reactive Programming Model
+
+This directory contains tests for a sample project for demonstration of basic error handling when using Spring Data Aerospike reactively.
+
+== Prerequisites
+
+- JDK 17
+
+== Demo Application
+
+:base_path_reactive: ../../../../../../../..
+:tests_path_reactive: examples-reactive/src/test/java/com/demo/reactive
+
+To see demo application go to link:{base_path_reactive}/{demo_path_reactive}/errorhandling[Basic Error Handling Demo for Reactive programming Model].

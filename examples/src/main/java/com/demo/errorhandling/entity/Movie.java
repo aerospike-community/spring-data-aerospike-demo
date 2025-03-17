@@ -1,11 +1,5 @@
 package com.demo.errorhandling.entity;
 
-import lombok.Value;
+public record Movie(String name, String description, double rating) {
 
-@Value
-public class Movie {
-
-    String name;
-    String description;
-    double rating;
 }

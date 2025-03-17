@@ -28,6 +28,7 @@ public class IndexTests extends SecondaryIndexAerospikeDemoApplicationTest {
 
     @Test
     void verifyCustomIndexCreated() {
+        // See defining indexes in the configuration and entity classes in the demo application
         List<String> existingIndexes = getIndexes(client, namespace, indexInfoParser)
                 .stream()
                 .map(Index::getName)
@@ -37,6 +38,7 @@ public class IndexTests extends SecondaryIndexAerospikeDemoApplicationTest {
 
     @Test
     void verifyAnnotationBasedIndexesCreated() {
+        // See defining indexes in the configuration and entity classes in the demo application
         List<String> existingIndexes = getIndexes(client, namespace, indexInfoParser)
                 .stream()
                 .map(Index::getName)

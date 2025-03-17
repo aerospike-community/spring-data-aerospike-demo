@@ -11,13 +11,13 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CommentsRepositoryTest extends CompositePKAerospikeDemoApplicationTest {
+class CommentsRepositoryTests extends CompositePKAerospikeDemoApplicationTest {
 
     @Autowired
     CommentsRepository repository;
 
     @Test
-    void getAndSaveComments() {
+    void saveComments() {
         CommentsKey key = new CommentsKey(1L, 7624L);
         List<String> comments = List.of("Great movie", "ONE OF THE BEST FILMS EVER MADE");
         CommentsDocument document = new CommentsDocument(key, comments);

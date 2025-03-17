@@ -1,0 +1,16 @@
+[[demo-simple-crud]]
+= Simple CRUD Reactive Operations Demo
+
+This directory contains a sample project for demonstration of setting up Spring Data Aerospike and using simple reactive CRUD operations with it.
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Tests
+
+:base_path_reactive: ../../../../../../../..
+:tests_path_reactive: examples-reactive/src/test/java/com/demo/reactive
+
+To see tests go to link:{base_path_reactive}/{tests_path_reactive}/simplecrud[simple CRUD tests for reactive programming model].

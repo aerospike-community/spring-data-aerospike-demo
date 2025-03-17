@@ -1,7 +1,7 @@
 [[tests-simple-crud]]
 = Simple CRUD Operations Tests
 
-This directory contains tests for a sample project for demonstration of setting up Spring Data Aerospike and using simple CRUD operations with it.
+This directory contains tests for using basic CRUD operations in a simple Spring Data Aerospike project.
 
 == Prerequisites
 
@@ -11,7 +11,7 @@ This directory contains tests for a sample project for demonstration of setting 
 
 :base_path: ../../../../../../..
 
-link:{base_path}/asciidoc/optimistic-locking.adoc[Getting Started for Basic CRUD Operations]
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started for Basic CRUD Operations]
 
 == Demo Application
 

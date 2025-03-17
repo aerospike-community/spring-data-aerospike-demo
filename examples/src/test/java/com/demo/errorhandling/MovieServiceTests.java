@@ -2,7 +2,6 @@ package com.demo.errorhandling;
 
 import com.demo.errorhandling.entity.Movie;
 import com.demo.errorhandling.service.MovieService;
-import com.playtika.testcontainer.aerospike.AerospikeTestOperations;
 import lombok.SneakyThrows;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -22,9 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class MovieServiceTests extends ErrorHandlingAerospikeDemoApplicationTest {
 
     @Autowired
-    AerospikeTestOperations testOperations;
-
-    @Autowired
     MovieService movieService;
 
     @Test
@@ -33,10 +29,10 @@ public class MovieServiceTests extends ErrorHandlingAerospikeDemoApplicationTest
                 "Student is accidentally sent thirty years into the past", 9.3);
 
         movieService.createMovie(movie);
-        assertThat(movieService.findMovie(movie.getName())).isPresent();
+        assertThat(movieService.findMovie(movie.name())).isPresent();
 
-        movieService.deleteMovie(movie.getName());
-        assertThat(movieService.findMovie(movie.getName())).isNotPresent();
+        movieService.deleteMovie(movie.name());
+        assertThat(movieService.findMovie(movie.name())).isNotPresent();
     }
 
     @Test
@@ -56,11 +52,11 @@ public class MovieServiceTests extends ErrorHandlingAerospikeDemoApplicationTest
                 0.0);
         movieService.createMovie(movie);
 
-        movieService.updateMovieDescription(movie.getName(), "A cynical American expatriate struggles to decide " +
+        movieService.updateMovieDescription(movie.name(), "A cynical American expatriate struggles to decide " +
                 "whether or not he should help his former lover and her fugitive husband escape French Morocco");
-        movieService.updateMovieRating(movie.getName(), 8.5);
+        movieService.updateMovieRating(movie.name(), 8.5);
 
-        assertThat(movieService.findMovie(movie.getName()))
+        assertThat(movieService.findMovie(movie.name()))
                 .hasValue(new Movie("Casablanca",
                         "A cynical American expatriate struggles to decide whether or not he should help " +
                                 "his former lover and her fugitive husband escape French Morocco",
@@ -74,8 +70,8 @@ public class MovieServiceTests extends ErrorHandlingAerospikeDemoApplicationTest
                 0.0);
 
         movieService.createMovie(movie);
-        assertThat(movieService.findMovie(movie.getName())).hasValue(
-                new Movie(movie.getName(), "Old description", 0.0)
+        assertThat(movieService.findMovie(movie.name())).hasValue(
+                new Movie(movie.name(), "Old description", 0.0)
         );
 
         ExecutorService pool = Executors.newFixedThreadPool(2);
@@ -84,19 +80,19 @@ public class MovieServiceTests extends ErrorHandlingAerospikeDemoApplicationTest
                 () -> {
                     latch.countDown();
                     latch.await();
-                    return movieService.updateMovieRating(movie.getName(), 5.5);
+                    return movieService.updateMovieRating(movie.name(), 5.5);
                 },
                 () -> {
                     latch.countDown();
                     latch.await();
-                    return movieService.updateMovieDescription(movie.getName(), "New description");
+                    return movieService.updateMovieDescription(movie.name(), "New description");
                 }
         );
         pool.invokeAll(tasks)
                 .forEach(this::waitUntilDone);
 
-        assertThat(movieService.findMovie(movie.getName())).hasValue(
-                new Movie(movie.getName(), "New description", 5.5)
+        assertThat(movieService.findMovie(movie.name())).hasValue(
+                new Movie(movie.name(), "New description", 5.5)
         );
     }
 

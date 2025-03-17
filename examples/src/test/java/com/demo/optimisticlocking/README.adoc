@@ -1,7 +1,7 @@
 [[tests-optimistic-locking]]
 = Optimistic Locking Tests
 
-This directory contains tests for a sample project for demonstration of handling concurrent updates using optimistic locking with Spring Data Aerospike.
+This directory contains tests for demonstration of handling concurrent updates using optimistic locking in Spring Data Aerospike.
 
 == Prerequisites
 

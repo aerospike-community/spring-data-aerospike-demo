@@ -1,0 +1,15 @@
+[[tests-composite-pk]]
+= Composite Primary Key Tests for Reactive Programming Model
+
+This directory contains tests for a sample project for demonstration of creating and using a composite primary key with Spring Data Aerospike reactively.
+
+== Prerequisites
+
+- JDK 17
+
+== Demo Application
+
+:base_path_reactive: ../../../../../../../..
+:demo_path_reactive: examples-reactive/src/main/java/com/demo/reactive
+
+To see demo application go to link:{base_path_reactive}/{demo_path_reactive}/compositeprimarykey[Composite Primary Key Demo for Reactive Programming Model].

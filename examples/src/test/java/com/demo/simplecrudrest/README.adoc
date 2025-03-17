@@ -1,7 +1,7 @@
 [[tests-simple-crud-rest]]
 = Simple CRUD Operations with REST API Tests
 
-This directory contains tests for a sample project for demonstration of using simple CRUD operations via REST API with Spring Data Aerospike.
+This directory contains tests for using simple CRUD operations via REST API in a simple Spring Data Aerospike project.
 
 == Prerequisites
 

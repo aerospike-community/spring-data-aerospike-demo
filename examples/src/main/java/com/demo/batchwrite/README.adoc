@@ -1,0 +1,15 @@
+[[demo-simple-crud]]
+= Batch Write Operations Demo
+
+This directory contains a sample project for demonstration of using basic batch write operations with Spring Data Aerospike.
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Tests
+
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/batchwrite[batch write tests].
