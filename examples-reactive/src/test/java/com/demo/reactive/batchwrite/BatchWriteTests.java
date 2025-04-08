@@ -346,7 +346,7 @@ public class BatchWriteTests extends ReactiveBatchWriteAerospikeDemoApplicationT
     }
 
     @Test
-    public void deleteAllById_usingRepository_idsMustNotBeIdentical() {
+    public void deleteAllById_usingRepository_ignoresEmptyRecords() {
         var movies = List.of(
                 MovieDocumentForBatchWrite.builder().id("id1").likes(100).build(),
                 MovieDocumentForBatchWrite.builder().id("id2").likes(100).build()
@@ -356,9 +356,10 @@ public class BatchWriteTests extends ReactiveBatchWriteAerospikeDemoApplicationT
                 .assertNext(results -> assertThat(results).hasSameElementsAs(movies))
                 .verifyComplete();
 
-        assertThatThrownBy(() -> repository.deleteAllById(List.of("id1", "id1", "id2", "id2")).block())
-                .isInstanceOf(AerospikeException.BatchRecordArray.class)
-                .hasMessageContaining("Batch failed");
+        StepVerifier.create(repository.deleteAllById(List.of("id1", "id1", "id2", "id2"))
+                        .thenMany(repository.findAllById(List.of("id1", "id2"))).collectList())
+                .assertNext(results -> assertThat(results).isEmpty())
+                .verifyComplete();
     }
 
     @Test
@@ -380,6 +381,40 @@ public class BatchWriteTests extends ReactiveBatchWriteAerospikeDemoApplicationT
 
         StepVerifier.create(template.deleteByIds(allMovieDocumentsIds, "demo-batchWrite-reactive-set")
                         .thenMany(repository.findAllById(allMovieDocumentsIds)).collectList())
+                .assertNext(results -> assertThat(results).isEmpty())
+                .verifyComplete();
+    }
+
+    @Test
+    public void deleteByIds_usingTemplate_idsMustNotBeIdentical() {
+        var movies = List.of(
+                MovieDocumentForBatchWrite.builder().id("id1").likes(100).build(),
+                MovieDocumentForBatchWrite.builder().id("id2").likes(100).build()
+        );
+        StepVerifier.create(repository.saveAll(movies)
+                        .thenMany(repository.findAllById(List.of("id1", "id2"))).collectList())
+                .assertNext(results -> assertThat(results).hasSameElementsAs(movies))
+                .verifyComplete();
+
+        assertThatThrownBy(() ->
+                template.deleteByIds(List.of("id1", "id1", "id2", "id2"), MovieDocumentForBatchWrite.class).block())
+                .isInstanceOf(AerospikeException.BatchRecordArray.class)
+                .hasMessageContaining("Batch failed");
+    }
+
+    @Test
+    public void deleteExistingByIds_usingTemplate_ignoresEmptyRecords() {
+        var movies = List.of(
+                MovieDocumentForBatchWrite.builder().id("id1").likes(100).build(),
+                MovieDocumentForBatchWrite.builder().id("id2").likes(100).build()
+        );
+        StepVerifier.create(repository.saveAll(movies)
+                        .thenMany(repository.findAllById(List.of("id1", "id2"))).collectList())
+                .assertNext(results -> assertThat(results).hasSameElementsAs(movies))
+                .verifyComplete();
+
+        StepVerifier.create(template.deleteExistingByIds(List.of("id1", "id1", "id2", "id2"), MovieDocumentForBatchWrite.class)
+                        .thenMany(repository.findAllById(List.of("id1", "id2"))).collectList())
                 .assertNext(results -> assertThat(results).isEmpty())
                 .verifyComplete();
     }
