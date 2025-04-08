@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.4</version>
         <relativePath/>
     </parent>
 
@@ -23,15 +23,15 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring-cloud-dependencies.version>2024.0.0</spring-cloud-dependencies.version>
-        <spring-data-aerospike.version>5.0.1</spring-data-aerospike.version>
-        <reactor-client.version>9.0.2</reactor-client.version>
-        <embedded-aerospike.version>3.1.10</embedded-aerospike.version>
-        <testcontainers>1.20.4</testcontainers>
-        <spring-boot-test.version>3.4.1</spring-boot-test.version>
-        <spring-boot-starter-web.version>3.4.2</spring-boot-starter-web.version>
-        <rest-assured.version>5.5.0</rest-assured.version>
-        <reactor-test>3.7.2</reactor-test>
+        <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
+        <spring-data-aerospike.version>5.1.1</spring-data-aerospike.version>
+        <reactor-client.version>9.0.5</reactor-client.version>
+        <embedded-aerospike.version>3.1.11</embedded-aerospike.version>
+        <testcontainers>1.20.6</testcontainers>
+        <spring-boot-test.version>3.4.4</spring-boot-test.version>
+        <spring-boot-starter-web.version>3.4.4</spring-boot-starter-web.version>
+        <rest-assured.version>5.5.1</rest-assured.version>
+        <reactor-test>3.7.4</reactor-test>
     </properties>
 
     <dependencyManagement>
