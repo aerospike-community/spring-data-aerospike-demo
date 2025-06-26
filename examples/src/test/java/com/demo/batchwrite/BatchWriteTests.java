@@ -318,7 +318,7 @@ public class BatchWriteTests extends BatchWriteAerospikeDemoApplicationTest {
     }
 
     @Test
-    public void deleteByIds_usingTemplate_idsMustNotBeIdentical() {
+    public void deleteByIds_usingTemplate_ignoresEmptyOrDuplicateRecords() {
         List<MovieDocumentForBatchWrite> movies = List.of(
                 MovieDocumentForBatchWrite.builder().id("id1").build(),
                 MovieDocumentForBatchWrite.builder().id("id2").build()
@@ -326,22 +326,7 @@ public class BatchWriteTests extends BatchWriteAerospikeDemoApplicationTest {
         template.saveAll(movies);
         assertThat(repository.findAllById(List.of("id1", "id2"))).hasSameElementsAs(movies);
 
-        assertThatThrownBy(() ->
-                template.deleteByIds(List.of("id1", "id1", "id2", "id2"), MovieDocumentForBatchWrite.class))
-                .isInstanceOf(AerospikeException.BatchRecordArray.class)
-                .hasMessageContaining("Batch failed");
-    }
-
-    @Test
-    public void deleteExistingByIds() {
-        List<MovieDocumentForBatchWrite> movies = List.of(
-                MovieDocumentForBatchWrite.builder().id("id1").build(),
-                MovieDocumentForBatchWrite.builder().id("id2").build()
-        );
-        template.saveAll(movies);
-        assertThat(repository.findAllById(List.of("id1", "id2"))).hasSameElementsAs(movies);
-
-        template.deleteExistingByIds(List.of("id1", "id1", "id2", "id2"), MovieDocumentForBatchWrite.class);
+        template.deleteByIds(List.of("id1", "id1", "id2", "id2"), MovieDocumentForBatchWrite.class);
         assertThat(repository.findAllById(List.of("id1", "id2"))).isEmpty();
     }
 
