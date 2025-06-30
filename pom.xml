@@ -27,7 +27,7 @@
         <spring-data-aerospike.version>5.2.0</spring-data-aerospike.version>
         <reactor-client.version>9.0.5</reactor-client.version>
         <embedded-aerospike.version>3.1.14</embedded-aerospike.version>
-        <testcontainers>1.21.2</testcontainers>
+        <testcontainers>1.21.3</testcontainers>
         <spring-boot-test.version>3.5.3</spring-boot-test.version>
         <spring-boot-starter-web.version>3.5.3</spring-boot-starter-web.version>
         <rest-assured.version>5.5.5</rest-assured.version>
