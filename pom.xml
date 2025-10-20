@@ -31,7 +31,7 @@
         <spring-boot-test.version>3.5.3</spring-boot-test.version>
         <spring-boot-starter-web.version>3.5.3</spring-boot-starter-web.version>
         <rest-assured.version>5.5.5</rest-assured.version>
-        <reactor-test>3.7.7</reactor-test>
+        <reactor-test>3.7.12</reactor-test>
     </properties>
 
     <dependencyManagement>
