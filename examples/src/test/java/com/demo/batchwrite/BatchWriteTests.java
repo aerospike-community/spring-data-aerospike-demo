@@ -206,7 +206,7 @@ public class BatchWriteTests extends BatchWriteAerospikeDemoApplicationTest {
         var moviesUpdated = List.of(
                 MovieDocumentForBatchWrite.builder().id("id1").likes(200).build(),
                 MovieDocumentForBatchWrite.builder().id("id2").likes(200).build()
-        );;
+        );
         template.updateAll(moviesUpdated);
         assertThat(repository.findAllById(List.of("id1", "id2"))).hasSameElementsAs(moviesUpdated);
     }
@@ -234,7 +234,7 @@ public class BatchWriteTests extends BatchWriteAerospikeDemoApplicationTest {
         var moviesUpdated = List.of(
                 MovieDocumentForBatchWrite.builder().id("id1").likes(200).build(),
                 MovieDocumentForBatchWrite.builder().id("id2").likes(200).build()
-        );;
+        );
         template.updateAll(moviesUpdated, "demo-batchWrite-set");
         assertThat(repository.findAllById(List.of("id1", "id2"))).hasSameElementsAs(moviesUpdated);
     }
@@ -386,7 +386,8 @@ public class BatchWriteTests extends BatchWriteAerospikeDemoApplicationTest {
         template.deleteAll(MovieDocumentForBatchWrite.class); // deletes all entities of the class
         await()
                 .atMost(Duration.ofSeconds(3))
-                .pollInterval(Duration.ofMillis(250))
+                .pollDelay(Duration.ofMillis(500))
+                .pollInterval(Duration.ofMillis(1000))
                 .untilAsserted(() -> assertThat(repository.findAllById(allMovieDocumentsIds)).isEmpty());
     }
 
@@ -398,7 +399,8 @@ public class BatchWriteTests extends BatchWriteAerospikeDemoApplicationTest {
         template.deleteAll("demo-batchWrite-set"); // deletes all entities in the set
         await()
                 .atMost(Duration.ofSeconds(3))
-                .pollInterval(Duration.ofMillis(250))
+                .pollDelay(Duration.ofMillis(500))
+                .pollInterval(Duration.ofMillis(1000))
                 .untilAsserted(() -> assertThat(repository.findAllById(allMovieDocumentsIds)).isEmpty());
     }
 
