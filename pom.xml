@@ -23,7 +23,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2025.1.0</spring-cloud-dependencies.version>
         <spring-data-aerospike.version>5.3.0</spring-data-aerospike.version>
         <reactor-client.version>9.0.5</reactor-client.version>
         <embedded-aerospike.version>3.1.17</embedded-aerospike.version>
