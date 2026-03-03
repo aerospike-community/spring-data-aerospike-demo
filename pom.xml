@@ -28,7 +28,7 @@
         <reactor-client.version>9.0.5</reactor-client.version>
         <embedded-aerospike.version>3.1.17</embedded-aerospike.version>
         <testcontainers>2.0.1</testcontainers>
-        <spring-boot-test.version>3.5.7</spring-boot-test.version>
+        <spring-boot-test.version>4.0.3</spring-boot-test.version>
         <spring-boot-starter-web.version>3.5.7</spring-boot-starter-web.version>
         <rest-assured.version>5.5.6</rest-assured.version>
         <reactor-test>3.8.0</reactor-test>
