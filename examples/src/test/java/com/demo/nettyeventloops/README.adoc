@@ -1,0 +1,23 @@
+[[tests-netty-event-loops]]
+= Netty Event Loops Tests
+
+This directory contains tests for verifying Netty event loop configurations in a Spring Data Aerospike project.
+
+Each test class activates a different event loop configuration via the `demo.eventloop.type` property
+and verifies that the expected transport is used.
+
+== Prerequisites
+
+- JDK 17
+
+== Guides
+
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
+
+== Demo Application
+
+:demo_path: examples/src/main/java/com/demo
+
+To see demo application go to link:{base_path}/{demo_path}/nettyeventloops[Netty Event Loops Demo].

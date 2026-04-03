@@ -26,11 +26,7 @@ public class UserDocument {
     @Field
     UserData data;
 
-    @Value
-    public static class UserData {
-
-        String address;
-        String country;
+    public record UserData(String address, String country) {
     }
 }
 ----

@@ -1,0 +1,23 @@
+[[tests-reactive-netty-event-loops]]
+= Reactive Netty Event Loops Tests
+
+This directory contains tests for verifying Netty event loop configurations in a reactive Spring Data Aerospike project.
+
+Each test class activates a different event loop configuration via the `demo.eventloop.type` property
+and verifies that the expected transport is used.
+
+== Prerequisites
+
+- JDK 17
+
+== Guides
+
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
+
+== Demo Application
+
+:demo_path: examples-reactive/src/main/java/com/demo/reactive
+
+To see demo application go to link:{base_path}/{demo_path}/nettyeventloops[Reactive Netty Event Loops Demo].

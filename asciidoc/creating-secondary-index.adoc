@@ -2,7 +2,7 @@
 = Creating secondary index with Spring Data Aerospike
 
 TIP: For more details on secondary indexes please visit
-https://www.aerospike.com/docs/architecture/secondary-index.html[Aerospike Secondary Index official documentation].
+https://aerospike.com/docs/server/architecture/secondary-index[Aerospike Secondary Index official documentation].
 
 Out of the box https://github.com/aerospike/spring-data-aerospike[Spring Data Aerospike] supports
 creating secondary indexes in Aerospike.
@@ -52,12 +52,13 @@ public class IndexedDocument {
 
 In this example we will create an index at startup of the application manually.
 
-.AerospikeIndexConfiguration.java
+.AerospikeConfiguration.java
 [source,java]
 ----
 @Slf4j
 @Configuration
-public class AerospikeIndexConfiguration {
+@EnableAerospikeRepositories(basePackageClasses = IndexedDocumentRepository.class)
+public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
     private static final String INDEX_NAME = "movie-rating-index";
 
@@ -67,7 +68,7 @@ public class AerospikeIndexConfiguration {
             havingValue = "true",
             matchIfMissing = true)
     public boolean createAerospikeIndex(AerospikeTemplate aerospikeTemplate) {
-        aerospikeTemplate.createIndex(MovieDocument.class, INDEX_NAME, "rating", IndexType.NUMERIC);
+        aerospikeTemplate.createIndex(IndexedMovieDocument.class, INDEX_NAME, "rating", IndexType.NUMERIC);
         log.info("Index {} was successfully created", INDEX_NAME);
         return true;
     }

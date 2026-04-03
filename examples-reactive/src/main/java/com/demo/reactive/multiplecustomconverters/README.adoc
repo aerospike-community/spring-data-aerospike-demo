@@ -1,0 +1,41 @@
+[[demo-reactive-multiple-custom-converters]]
+= Reactive Multiple Custom Converters Demo
+
+This directory contains a reactive sample project demonstrating how to register multiple
+`AerospikeCustomConverters` beans with Spring Data Aerospike 6.0.0.
+
+== What Changed in SDA 6.0.0
+
+Since SDA 6.0.0, `AerospikeDataConfigurationSupport.customConversions()` accepts an
+`ObjectProvider<AerospikeCustomConverters>` and aggregates all beans via `orderedStream()`.
+This allows different modules or configuration classes to each contribute their own converter beans
+independently, without overriding `customConverters()`.
+
+Previously, only a single `AerospikeCustomConverters` bean could be injected.
+
+== How This Demo Works
+
+Two separate `AerospikeCustomConverters` beans are defined in the configuration:
+
+1. *priceConverters* -- handles `Price` record serialization/deserialization
+2. *addressConverters* -- handles `Address` record serialization/deserialization
+
+Both converter groups are automatically aggregated by SDA and used when persisting
+`ProductDocument` (which has a `Price` field) and `StoreDocument` (which has an `Address` field).
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Guides
+
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
+
+== Tests
+
+:tests_path: examples-reactive/src/test/java/com/demo/reactive
+
+To see tests go to link:{base_path}/{tests_path}/multiplecustomconverters[Reactive Multiple Custom Converters tests].

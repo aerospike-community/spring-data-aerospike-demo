@@ -1,4 +1,4 @@
-[[tests-simple-crud]]
+[[tests-batch-write]]
 = Batch Write Operations Tests
 
 This directory contains tests for a sample project for demonstration of using batch write operations with Spring Data Aerospike.

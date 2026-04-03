@@ -4,8 +4,8 @@
 == How to set up Spring Data Aerospike in a Spring Boot application for basic CRUD operations
 :toc:
 
-:spring-boot-version: 3.4.1
-:spring-data-aerospike-version: 5.0.0
+:spring-boot-version: 4.0.5
+:spring-data-aerospike-version: 6.0.0
 
 == Setting up the project
 
@@ -110,12 +110,12 @@ Document explained:
 <2> `@Document(collection = "demo-simplecrud-set")` marks a class as an entity to be persisted to Aerospike.
 It also allows to specify set name, expiration and touch on read values. In current example custom set name is specified
 via `collection`. Please note that a set name cannot contain the ':' or ';' characters
-(see more https://www.aerospike.com/docs/guide/limitations.html[limitations]).
+(see more https://aerospike.com/docs/reference/limitations[limitations]).
 
 <3> `@Builder` provide Builder API for a class.
 
 <4> `@AllArgsConstructor` creates public all-args constructor for a class (which is hidden by `@Builder`).
-Spring Data can use all-args constructor instead of reflection to https://docs.spring.io/spring-data/data-commons/docs/current/reference/html/#mapping.object-creation[gain performance boost] for object creation.
+Spring Data can use all-args constructor instead of reflection to https://docs.spring.io/spring-data/commons/reference/object-mapping.html#mapping.object-creation[gain performance boost] for object creation.
 
 <5> `@Id` marks a field as the primary key.
 
@@ -123,7 +123,7 @@ Spring Data can use all-args constructor instead of reflection to https://docs.s
 
 <7> `@Field("desc")` configures the name of a field to be used when persisting the document. This value will be used as a bin name instead of the original field name.
 
-<8> `@Indexed` creates https://www.aerospike.com/docs/architecture/secondary-index.html[secondary index] on application startup for the specific field. Note: `@Indexed` annotation is not supported for the fields annotated with `@Id`, `@Expiration` or `@Version` annotations.
+<8> `@Indexed` creates https://aerospike.com/docs/server/architecture/secondary-index[secondary index] on application startup for the specific field. Note: `@Indexed` annotation is not supported for the fields annotated with `@Id`, `@Expiration` or `@Version` annotations.
 
 [NOTE]
 ====
@@ -147,7 +147,7 @@ public interface MovieRepository extends AerospikeRepository<MovieDocument, Stri
 Repository explained:
 
 <1> `AerospikeRepository` provides
-https://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html[Repository]
+https://docs.spring.io/spring-data/commons/reference/repositories.html[Repository]
 functionality for the entity class (standard CRUD + Aerospike specific operations).
 
 == Configuring connection to Aerospike
@@ -252,12 +252,6 @@ If you are not using Spring Cloud you can add `spring-cloud-starter-bootstrap` w
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -303,5 +297,8 @@ link:https://docs.spring.io/spring-framework/reference/[Spring Framework Documen
 === Demo application
 
 :demo_path: ../examples/src/main/java/com/demo
+:reactive_demo_path: ../examples-reactive/src/main/java/com/demo/reactive
 
 To see demo application go to link:{demo_path}/simplecrud[Simple CRUD Demo].
+
+For a reactive variant see link:{reactive_demo_path}/simplecrud[Reactive Simple CRUD Demo].

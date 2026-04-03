@@ -1,6 +1,7 @@
 = `spring-data-aerospike` setup and usage
 
 This repository contains sample projects for demonstration of setting up and usage of Spring Data Aerospike.
+It includes two modules: `examples` (imperative) and `examples-reactive` (reactive).
 
 == Prerequisites
 
@@ -15,3 +16,16 @@ This repository contains sample projects for demonstration of setting up and usa
 - link:asciidoc/composite-primary-key.adoc[Composite primary key]
 - link:asciidoc/optimistic-locking.adoc[Handling concurrent updates]
 - link:asciidoc/basic-error-handling.adoc[Basic error handling]
+
+== Code Demos
+
+:examples_path: examples/src/main/java/com/demo
+:reactive_examples_path: examples-reactive/src/main/java/com/demo/reactive
+
+In addition to the guides above, the following demos are available:
+
+- link:{examples_path}/batchread[Batch Read Operations]
+- link:{examples_path}/batchwrite[Batch Write Operations]
+- link:{examples_path}/simplecrudrest[Simple CRUD with REST API]
+
+Reactive variants of the demos are available under link:examples-reactive[`examples-reactive`] module.
