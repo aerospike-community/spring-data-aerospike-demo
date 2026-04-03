@@ -1,4 +1,4 @@
-[[tests-simple-crud]]
+[[tests-reactive-batch-read]]
 = Reactive Batch Read Operations Tests
 
 This directory contains tests for a sample project for demonstration of using batch read operations with Spring Data Aerospike reactively.

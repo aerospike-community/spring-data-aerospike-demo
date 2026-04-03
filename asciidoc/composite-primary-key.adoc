@@ -48,10 +48,10 @@ public record CommentsKey(long pageId, long threadId) {
 public class CommentsDocument {
 
     @Id
-    private CommentsKey key;
+    CommentsKey key;
 
     @Field
-    private List<String> comments;
+    List<String> comments;
 
 }
 ----
@@ -65,7 +65,7 @@ public class CommentsDocument {
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     // other code omitted
     @Override
-    protected List<?> customConverters() {
+    protected List<Object> customConverters() {
         return List.of(
                 CommentsKey.CommentsKeyToStringConverter.INSTANCE,
                 CommentsKey.StringToCommentsKeyConverter.INSTANCE

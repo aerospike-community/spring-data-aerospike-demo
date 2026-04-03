@@ -1,0 +1,24 @@
+[[tests-multiple-custom-converters]]
+= Multiple Custom Converters Tests
+
+This directory contains tests verifying that multiple `AerospikeCustomConverters` beans are correctly
+aggregated and applied by Spring Data Aerospike 6.0.0.
+
+Each test class exercises converters from a different bean to prove that all converter groups
+are picked up via `ObjectProvider.orderedStream()`.
+
+== Prerequisites
+
+- JDK 17
+
+== Guides
+
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
+
+== Demo Application
+
+:demo_path: examples/src/main/java/com/demo
+
+To see demo application go to link:{base_path}/{demo_path}/multiplecustomconverters[Multiple Custom Converters Demo].

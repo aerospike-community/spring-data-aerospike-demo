@@ -1,0 +1,41 @@
+[[demo-netty-event-loops]]
+= Netty Event Loops Demo
+
+This directory contains a sample project demonstrating Netty event loop configuration with Spring Data Aerospike.
+
+Since Spring Data Aerospike 6.0.0 (with Aerospike Java client 10.0.0), Netty event loops are always configured
+via the `eventLoops()` bean in `AerospikeDataConfigurationSupport`. This demo shows both the default behavior
+and how to override event loops with custom configurations.
+
+== Use Cases
+
+=== Default Event Loops
+The default configuration auto-selects the best available Netty transport:
+
+- *Epoll* on Linux (if available)
+- *KQueue* on macOS (if available)
+- *NIO* as a fallback on all platforms
+
+=== Custom Event Loops
+Three custom override patterns are demonstrated:
+
+1. *Custom NIO* (`demo.eventloop.type=custom-nio`) -- fixed thread count and tuned `EventPolicy` values using the legacy `NioEventLoopGroup` API
+2. *New Netty 4.2 API* (`demo.eventloop.type=new-netty-api`) -- uses `MultiThreadIoEventLoopGroup` with `IoHandler` factories
+3. *io_uring* (`demo.eventloop.type=iouring`) -- Linux io_uring via `IoUringIoHandler` for high-performance async I/O
+
+== Prerequisites
+
+- JDK 17
+- Docker installed and running (optional)
+
+== Guides
+
+:base_path: ../../../../../../..
+
+link:{base_path}/asciidoc/getting-started.adoc[Getting Started]
+
+== Tests
+
+:tests_path: examples/src/test/java/com/demo
+
+To see tests go to link:{base_path}/{tests_path}/nettyeventloops[Netty Event Loops tests].

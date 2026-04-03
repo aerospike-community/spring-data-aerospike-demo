@@ -1,4 +1,4 @@
-[[demo-simple-crud]]
+[[demo-batch-read]]
 = Batch Read Operations Demo
 
 This directory contains a sample project for demonstration of using basic batch read operations with Spring Data Aerospike.

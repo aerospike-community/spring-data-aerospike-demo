@@ -1,4 +1,4 @@
-[[demo-simple-crud]]
+[[demo-reactive-batch-write]]
 = Reactive Batch Write Operations Demo
 
 This directory contains a sample project for demonstration of using basic batch write operations with Spring Data Aerospike reactively.
