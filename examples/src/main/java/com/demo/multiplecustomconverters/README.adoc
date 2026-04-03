@@ -4,9 +4,9 @@
 This directory contains a sample project demonstrating how to register multiple `AerospikeCustomConverters` beans
 with Spring Data Aerospike 6.0.0.
 
-== What Changed in SDA 6.0.0
+== What Changed in Spring Data Aerospike 6.0.0
 
-Since SDA 6.0.0, `AerospikeDataConfigurationSupport.customConversions()` accepts an
+Since Spring Data Aerospike 6.0.0, `AerospikeDataConfigurationSupport.customConversions()` accepts an
 `ObjectProvider<AerospikeCustomConverters>` and aggregates all beans via `orderedStream()`.
 This allows different modules or configuration classes to each contribute their own converter beans
 independently, without overriding `customConverters()`.
@@ -20,7 +20,7 @@ Two separate `AerospikeCustomConverters` beans are defined in the configuration:
 1. *priceConverters* -- handles `Price` record serialization/deserialization
 2. *addressConverters* -- handles `Address` record serialization/deserialization
 
-Both converter groups are automatically aggregated by SDA and used when persisting
+Both converter groups are automatically aggregated by Spring Data Aerospike and used when persisting
 `ProductDocument` (which has a `Price` field) and `StoreDocument` (which has an `Address` field).
 
 == Prerequisites

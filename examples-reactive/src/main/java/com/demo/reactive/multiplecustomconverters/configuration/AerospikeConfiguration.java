@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Demonstrates registering multiple {@link AerospikeCustomConverters} beans in a reactive application.
  * <p>
- * Since SDA 6.0.0, {@code AerospikeDataConfigurationSupport.customConversions()} accepts an
+ * Since Spring Data Aerospike 6.0.0, {@code AerospikeDataConfigurationSupport.customConversions()} accepts an
  * {@code ObjectProvider<AerospikeCustomConverters>} and aggregates all beans via
  * {@code orderedStream()}. Each bean contributes its own group of converters independently.
  */
